@@ -1,12 +1,8 @@
 package fr.javaquest;
 
-public class Game {
-    private GameWindow gameWindow;
-    private GamePanel gamePanel;
-
-    public Game(){
-        gamePanel = new GamePanel();
-        gameWindow = new GameWindow(gamePanel);
-        gamePanel.requestFocus();
+public class Game extends com.badlogic.gdx.Game {
+    @Override
+    public void create() {
+        setScreen(new GameScreen());
     }
 }

@@ -1,45 +1,36 @@
 package fr.javaquest.entity;
 
-import javax.swing.*;
+public class Player extends Entity {
+    private static final float JUMP_SPEED = 400f;
+    private static final float GRAVITY = 1000f;
+    private static final float GROUND_Y = 347f; // provisoire, à remplacer par les collisions Tiled
 
-public class Player extends Entity{
+    private float velocityY = 0;
     private boolean onGround = true;
 
-    public Player(int x, int y){
-        super(100, 4, x, y);
+    public Player(float x, float y) {
+        super(100, 200f, x, y);
     }
 
-    public void moveLeft(){
-        hitbox.x -= movementSpeed;
-    }
-    public void moveRight(){
-        hitbox.x += movementSpeed;
-    }
-    public void jump(){
+    public void moveLeft(float delta)  { hitbox.x -= movementSpeed * delta; }
+    public void moveRight(float delta) { hitbox.x += movementSpeed * delta; }
+
+    public void jump() {
         if (onGround) {
             onGround = false;
-
-            Timer timer = new Timer(20, null);
-
-            final double[] velocity = {-8};
-
-            timer.addActionListener(e -> {
-
-                hitbox.y += velocity[0];
-                velocity[0] += 0.4;
-
-                if (hitbox.y >= 200) {
-                    hitbox.y = 200;
-                    timer.stop();
-                    onGround = true;
-                }
-            });
-
-            timer.start();
+            velocityY = JUMP_SPEED;
         }
     }
-    @Override
-    public void move() {
 
+    @Override
+    public void update(float delta) {
+        velocityY -= GRAVITY * delta;
+        hitbox.y += velocityY * delta;
+
+        if (hitbox.y <= GROUND_Y) {
+            hitbox.y = GROUND_Y;
+            velocityY = 0;
+            onGround = true;
+        }
     }
 }
