@@ -1,65 +1,33 @@
 package fr.javaquest;
 
-import inputs.KeyboardInputs;
-import inputs.MouseInputs;
+import fr.javaquest.entity.Player;
+import fr.javaquest.inputs.KeyboardInputs;
+import fr.javaquest.inputs.MouseInputs;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class GamePanel extends JPanel {
     private MouseInputs mouseInputs;
-    private int xDelta = 200, yDelta = 200;
-    private boolean onGround = true;
+    private Player player;
 
     public GamePanel(){
+        player = new Player(200,200);
+
         mouseInputs = new MouseInputs(this);
-        addKeyListener(new KeyboardInputs(this));
+        addKeyListener(new KeyboardInputs(this, player));
         addMouseListener(mouseInputs);
         addMouseMotionListener(mouseInputs);
+        setFocusable(true);
     }
 
-    public void changeXDelta(int value){
-        this.xDelta += value;
-        repaint();
-    }
-    public void changeYDelta(int value){
-        this.yDelta += value;
-        repaint();
-    }
-    public void jump() {
-        if (onGround) {
-            onGround = false;
-
-            Timer timer = new Timer(20, null);
-
-            final double[] velocity = {-8};
-
-            timer.addActionListener(e -> {
-
-                yDelta += velocity[0];
-                velocity[0] += 0.4;
-
-                if (yDelta >= 200) {
-                    yDelta = 200;
-                    timer.stop();
-                    onGround = true;
-                }
-                repaint();
-            });
-
-            timer.start();
-        }
-    }
-
+    @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        g.fillRect(xDelta, yDelta, 10, 10);
-    }
+        Rectangle hitbox = player.getHitbox();
+        g.fillRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
+        g.fillRect(0, 210, 400,400);
 
-    public void setRectPosition (int x, int y) {
-        this.xDelta = x;
-        this.yDelta = y;
-        repaint();
     }
 }

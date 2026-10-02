@@ -1,4 +1,4 @@
-package inputs;
+package fr.javaquest.inputs;
 
 import fr.javaquest.GamePanel;
 import java.awt.event.MouseEvent;
