@@ -1,6 +1,6 @@
 package fr.javaquest.entity;
 
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 
@@ -31,10 +31,6 @@ public abstract class Entity {
     public void keepInside(float mapWidth, float mapHeight) {
         hitbox.x = MathUtils.clamp(hitbox.x, 0, mapWidth - hitbox.width);
         hitbox.y = MathUtils.clamp(hitbox.y, 0, mapHeight - hitbox.height);
-    }
-
-    public void render(ShapeRenderer shapes) {
-        shapes.rect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
     }
 
     public abstract void update(float delta);

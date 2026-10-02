@@ -15,7 +15,7 @@ public class KeyboardInputs {
         // Sur un clavier AZERTY, la touche Q correspond à Keys.A (LibGDX utilise la position physique)
         if (Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT))  player.moveLeft(delta);
         if (Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT)) player.moveRight(delta);
-
+        if (Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN)) System.out.println("Pressed S or Down arrow");
         if (Gdx.input.isKeyJustPressed(Keys.SPACE) || Gdx.input.isKeyJustPressed(Keys.UP)) player.jump();
     }
 }
