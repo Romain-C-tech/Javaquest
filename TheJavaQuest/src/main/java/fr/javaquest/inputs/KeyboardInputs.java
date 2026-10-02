@@ -1,5 +1,6 @@
-package inputs;
+package fr.javaquest.inputs;
 
+import fr.javaquest.entity.Player;
 import fr.javaquest.GamePanel;
 
 import javax.swing.*;
@@ -7,24 +8,25 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class KeyboardInputs implements KeyListener {
-
     private GamePanel gamePanel;
+    private Player player;
     private boolean left, right;
 
-    public KeyboardInputs(GamePanel gamePanel){
+    public KeyboardInputs(GamePanel gamePanel, Player player){
         this.gamePanel = gamePanel;
+        this.player = player;
         movementTimer.start();
-
     }
 
     Timer movementTimer = new Timer(20, e -> {
         if (left) {
-            gamePanel.changeXDelta(-5);
+            player.moveLeft();
         }
 
         if (right) {
-            gamePanel.changeXDelta(5);
+            player.moveRight();
         }
+        gamePanel.repaint();
     });
 
     @Override
@@ -41,8 +43,8 @@ public class KeyboardInputs implements KeyListener {
             case KeyEvent.VK_DOWN -> System.out.println("down arrow");
             case KeyEvent.VK_D -> right = true;
             case KeyEvent.VK_RIGHT -> right = true;
-            case KeyEvent.VK_SPACE -> gamePanel.jump();
-            case KeyEvent.VK_UP -> gamePanel.jump();
+            case KeyEvent.VK_SPACE -> player.jump();
+            case KeyEvent.VK_UP -> player.jump();
         }
     }
 

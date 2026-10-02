@@ -11,5 +11,6 @@ public class GameWindow {
         jframe.add(gamePanel);
         jframe.setLocationRelativeTo(null);
         jframe.setVisible(true);
+        gamePanel.requestFocusInWindow();
     }
 }
