@@ -5,13 +5,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 public class Game extends ApplicationAdapter {
     private static final float VIEW_WIDTH = 640f;
@@ -21,12 +19,11 @@ public class Game extends ApplicationAdapter {
 
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
-    private OrthographicCamera camera;
-    private ExtendViewport viewport;
+    private GameCamera gameCamera;
     private ShapeRenderer shapeRenderer;
 
     private float mapWidth, mapHeight;
-    private float playerX = 100, playerY = 100; // à placer sur une case accessible
+    private float playerX = 100, playerY = 100;
 
     @Override
     public void create() {
@@ -38,8 +35,7 @@ public class Game extends ApplicationAdapter {
         mapHeight = map.getProperties().get("height", Integer.class)
                 * map.getProperties().get("tileheight", Integer.class);
 
-        camera = new OrthographicCamera();
-        viewport = new ExtendViewport(VIEW_WIDTH, VIEW_HEIGHT, camera);
+        gameCamera = new GameCamera(VIEW_WIDTH, VIEW_HEIGHT, mapWidth, mapHeight);
         shapeRenderer = new ShapeRenderer();
     }
 
@@ -50,52 +46,35 @@ public class Game extends ApplicationAdapter {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        viewport.apply();
-        renderer.setView(camera);
+        gameCamera.apply();
+        renderer.setView(gameCamera.getCamera());
         renderer.render();
 
-        // Joueur provisoire (carré rouge)
-        shapeRenderer.setProjectionMatrix(camera.combined);
+        shapeRenderer.setProjectionMatrix(gameCamera.getCamera().combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.RED);
-        shapeRenderer.rect(playerX, playerY, PLAYER_SIZE /2, PLAYER_SIZE);
+        shapeRenderer.rect(playerX, playerY, PLAYER_SIZE, PLAYER_SIZE);
         shapeRenderer.end();
     }
 
     private void update(float delta) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) Gdx.app.exit();
 
-        // Déplacement du joueur
         float step = PLAYER_SPEED * delta;
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT))  playerX -= step;
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) playerX += step;
         if (Gdx.input.isKeyPressed(Input.Keys.UP))    playerY += step;
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN))  playerY -= step;
 
-        // Quitter le jeu
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) Gdx.app.exit();
-
-        // Le joueur reste dans la map
         playerX = MathUtils.clamp(playerX, 0, mapWidth - PLAYER_SIZE);
         playerY = MathUtils.clamp(playerY, 0, mapHeight - PLAYER_SIZE);
 
-        // La caméra suit le joueur, sans sortir de la map
-        float halfW = camera.viewportWidth / 2f;
-        float halfH = camera.viewportHeight / 2f;
-        float targetX = playerX + PLAYER_SIZE / 2f;
-        float targetY = playerY + PLAYER_SIZE / 2f;
-
-        camera.position.x = (mapWidth <= camera.viewportWidth)
-                ? mapWidth / 2f
-                : MathUtils.clamp(targetX, halfW, mapWidth - halfW);
-        camera.position.y = (mapHeight <= camera.viewportHeight)
-                ? mapHeight / 2f
-                : MathUtils.clamp(targetY, halfH, mapHeight - halfH);
-        camera.update();
+        gameCamera.follow(playerX + PLAYER_SIZE / 2f, playerY + PLAYER_SIZE / 2f);
     }
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height, false);
+        gameCamera.resize(width, height);
     }
 
     @Override
