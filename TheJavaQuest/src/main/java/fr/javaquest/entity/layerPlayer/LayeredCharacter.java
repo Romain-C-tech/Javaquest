@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
+import fr.javaquest.entity.shieldRenderer.ShieldRenderer;
+import fr.javaquest.entity.weaponRenderer.WeaponRenderer;
 
 public class LayeredCharacter {
 
@@ -23,6 +25,8 @@ public class LayeredCharacter {
     public float y;
 
     public boolean facingRight = true;
+    private WeaponRenderer weapon;
+    private ShieldRenderer shield;
 
     public LayeredCharacter() {
 
@@ -57,7 +61,8 @@ public class LayeredCharacter {
             32,
             16
         );
-
+        shield = new ShieldRenderer();
+        weapon = new WeaponRenderer();
         currentAnimation = idle;
     }
 
@@ -172,14 +177,18 @@ public class LayeredCharacter {
 
     public void draw(SpriteBatch batch) {
 
-        drawLayer(batch, currentAnimation);
-
-        drawLayer(batch, hands);
+        drawLayer(batch, currentAnimation, 0, 0, 0);
+        drawLayer(batch, weapon.getCurrentWeapon(), 18,18, 0);
+        drawLayer(batch, hands, 1, -1, 0);
+        drawLayer(batch, shield.getCurrentShield(), 0, -18, 0);
     }
 
     private void drawLayer(
         SpriteBatch batch,
-        Animation<TextureRegion> animation
+        Animation<TextureRegion> animation,
+        float offSetRightX,
+        float offSetLeftX,
+        float offSetY
     ) {
         TextureRegion frame =
             animation.getKeyFrame(
@@ -194,18 +203,17 @@ public class LayeredCharacter {
 
             batch.draw(
                 frame,
-                x,
-                y,
+                x + offSetRightX,
+                y + offSetY,
                 width,
                 height
             );
 
         } else {
-
             batch.draw(
                 frame,
-                x + width,
-                y,
+                x - offSetLeftX + width,
+                y + offSetY,
                 -width,
                 height
             );
