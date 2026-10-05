@@ -3,20 +3,19 @@ package fr.javaquest;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ScreenUtils;
 import fr.javaquest.entity.Player;
 import fr.javaquest.inputs.KeyboardInputs;
 
 public class GameScreen extends ScreenAdapter {
-    private final MapViewer mapViewer = new MapViewer("FirstMap.tmx");
+    private final MapViewer mapViewer = new MapViewer("Map/FirstMap.tmx");
     private final GameCamera gameCamera =
             new GameCamera(640f, 360f, mapViewer.getWidth(), mapViewer.getHeight());
     private final Player player = new Player(100, 100);
     private final KeyboardInputs inputs = new KeyboardInputs(player);
-    private final ShapeRenderer shapeRenderer = new ShapeRenderer();
+    private final SpriteBatch batch = new SpriteBatch();
 
     @Override
     public void render(float delta) {
@@ -33,11 +32,10 @@ public class GameScreen extends ScreenAdapter {
         gameCamera.apply();
         mapViewer.render(gameCamera.getCamera());
 
-        shapeRenderer.setProjectionMatrix(gameCamera.getCamera().combined);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(Color.RED);
-        player.render(shapeRenderer);
-        shapeRenderer.end();
+        batch.setProjectionMatrix(gameCamera.getCamera().combined);
+        batch.begin();
+        player.render(batch);
+        batch.end();
     }
 
     @Override
@@ -48,6 +46,7 @@ public class GameScreen extends ScreenAdapter {
     @Override
     public void dispose() {
         mapViewer.dispose();
-        shapeRenderer.dispose();
+        batch.dispose();
+        player.dispose();
     }
 }
