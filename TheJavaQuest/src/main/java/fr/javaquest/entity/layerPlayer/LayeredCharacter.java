@@ -71,12 +71,6 @@ public class LayeredCharacter {
     ) {
         Texture texture = new Texture(file);
 
-        System.out.println(
-            file + " -> " +
-                texture.getWidth() + "x" +
-                texture.getHeight()
-        );
-
         texture.setFilter(
             Texture.TextureFilter.Nearest,
             Texture.TextureFilter.Nearest
