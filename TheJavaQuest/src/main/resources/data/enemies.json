@@ -9,10 +9,6 @@
     "hitbox": {
       "width": 24,
       "height": 40
-    },
-    "visual": {
-      "padding": 3,
-      "color": "FF4D00"
     }
   }
 ]

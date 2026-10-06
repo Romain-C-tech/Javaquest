@@ -10,7 +10,6 @@ public class EnemyData {
     public float movementSpeed;
     public float attackSpeed;
     public HitboxSize hitbox;
-    public VisualData visual;
     public String weapon;
     public Rarity weaponRarity = Rarity.COMMON;
 
