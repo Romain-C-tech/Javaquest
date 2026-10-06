@@ -17,6 +17,7 @@ public abstract class Entity implements Combatant {
     protected float movementSpeed;
     protected float attackSpeed;
     protected Weapon weapon;
+    protected boolean isFacingRight;
     protected final Map<ArmorSlot, Armor> armors = new EnumMap<>(ArmorSlot.class);
     protected Rectangle hitbox;
 

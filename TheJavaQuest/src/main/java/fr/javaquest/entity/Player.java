@@ -1,10 +1,9 @@
 package fr.javaquest.entity;
 
+import com.badlogic.gdx.math.Rectangle;
 import fr.javaquest.equipments.armors.Armor;
 import fr.javaquest.equipments.armors.ArmorSlot;
 import fr.javaquest.equipments.weapons.Weapon;
-
-import java.awt.*;
 
 public class Player extends Entity {
     private static final float JUMP_SPEED = 400f;
@@ -19,8 +18,8 @@ public class Player extends Entity {
         super(200, 5,200f , 1f,null, x, y);
     }
 
-    public void moveLeft(float delta)  { hitbox.x -= movementSpeed * delta; }
-    public void moveRight(float delta) { hitbox.x += movementSpeed * delta; }
+    public void moveLeft(float delta)  { hitbox.x -= movementSpeed * delta; isFacingRight = false;}
+    public void moveRight(float delta) { hitbox.x += movementSpeed * delta; isFacingRight = true;}
 
     public void jump() {
         if (onGround) {
@@ -28,6 +27,7 @@ public class Player extends Entity {
             velocityY = JUMP_SPEED;
         }
     }
+
     public void equip(Weapon newWeapon) {
         Weapon old = weapon;
         weapon = newWeapon;
@@ -44,6 +44,8 @@ public class Player extends Entity {
     public Armor unequip(ArmorSlot slot) {
         return armors.remove(slot);
     }
+
+    public boolean isHeFacingRight() {return isFacingRight;}
 
     @Override
     public int getDamage() {
