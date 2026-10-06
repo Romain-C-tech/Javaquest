@@ -1,6 +1,6 @@
 package fr.javaquest.equipments;
 
 public interface Equipment {
-    String getname();
+    String getName();
     Rarity getRarity();
 }

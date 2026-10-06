@@ -1,8 +1,9 @@
 package fr.javaquest.equipments.weapons;
 
+import fr.javaquest.equipments.Equipment;
 import fr.javaquest.equipments.Rarity;
 
-public class Weapon {
+public class Weapon  implements Equipment {
     private final WeaponData data;
     private final Rarity rarity;
 
