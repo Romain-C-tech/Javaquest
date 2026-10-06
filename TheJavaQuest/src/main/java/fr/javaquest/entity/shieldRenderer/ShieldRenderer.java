@@ -47,7 +47,7 @@ public class ShieldRenderer {
             16
         );
 
-        CurrentShield = ShieldWood;
+        CurrentShield = null;
 
     }
     public Animation<TextureRegion> getCurrentShield() {

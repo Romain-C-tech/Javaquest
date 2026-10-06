@@ -2,7 +2,6 @@ package fr.javaquest.entity.weaponRenderer;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
@@ -138,22 +137,9 @@ public class WeaponRenderer {
             32
         );
 
-//        CurrentWeapon = Stick;
-        CurrentWeapon = SwordIron;
+        CurrentWeapon = Stick;
 
     }
-//    private Animation<TextureRegion> ;
-//    private Animation<TextureRegion> ;
-//    private Animation<TextureRegion> ;
-//    private Animation<TextureRegion> ;
-//    private Animation<TextureRegion> ;
-//    private Animation<TextureRegion> ;
-//    private Animation<TextureRegion> ;
-//    private Animation<TextureRegion> ;
-//    private Animation<TextureRegion> ;
-//    private Animation<TextureRegion> ;
-//    private Animation<TextureRegion> ;
-//    private Animation<TextureRegion> ;
     public Animation<TextureRegion> getCurrentWeapon() {
         return CurrentWeapon;
     }

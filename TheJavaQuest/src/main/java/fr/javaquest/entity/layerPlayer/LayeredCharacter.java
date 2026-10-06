@@ -180,7 +180,7 @@ public class LayeredCharacter {
         drawLayer(batch, currentAnimation, 0, 0, 0);
         drawLayer(batch, weapon.getCurrentWeapon(), 18,18, 0);
         drawLayer(batch, hands, 1, -1, 0);
-        drawLayer(batch, shield.getCurrentShield(), 0, -18, 0);
+        if (shield.getCurrentShield() != null){drawLayer(batch, shield.getCurrentShield(), 0, -18, 0);}
     }
 
     private void drawLayer(
