@@ -5,6 +5,8 @@ public class WeaponData {
     public String name;
     public int damage;
     public float attackSpeed;
+    public HitboxData hitbox;
+    public float range;
 
     public WeaponData() {}
 }

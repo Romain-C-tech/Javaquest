@@ -4,6 +4,8 @@ import fr.javaquest.equipments.armors.Armor;
 import fr.javaquest.equipments.armors.ArmorSlot;
 import fr.javaquest.equipments.weapons.Weapon;
 
+import java.awt.*;
+
 public class Player extends Entity {
     private static final float JUMP_SPEED = 400f;
     private static final float GRAVITY = 1000f;
@@ -26,18 +28,17 @@ public class Player extends Entity {
             velocityY = JUMP_SPEED;
         }
     }
-    public Weapon equip(Weapon newWeapon) {
+    public void equip(Weapon newWeapon) {
         Weapon old = weapon;
         weapon = newWeapon;
-        return old;
     }
 
     public void unequip() {
         weapon = null;
     }
 
-    public Armor equip(Armor armor) {
-        return armors.put(armor.getSlot(), armor);
+    public void equip(Armor armor) {
+        armors.put(armor.getSlot(), armor);
     }
 
     public Armor unequip(ArmorSlot slot) {

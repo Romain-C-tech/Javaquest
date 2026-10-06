@@ -3,6 +3,8 @@ package fr.javaquest.equipments.weapons;
 import fr.javaquest.equipments.Equipment;
 import fr.javaquest.equipments.Rarity;
 
+import java.awt.*;
+
 public class Weapon  implements Equipment {
     private final WeaponData data;
     private final Rarity rarity;
@@ -11,6 +13,16 @@ public class Weapon  implements Equipment {
         this.data = data;
         this.rarity = rarity;
     }
+
+    public Rectangle getAttackHitbox(Rectangle owner, boolean facingRight) {
+        HitboxData h = data.hitbox;
+        float x = facingRight ? owner.x + owner.width : owner.x - h.width;
+        float y = owner.y + h.offsetY;
+        return new Rectangle((int) x, (int) y, (int) h.width, (int) h.height);
+    }
+
+    public boolean isRanged() { return data.range > 0; }
+    public float getRange()   { return data.range; }
 
     public int getDamage() {return Math.round(data.damage * rarity.multiplier);}
     public float getAttackSpeed() {return data.attackSpeed;}
