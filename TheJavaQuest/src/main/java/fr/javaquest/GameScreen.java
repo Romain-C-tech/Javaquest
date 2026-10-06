@@ -8,6 +8,11 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ScreenUtils;
 import fr.javaquest.entity.Player;
+import fr.javaquest.equipments.Rarity;
+import fr.javaquest.equipments.armors.Armor;
+import fr.javaquest.equipments.armors.ArmorRegistry;
+import fr.javaquest.equipments.weapons.Weapon;
+import fr.javaquest.equipments.weapons.WeaponRegistry;
 import fr.javaquest.inputs.KeyboardInputs;
 
 public class GameScreen extends ScreenAdapter {
@@ -22,9 +27,18 @@ public class GameScreen extends ScreenAdapter {
     public void render(float delta) {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) Gdx.app.exit();
 
+        WeaponRegistry.load();
+        ArmorRegistry.load();
+
         inputs.update(delta);
         player.update(delta);
         player.keepInside(mapViewer.getWidth(), mapViewer.getHeight());
+
+        player.equip(new Weapon(WeaponRegistry.get("iron_sword"), Rarity.NORMAL));
+        player.equip(new Armor(ArmorRegistry.get("iron_helmet"), Rarity.COMMON));
+        player.equip(new Armor(ArmorRegistry.get("iron_chestplate"), Rarity.LEGEND));
+        player.equip(new Armor(ArmorRegistry.get("iron_leggings"), Rarity.NORMAL));
+
 
         Rectangle hitbox = player.getHitbox();
         gameCamera.follow(hitbox.x + hitbox.width / 2f, hitbox.y + hitbox.height / 2f);

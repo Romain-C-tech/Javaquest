@@ -1,0 +1,13 @@
+[
+  { "id": "wooden_sword",    "name": "Épée en bois",              "damage": 15, "attackSpeed": 2.0 },
+  { "id": "copper_sword",    "name": "Épée en cuivre",            "damage": 25, "attackSpeed": 2.0 },
+  { "id": "iron_sword",      "name": "Épée en fer",               "damage": 35, "attackSpeed": 2.0 },
+
+  { "id": "wooden_war_axe",  "name": "Hache en bois",             "damage": 18, "attackSpeed": 1.2 },
+  { "id": "copper_war_axe",  "name": "Hache en cuivre",           "damage": 28, "attackSpeed": 1.2 },
+  { "id": "iron_war_axe",    "name": "Hache en fer",              "damage": 38, "attackSpeed": 1.2 },
+
+  { "id": "bow_wooden_arrow","name": "Arc avec flèche en bois",   "damage": 12, "attackSpeed": 1.5 },
+  { "id": "bow_copper_arrow","name": "Arc avec flèche en cuivre", "damage": 20, "attackSpeed": 1.5 },
+  { "id": "bow_iron_arrow",  "name": "Arc avec flèche en fer",    "damage": 28, "attackSpeed": 1.5 }
+]
