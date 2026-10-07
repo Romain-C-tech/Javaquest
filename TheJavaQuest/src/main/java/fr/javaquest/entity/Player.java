@@ -4,12 +4,7 @@ import com.badlogic.gdx.math.Rectangle;
 import fr.javaquest.equipments.armors.Armor;
 import fr.javaquest.equipments.armors.ArmorSlot;
 import fr.javaquest.equipments.weapons.Weapon;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Array;
 import fr.javaquest.entity.layerPlayer.*;
 
 public class Player extends Entity {
@@ -22,10 +17,8 @@ public class Player extends Entity {
     private float velocityY = 0;
     private boolean onGround = true;
 
-    private final Array<Texture> textures = new Array<>();
-
     public Player(float x, float y) {
-        super(100, 200f, x, y);
+        super(100,5 ,200f,1F,null, x, y);
         visual = new LayeredCharacter();
     }
 
