@@ -1,7 +1,6 @@
 package fr.javaquest.inputs;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import fr.javaquest.entity.Player;
 import fr.javaquest.entity.enemies.Enemy;
