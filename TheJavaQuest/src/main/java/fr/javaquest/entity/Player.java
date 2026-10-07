@@ -51,10 +51,7 @@ public class Player extends Entity {
         }
     }
 
-    public void equip(Weapon newWeapon) {
-        Weapon old = weapon;
-        weapon = newWeapon;
-    }
+    public void equip(Weapon newWeapon) {weapon = newWeapon;}
 
     public void unequip() {
         weapon = null;
@@ -68,7 +65,6 @@ public class Player extends Entity {
         return armors.remove(slot);
     }
 
-    public boolean isHeFacingRight() {return isFacingRight;}
 
     @Override
     public int getDamage() {
