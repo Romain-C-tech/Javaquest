@@ -1,6 +1,7 @@
 package fr.javaquest.entity.enemies;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import fr.javaquest.entity.Entity;

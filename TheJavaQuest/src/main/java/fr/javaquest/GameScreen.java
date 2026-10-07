@@ -16,20 +16,41 @@ import fr.javaquest.equipments.weapons.Weapon;
 import fr.javaquest.equipments.weapons.WeaponRegistry;
 import fr.javaquest.inputs.KeyboardInputs;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GameScreen extends ScreenAdapter {
-    private final MapViewer mapViewer = new MapViewer("Map/FirstMap.tmx");
-    private final GameCamera gameCamera =
-            new GameCamera(640f, 360f, mapViewer.getWidth(), mapViewer.getHeight());
-    private final Player player = new Player(100, 100);
-    private final Enemy dummy = new Enemy(EnemyRegistry.get("training_dummy"), 500, 347);
-    private final KeyboardInputs inputs = new KeyboardInputs(player);
-    private final SpriteBatch batch = new SpriteBatch();
+    private final MapViewer mapViewer;
+    private final GameCamera gameCamera;
+    private final Player player;
+    private final SpriteBatch batch;
+    private final List<Enemy> enemies = new ArrayList<>();
+    private final KeyboardInputs inputs;
 
     public GameScreen() {
+        mapViewer = new MapViewer("Map/FirstMap.tmx");
+        gameCamera = new GameCamera(640f, 360f, mapViewer.getWidth(), mapViewer.getHeight());
+        player = new Player(100, 100);
+        inputs = new KeyboardInputs(player, enemies);
+        batch = new SpriteBatch();
+
+        equipPlayer();
+        spawnEnemies();
+    }
+
+    public void equipPlayer() {
         player.equip(new Weapon(WeaponRegistry.get("iron_sword"), Rarity.NORMAL));
         player.equip(new Armor(ArmorRegistry.get("iron_helmet"), Rarity.COMMON));
         player.equip(new Armor(ArmorRegistry.get("iron_chestplate"), Rarity.LEGEND));
         player.equip(new Armor(ArmorRegistry.get("iron_leggings"), Rarity.NORMAL));
+    }
+
+    public void spawnEnemies() {
+        spawn("training_dummy", 500, 347);
+    }
+
+    private void spawn(String id, float x, float y) {
+        enemies.add(new Enemy(EnemyRegistry.get(id), x, y));
     }
 
     @Override
@@ -38,7 +59,7 @@ public class GameScreen extends ScreenAdapter {
 
         inputs.update(delta);
         player.update(delta);
-        dummy.update(delta);
+        for (Enemy enemy : enemies) enemy.update(delta);
 
         player.keepInside(mapViewer.getWidth(), mapViewer.getHeight());
 

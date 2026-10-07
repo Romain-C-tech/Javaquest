@@ -1,11 +1,14 @@
 package fr.javaquest.entity;
 
 import com.badlogic.gdx.math.Rectangle;
+import fr.javaquest.entity.enemies.Enemy;
 import fr.javaquest.equipments.armors.Armor;
 import fr.javaquest.equipments.armors.ArmorSlot;
 import fr.javaquest.equipments.weapons.Weapon;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import fr.javaquest.entity.layerPlayer.*;
+
+import java.util.List;
 
 public class Player extends Entity {
 
@@ -14,6 +17,7 @@ public class Player extends Entity {
     private static final float GROUND_Y = 347f;
 
     private final LayeredCharacter visual;
+    private float attackCooldown = 0f;
     private float velocityY = 0;
     private boolean onGround = true;
 
@@ -58,6 +62,22 @@ public class Player extends Entity {
         return armors.remove(slot);
     }
 
+    public void attack(List<Enemy> enemies) {
+        if (!canAttack()) return;
+
+        attackCooldown = 1f / weapon.getAttackSpeed();
+
+        Rectangle zone = weapon.getAttackHitbox(hitbox, visual.facingRight);
+
+        for (Enemy enemy : enemies) {
+            if (zone.overlaps(enemy.getHitbox())) {
+                enemy.takeDamage(getDamage());
+            }
+        }
+    }
+
+    private boolean canAttack() {return weapon != null && attackCooldown <= 0;}
+
 
     @Override
     public int getDamage() {
@@ -85,6 +105,8 @@ public class Player extends Entity {
         }
 
         visual.update(delta);
+
+        if (attackCooldown > 0f) attackCooldown -= delta;
     }
 
     public void render(SpriteBatch batch) {
