@@ -1,0 +1,13 @@
+[
+  { "id": "wooden_helmet",      "name": "Casque en bois",        "slot": "HELMET",     "hp": 20 },
+  { "id": "wooden_chestplate",  "name": "Plastron en bois",      "slot": "CHESTPLATE", "hp": 40 },
+  { "id": "wooden_leggings",    "name": "Jambières en bois",     "slot": "LEGGINGS",   "hp": 30 },
+
+  { "id": "copper_helmet",      "name": "Casque en cuivre",      "slot": "HELMET",     "hp": 40 },
+  { "id": "copper_chestplate",  "name": "Plastron en cuivre",    "slot": "CHESTPLATE", "hp": 70 },
+  { "id": "copper_leggings",    "name": "Jambières en cuivre",   "slot": "LEGGINGS",   "hp": 50 },
+
+  { "id": "iron_helmet",        "name": "Casque en fer",         "slot": "HELMET",     "hp": 60 },
+  { "id": "iron_chestplate",    "name": "Plastron en fer",       "slot": "CHESTPLATE", "hp": 100 },
+  { "id": "iron_leggings",      "name": "Jambières en fer",      "slot": "LEGGINGS",   "hp": 80 }
+]

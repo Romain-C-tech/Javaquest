@@ -7,6 +7,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ScreenUtils;
 import fr.javaquest.entity.Player;
+import fr.javaquest.entity.enemies.Enemy;
+import fr.javaquest.entity.enemies.EnemyRegistry;
+import fr.javaquest.equipments.Rarity;
+import fr.javaquest.equipments.armors.Armor;
+import fr.javaquest.equipments.armors.ArmorRegistry;
+import fr.javaquest.equipments.weapons.Weapon;
+import fr.javaquest.equipments.weapons.WeaponRegistry;
 import fr.javaquest.inputs.KeyboardInputs;
 
 public class GameScreen extends ScreenAdapter {
@@ -14,8 +21,16 @@ public class GameScreen extends ScreenAdapter {
     private final GameCamera gameCamera =
             new GameCamera(640f, 360f, mapViewer.getWidth(), mapViewer.getHeight());
     private final Player player = new Player(100, 100);
+    private final Enemy dummy = new Enemy(EnemyRegistry.get("training_dummy"), 500, 347);
     private final KeyboardInputs inputs = new KeyboardInputs(player);
     private final SpriteBatch batch = new SpriteBatch();
+
+    public GameScreen() {
+        player.equip(new Weapon(WeaponRegistry.get("iron_sword"), Rarity.NORMAL));
+        player.equip(new Armor(ArmorRegistry.get("iron_helmet"), Rarity.COMMON));
+        player.equip(new Armor(ArmorRegistry.get("iron_chestplate"), Rarity.LEGEND));
+        player.equip(new Armor(ArmorRegistry.get("iron_leggings"), Rarity.NORMAL));
+    }
 
     @Override
     public void render(float delta) {
@@ -23,6 +38,8 @@ public class GameScreen extends ScreenAdapter {
 
         inputs.update(delta);
         player.update(delta);
+        dummy.update(delta);
+
         player.keepInside(mapViewer.getWidth(), mapViewer.getHeight());
 
         Rectangle hitbox = player.getHitbox();

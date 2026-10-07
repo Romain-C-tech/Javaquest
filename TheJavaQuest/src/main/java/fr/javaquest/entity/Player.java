@@ -1,5 +1,9 @@
 package fr.javaquest.entity;
 
+import com.badlogic.gdx.math.Rectangle;
+import fr.javaquest.equipments.armors.Armor;
+import fr.javaquest.equipments.armors.ArmorSlot;
+import fr.javaquest.equipments.weapons.Weapon;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -45,6 +49,35 @@ public class Player extends Entity {
             onGround = false;
             velocityY = JUMP_SPEED;
         }
+    }
+
+    public void equip(Weapon newWeapon) {weapon = newWeapon;}
+
+    public void unequip() {
+        weapon = null;
+    }
+
+    public void equip(Armor armor) {
+        armors.put(armor.getSlot(), armor);
+    }
+
+    public Armor unequip(ArmorSlot slot) {
+        return armors.remove(slot);
+    }
+
+
+    @Override
+    public int getDamage() {
+        return super.getDamage() + (weapon != null ? weapon.getDamage() : 0);
+    }
+
+    @Override
+    public int getHp() {
+        int total = super.getHp();
+        for (Armor armor : armors.values()) {
+            total += armor.getHp();
+        }
+        return total;
     }
 
     @Override
