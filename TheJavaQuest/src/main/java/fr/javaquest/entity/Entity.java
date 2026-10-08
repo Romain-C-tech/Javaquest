@@ -1,6 +1,5 @@
 package fr.javaquest.entity;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import fr.javaquest.equipments.armors.Armor;
@@ -12,6 +11,7 @@ import java.util.Map;
 
 public abstract class Entity implements Combatant {
 
+    protected int maxHp;
     protected int hp;
     protected int damage;
     protected float movementSpeed;
@@ -30,6 +30,7 @@ public abstract class Entity implements Combatant {
         this.weapon = weapon;
     }
 
+    @Override public int getMaxHp() {return maxHp;}
     @Override public int getHp() {return hp;}
     @Override public int getDamage() {return damage;}
     @Override public float getMovementSpeed() {return movementSpeed;}
@@ -41,8 +42,12 @@ public abstract class Entity implements Combatant {
         hp -= damage;
         if (hp <= 0) {
             hp = 0;
-            System.out.println("Player is dead");
+            System.out.println("Entity is dead");
         }
+    }
+
+    public boolean isDead() {
+        return  getHp() <= 0;
     }
 
     public void keepInside(float mapWidth, float mapHeight) {

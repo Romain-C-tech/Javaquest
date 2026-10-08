@@ -2,6 +2,8 @@ package fr.javaquest.entity;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
+import fr.javaquest.entity.enemies.Enemy;
+import fr.javaquest.entity.enemies.TrainingDummy;
 import com.badlogic.gdx.utils.Array;
 import fr.javaquest.MapViewer;
 import fr.javaquest.equipments.armors.Armor;
@@ -10,12 +12,15 @@ import fr.javaquest.equipments.weapons.Weapon;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import fr.javaquest.entity.layerPlayer.*;
 
+import java.util.List;
+
 public class Player extends Entity {
 
     private static final float JUMP_SPEED = 400f;
     private static final float GRAVITY = 1000f;
 
     private final LayeredCharacter visual;
+    private float attackCooldown = 0f;
     private float velocityY = 0;
     private boolean onGround = true;
 
@@ -60,7 +65,9 @@ public class Player extends Entity {
         }
     }
 
-    public void equip(Weapon newWeapon) {weapon = newWeapon;}
+    public void equip(Weapon newWeapon) {
+        weapon = newWeapon;
+    }
 
     public void unequip() {
         weapon = null;
@@ -74,15 +81,36 @@ public class Player extends Entity {
         return armors.remove(slot);
     }
 
+    public void attack(List<Enemy> enemies) {
+        if (!canAttack()) return;
+
+        attackCooldown = 1f / weapon.getAttackSpeed();
+
+        Rectangle zone = weapon.getAttackHitbox(hitbox, visual.facingRight);
+
+        for (Enemy enemy : enemies) {
+            if (zone.overlaps(enemy.getHitbox())) {
+                if (!(enemy instanceof TrainingDummy)) {
+                    enemy.takeDamage(getDamage());
+                }
+                return;
+            }
+        }
+    }
+
+    private boolean canAttack() {
+        return attackCooldown <= 0;
+    }
+
 
     @Override
     public int getDamage() {
-        return super.getDamage() + (weapon != null ? weapon.getDamage() : 0);
+        return super.getDamage() + (weapon != null ? weapon.getDamage() : 5);
     }
 
     @Override
-    public int getHp() {
-        int total = super.getHp();
+    public int getMaxHp() {
+        int total = 200;
         for (Armor armor : armors.values()) {
             total += armor.getHp();
         }
@@ -133,13 +161,15 @@ public class Player extends Entity {
         }
 
         visual.update(delta);
+
+        if (attackCooldown > 0f) attackCooldown -= delta;
     }
 
     public void render(SpriteBatch batch) {
         Rectangle hb = getHitbox();
 
         visual.x =
-            hb.x + hb.width / 2f - 32 / 2f;
+                hb.x + hb.width / 2f - 32 / 2f;
 
         visual.y = hb.y;
 
