@@ -33,9 +33,9 @@ public class GameScreen extends ScreenAdapter {
     private final Hud hud;
 
     public GameScreen() {
-        mapViewer = new MapViewer("Map/ForestMap.tmx");
+        mapViewer = new MapViewer("Map/ForestMap/ForestMap.tmx");
         gameCamera = new GameCamera(640f, 360f, mapViewer.getWidth(), mapViewer.getHeight());
-        player = new Player(100, 100, mapViewer);
+        player = new Player(100, 300, mapViewer);
         inputs = new KeyboardInputs(player, enemies);
         batch = new SpriteBatch();
         hud = new Hud(batch, player);
@@ -52,7 +52,7 @@ public class GameScreen extends ScreenAdapter {
     }
 
     public void spawnEnemies() {
-        spawnNpc("training_dummy", 500, 347);
+        spawnNpc("training_dummy", 400, 192);
     }
 
     private void spawnNpc(String id, float x, float y) {
