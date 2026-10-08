@@ -25,6 +25,7 @@ public abstract class Entity implements Combatant {
         this.hp = hp;
         this.damage = damage;
         this.movementSpeed = movementSpeed;
+        this.hitbox = new Rectangle(x, y, 24, 30);
         this.attackSpeed = attackSpeed;
         this.weapon = weapon;
         this.hitbox = new Rectangle(x, y, 10, 10);

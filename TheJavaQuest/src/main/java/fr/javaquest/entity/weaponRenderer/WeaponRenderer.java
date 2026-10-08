@@ -96,22 +96,6 @@ public class WeaponRenderer {
             16,
             16
         );
-        ShieldIron = load(
-            "Asset/PixelCrawlerFreePack/Weapons/Shield/ShieldIronAnimation.png",
-            0.15f,
-            0,
-            0,
-            16,
-            16
-        );
-        ShieldWood = load(
-            "Asset/PixelCrawlerFreePack/Weapons/Shield/ShieldWoodAnimation.png",
-            0.15f,
-            0,
-            0,
-            16,
-            16
-        );
         SwordCopper = load(
             "Asset/PixelCrawlerFreePack/Weapons/Sword/SwordCopperAnimation.png",
             0.15f,
@@ -137,7 +121,9 @@ public class WeaponRenderer {
             32
         );
 
-        CurrentWeapon = Stick;
+        if (getCurrentWeapon() == null){
+            CurrentWeapon = Stick;
+        }
 
     }
     public Animation<TextureRegion> getCurrentWeapon() {
