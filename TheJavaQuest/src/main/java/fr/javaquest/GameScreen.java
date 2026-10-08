@@ -35,7 +35,7 @@ public class GameScreen extends ScreenAdapter {
     public GameScreen() {
         mapViewer = new MapViewer("Map/ForestMap.tmx");
         gameCamera = new GameCamera(640f, 360f, mapViewer.getWidth(), mapViewer.getHeight());
-        player = new Player(100, 100);
+        player = new Player(100, 100, mapViewer);
         inputs = new KeyboardInputs(player, enemies);
         batch = new SpriteBatch();
         hud = new Hud(batch, player);
