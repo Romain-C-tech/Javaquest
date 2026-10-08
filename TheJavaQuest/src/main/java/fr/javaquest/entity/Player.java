@@ -84,13 +84,13 @@ public class Player extends Entity {
     }
 
     private boolean canAttack() {
-        return weapon != null && attackCooldown <= 0;
+        return attackCooldown <= 0;
     }
 
 
     @Override
     public int getDamage() {
-        return super.getDamage() + (weapon != null ? weapon.getDamage() : 0);
+        return super.getDamage() + (weapon != null ? weapon.getDamage() : 5);
     }
 
     @Override
