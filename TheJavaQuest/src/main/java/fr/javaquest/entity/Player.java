@@ -1,8 +1,11 @@
 package fr.javaquest.entity;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import fr.javaquest.entity.enemies.Enemy;
 import fr.javaquest.entity.enemies.TrainingDummy;
+import com.badlogic.gdx.utils.Array;
+import fr.javaquest.MapViewer;
 import fr.javaquest.equipments.armors.Armor;
 import fr.javaquest.equipments.armors.ArmorSlot;
 import fr.javaquest.equipments.weapons.Weapon;
@@ -15,33 +18,45 @@ public class Player extends Entity {
 
     private static final float JUMP_SPEED = 400f;
     private static final float GRAVITY = 1000f;
-    private static final float GROUND_Y = 347f;
 
     private final LayeredCharacter visual;
     private float attackCooldown = 0f;
     private float velocityY = 0;
     private boolean onGround = true;
 
-    public Player(float x, float y) {
-        super(100, 5, 200f, 1F, null, x, y);
+    private final Array<Texture> textures = new Array<>();
+    private final MapViewer mapViewer;
+
+    public Player(float x, float y, MapViewer mapViewer) {
+        super(100,5 ,200f,1F,null, x, y);
         visual = new LayeredCharacter();
+        this.mapViewer = mapViewer;
+    }
+
+    private boolean canMoveTo(float nextX, float nextY){
+        Rectangle nextHitbox = new Rectangle(nextX, nextY, hitbox.width, hitbox.height);
+        return !mapViewer.collides(nextHitbox);
     }
 
     public void moveLeft(float delta) {
-        hitbox.x -= movementSpeed * delta;
+        float nextX = hitbox.x - movementSpeed * delta;
+        if (canMoveTo(nextX, hitbox.y)){
+            hitbox.x = nextX;
+        }
+
         visual.facingRight = false;
         visual.setRun();
     }
 
     public void moveRight(float delta) {
-        hitbox.x += movementSpeed * delta;
+        float nextX = hitbox.x + movementSpeed * delta;
+        if (canMoveTo(nextX, hitbox.y)){
+            hitbox.x = nextX;
+        }
         visual.facingRight = true;
         visual.setRun();
     }
-
-    public void idle() {
-        visual.setIdle();
-    }
+    public void idle(){ visual.setIdle(); }
 
     public void jump() {
         if (onGround) {
@@ -105,12 +120,44 @@ public class Player extends Entity {
     @Override
     public void update(float delta) {
         velocityY -= GRAVITY * delta;
-        hitbox.y += velocityY * delta;
 
-        if (hitbox.y <= GROUND_Y) {
-            hitbox.y = GROUND_Y;
-            velocityY = 0;
-            onGround = true;
+        float newY = hitbox.y + velocityY * delta;
+
+        Rectangle futureHitbox = new Rectangle(
+            hitbox.x,
+            newY,
+            hitbox.width,
+            hitbox.height
+        );
+
+        boolean collision = false;
+
+        for (Rectangle collider : mapViewer.getCollisionsRectangles()) {
+
+            if (futureHitbox.overlaps(collider)) {
+
+                if (velocityY <= 0 && hitbox.y >= collider.y + collider.height - 1) {
+
+                    hitbox.y = collider.y + collider.height;
+                    velocityY = 0;
+                    onGround = true;
+                    collision = true;
+                    break;
+                }
+
+                if (velocityY > 0 && hitbox.y + hitbox.height <= collider.y + 1) {
+
+                    hitbox.y = collider.y - hitbox.height;
+                    velocityY = 0;
+                    collision = true;
+                    break;
+                }
+            }
+        }
+
+        if (!collision) {
+            hitbox.y = newY;
+            onGround = false;
         }
 
         visual.update(delta);
