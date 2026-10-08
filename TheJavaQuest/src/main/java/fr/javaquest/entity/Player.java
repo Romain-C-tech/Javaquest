@@ -1,5 +1,6 @@
 package fr.javaquest.entity;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import fr.javaquest.MapViewer;
@@ -22,8 +23,6 @@ public class Player extends Entity {
     private final MapViewer mapViewer;
 
     public Player(float x, float y, MapViewer mapViewer) {
-        super(100, 200f, x, y);
-    public Player(float x, float y) {
         super(100,5 ,200f,1F,null, x, y);
         visual = new LayeredCharacter();
         this.mapViewer = mapViewer;

@@ -21,7 +21,6 @@ public class GameScreen extends ScreenAdapter {
     private final GameCamera gameCamera =
             new GameCamera(640f, 360f, mapViewer.getWidth(), mapViewer.getHeight());
     private final Player player = new Player(100, 300, mapViewer);
-    private final Player player = new Player(100, 100);
     private final Enemy dummy = new Enemy(EnemyRegistry.get("training_dummy"), 500, 347);
     private final KeyboardInputs inputs = new KeyboardInputs(player);
     private final SpriteBatch batch = new SpriteBatch();
