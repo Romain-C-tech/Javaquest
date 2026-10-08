@@ -1,12 +1,12 @@
 package fr.javaquest.entity;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import fr.javaquest.MapViewer;
+import fr.javaquest.equipments.armors.Armor;
+import fr.javaquest.equipments.armors.ArmorSlot;
+import fr.javaquest.equipments.weapons.Weapon;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import fr.javaquest.entity.layerPlayer.*;
 
 public class Player extends Entity {
@@ -23,6 +23,8 @@ public class Player extends Entity {
 
     public Player(float x, float y, MapViewer mapViewer) {
         super(100, 200f, x, y);
+    public Player(float x, float y) {
+        super(100,5 ,200f,1F,null, x, y);
         visual = new LayeredCharacter();
         this.mapViewer = mapViewer;
     }
@@ -57,6 +59,35 @@ public class Player extends Entity {
             onGround = false;
             velocityY = JUMP_SPEED;
         }
+    }
+
+    public void equip(Weapon newWeapon) {weapon = newWeapon;}
+
+    public void unequip() {
+        weapon = null;
+    }
+
+    public void equip(Armor armor) {
+        armors.put(armor.getSlot(), armor);
+    }
+
+    public Armor unequip(ArmorSlot slot) {
+        return armors.remove(slot);
+    }
+
+
+    @Override
+    public int getDamage() {
+        return super.getDamage() + (weapon != null ? weapon.getDamage() : 0);
+    }
+
+    @Override
+    public int getHp() {
+        int total = super.getHp();
+        for (Armor armor : armors.values()) {
+            total += armor.getHp();
+        }
+        return total;
     }
 
     @Override
