@@ -24,6 +24,9 @@ public class WeaponRenderer {
 
     private final Array<Texture> textures = new Array<>();
 
+    private boolean attacking = false;
+    private float attackTime = 0f;
+
     private float stateTime = 0f;
 
     public float x;
@@ -144,6 +147,9 @@ public class WeaponRenderer {
         return CurrentWeapon;
     }
 
+    public void setCurrentWeapon(Animation<TextureRegion> currentWeapon) {this.CurrentWeapon = currentWeapon; }
+    
+
     private Animation<TextureRegion> load(
             String file,
         float frameTime,
@@ -192,6 +198,6 @@ public class WeaponRenderer {
                 frameTime,
                 subset
             );
-        }
+    }
 
 }

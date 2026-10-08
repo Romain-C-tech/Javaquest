@@ -2,6 +2,7 @@ package fr.javaquest.entity;
 
 import com.badlogic.gdx.math.Rectangle;
 import fr.javaquest.entity.enemies.Enemy;
+import fr.javaquest.entity.enemies.TrainingDummy;
 import fr.javaquest.equipments.armors.Armor;
 import fr.javaquest.equipments.armors.ArmorSlot;
 import fr.javaquest.equipments.weapons.Weapon;
@@ -22,7 +23,7 @@ public class Player extends Entity {
     private boolean onGround = true;
 
     public Player(float x, float y) {
-        super(100,5 ,200f,1F,null, x, y);
+        super(100, 5, 200f, 1F, null, x, y);
         visual = new LayeredCharacter();
     }
 
@@ -37,8 +38,9 @@ public class Player extends Entity {
         visual.facingRight = true;
         visual.setRun();
     }
-    public void idle(){
-            visual.setIdle();
+
+    public void idle() {
+        visual.setIdle();
     }
 
     public void jump() {
@@ -48,7 +50,9 @@ public class Player extends Entity {
         }
     }
 
-    public void equip(Weapon newWeapon) {weapon = newWeapon;}
+    public void equip(Weapon newWeapon) {
+        weapon = newWeapon;
+    }
 
     public void unequip() {
         weapon = null;
@@ -71,12 +75,17 @@ public class Player extends Entity {
 
         for (Enemy enemy : enemies) {
             if (zone.overlaps(enemy.getHitbox())) {
-                enemy.takeDamage(getDamage());
+                if (!(enemy instanceof TrainingDummy)) {
+                    enemy.takeDamage(getDamage());
+                }
+                return;
             }
         }
     }
 
-    private boolean canAttack() {return weapon != null && attackCooldown <= 0;}
+    private boolean canAttack() {
+        return weapon != null && attackCooldown <= 0;
+    }
 
 
     @Override
@@ -85,8 +94,8 @@ public class Player extends Entity {
     }
 
     @Override
-    public int getHp() {
-        int total = super.getHp();
+    public int getMaxHp() {
+        int total = 200;
         for (Armor armor : armors.values()) {
             total += armor.getHp();
         }
@@ -113,7 +122,7 @@ public class Player extends Entity {
         Rectangle hb = getHitbox();
 
         visual.x =
-            hb.x + hb.width / 2f - 32 / 2f;
+                hb.x + hb.width / 2f - 32 / 2f;
 
         visual.y = hb.y;
 

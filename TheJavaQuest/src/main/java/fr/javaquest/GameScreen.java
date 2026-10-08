@@ -9,14 +9,18 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import fr.javaquest.entity.Player;
 import fr.javaquest.entity.enemies.Enemy;
 import fr.javaquest.entity.enemies.EnemyRegistry;
+import fr.javaquest.entity.enemies.LayeredEnemy;
+import fr.javaquest.entity.enemies.TrainingDummy;
 import fr.javaquest.equipments.Rarity;
 import fr.javaquest.equipments.armors.Armor;
 import fr.javaquest.equipments.armors.ArmorRegistry;
 import fr.javaquest.equipments.weapons.Weapon;
 import fr.javaquest.equipments.weapons.WeaponRegistry;
+import fr.javaquest.hud.Hud;
 import fr.javaquest.inputs.KeyboardInputs;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class GameScreen extends ScreenAdapter {
@@ -26,6 +30,7 @@ public class GameScreen extends ScreenAdapter {
     private final SpriteBatch batch;
     private final List<Enemy> enemies = new ArrayList<>();
     private final KeyboardInputs inputs;
+    private final Hud hud;
 
     public GameScreen() {
         mapViewer = new MapViewer("Map/FirstMap.tmx");
@@ -33,6 +38,7 @@ public class GameScreen extends ScreenAdapter {
         player = new Player(100, 100);
         inputs = new KeyboardInputs(player, enemies);
         batch = new SpriteBatch();
+        hud = new Hud(batch, player);
 
         equipPlayer();
         spawnEnemies();
@@ -46,11 +52,14 @@ public class GameScreen extends ScreenAdapter {
     }
 
     public void spawnEnemies() {
-        spawn("training_dummy", 500, 347);
+        spawnNpc("training_dummy", 500, 347);
     }
 
-    private void spawn(String id, float x, float y) {
-        enemies.add(new Enemy(EnemyRegistry.get(id), x, y));
+    private void spawnNpc(String id, float x, float y) {
+        enemies.add(new TrainingDummy(EnemyRegistry.get(id), x, y));
+    }
+    private void spawnEnemy(String id, float x, float y) {
+        enemies.add(new LayeredEnemy(EnemyRegistry.get(id),x,y));
     }
 
     @Override
@@ -66,24 +75,39 @@ public class GameScreen extends ScreenAdapter {
         Rectangle hitbox = player.getHitbox();
         gameCamera.follow(hitbox.x + hitbox.width / 2f, hitbox.y + hitbox.height / 2f);
 
+        Iterator<Enemy> it = enemies.iterator();
+        while (it.hasNext()) {
+            Enemy enemy = it.next();
+            if (enemy.isDead()) {
+                enemy.dispose();
+                it.remove();
+            }
+        }
+
         ScreenUtils.clear(0, 0, 0, 1);
         gameCamera.apply();
         mapViewer.render(gameCamera.getCamera());
 
         batch.setProjectionMatrix(gameCamera.getCamera().combined);
         batch.begin();
+        for (Enemy enemy : enemies) {enemy.render(batch);}
         player.render(batch);
         batch.end();
+
+        hud.stage.act(delta);
+        hud.stage.draw();
     }
 
     @Override
     public void resize(int width, int height) {
         gameCamera.resize(width, height);
+        hud.resize(width,height);
     }
 
     @Override
     public void dispose() {
         mapViewer.dispose();
+        hud.dispose();
         batch.dispose();
         player.dispose();
     }

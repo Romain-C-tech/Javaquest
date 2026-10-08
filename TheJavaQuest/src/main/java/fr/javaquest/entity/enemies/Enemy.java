@@ -1,12 +1,13 @@
 package fr.javaquest.entity.enemies;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import fr.javaquest.entity.Entity;
 import fr.javaquest.equipments.weapons.Weapon;
 import fr.javaquest.equipments.weapons.WeaponRegistry;
 
-public class Enemy extends Entity {
+public abstract class Enemy extends Entity {
 
-    private final EnemyData data;
+    protected final EnemyData data;
 
     public Enemy(EnemyData data, float x, float y) {
         super(data.hp, data.damage, data.movementSpeed, data.attackSpeed,
@@ -20,8 +21,11 @@ public class Enemy extends Entity {
         return new Weapon(WeaponRegistry.get(data.weapon), data.weaponRarity);
     }
 
-    public void moveLeft(float delta)  { hitbox.x -= movementSpeed * delta; isFacingRight = false;}
-    public void moveRight(float delta) { hitbox.x += movementSpeed * delta; isFacingRight = true;}
+    public void moveLeft(float delta)  { hitbox.x -= movementSpeed * delta; isFacingRight = false; }
+    public void moveRight(float delta) { hitbox.x += movementSpeed * delta; isFacingRight = true; }
 
     @Override public void update(float delta) {}
+
+    public abstract void render(SpriteBatch batch);
+    public abstract void dispose();
 }
