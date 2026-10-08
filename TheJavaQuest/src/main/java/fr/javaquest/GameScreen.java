@@ -10,10 +10,10 @@ import fr.javaquest.entity.Player;
 import fr.javaquest.inputs.KeyboardInputs;
 
 public class GameScreen extends ScreenAdapter {
-    private final MapViewer mapViewer = new MapViewer("Map/FirstMap.tmx");
+    private final MapViewer mapViewer = new MapViewer("Map/ForestMap/ForestMap.tmx");
     private final GameCamera gameCamera =
             new GameCamera(640f, 360f, mapViewer.getWidth(), mapViewer.getHeight());
-    private final Player player = new Player(100, 100);
+    private final Player player = new Player(100, 300, mapViewer);
     private final KeyboardInputs inputs = new KeyboardInputs(player);
     private final SpriteBatch batch = new SpriteBatch();
 

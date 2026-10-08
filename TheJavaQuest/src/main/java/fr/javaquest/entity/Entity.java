@@ -13,7 +13,7 @@ public abstract class Entity {
     public Entity(int hp, float movementSpeed, float x, float y) {
         this.hp = hp;
         this.movementSpeed = movementSpeed;
-        this.hitbox = new Rectangle(x, y, 10, 10);
+        this.hitbox = new Rectangle(x, y, 24, 30);
     }
 
     public int getHp() { return hp; }
