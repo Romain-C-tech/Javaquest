@@ -73,7 +73,6 @@ public class MapViewer {
                     Rectangle rectangleOfVillageTp = rectangleObject.getRectangle();
                     teleportToVillageRectangles.add(new Rectangle(rectangleOfVillageTp));
                 }
-            System.out.println(teleportToVillageRectangles.size);
             }
         }
 

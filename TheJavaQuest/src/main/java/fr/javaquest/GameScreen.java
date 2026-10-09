@@ -15,6 +15,7 @@ import fr.javaquest.equipments.armors.ArmorRegistry;
 import fr.javaquest.equipments.weapons.Weapon;
 import fr.javaquest.equipments.weapons.WeaponRegistry;
 import fr.javaquest.inputs.KeyboardInputs;
+import com.badlogic.gdx.Input.Keys;
 
 public class GameScreen extends ScreenAdapter {
     private MapViewer mapViewer = new MapViewer("Map/VillageMap/FirstMap.tmx");
@@ -27,13 +28,19 @@ public class GameScreen extends ScreenAdapter {
     private void changeMap (String mapPath, float spawnX, float spawnY){
         MapViewer oldMap = mapViewer;
         mapViewer = new MapViewer(mapPath);
+        gameCamera.setMapSize(mapViewer.getWidth(), mapViewer.getHeight());
         player.setMap(mapViewer);
         player.setPosition(spawnX, spawnY);
+        Rectangle hitbox = player.getHitbox();
+        gameCamera.follow(
+            hitbox.x + hitbox.width / 2f,
+            hitbox.y + hitbox.height / 2f
+        );
         oldMap.dispose();
     }
     private void checkTeleportToForest(){
         for (Rectangle rectangle : mapViewer.getForestTeleportRectangles()){
-            if (rectangle.overlaps(player.getHitbox())){
+            if (rectangle.overlaps(player.getHitbox()) && Gdx.input.isKeyPressed(Keys.E)){
                 changeMap(
                     "Map/ForestMap/ForestMap.tmx",
                     100,
@@ -45,7 +52,7 @@ public class GameScreen extends ScreenAdapter {
 
     private  void checkTeleportToVillage(){
         for (Rectangle rectangle : mapViewer.getTeleportToVillageRectangles()){
-            if (rectangle.overlaps(player.getHitbox())){
+            if (rectangle.overlaps(player.getHitbox())&& Gdx.input.isKeyPressed(Keys.E)){
                 changeMap(
                     "Map/VillageMap/FirstMap.tmx",
                     100,
