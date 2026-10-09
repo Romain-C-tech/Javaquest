@@ -25,12 +25,6 @@ import java.util.Iterator;
 import java.util.List;
 
 public class GameScreen extends ScreenAdapter {
-    private MapViewer mapViewer = new MapViewer("Map/VillageMap/FirstMap.tmx");
-    private GameCamera gameCamera = new GameCamera(640f, 360f, mapViewer.getWidth(), mapViewer.getHeight());
-    private final Player player = new Player(100, 350, mapViewer);
-    private final Enemy dummy = new Enemy(EnemyRegistry.get("training_dummy"), 500, 347);
-    private final KeyboardInputs inputs = new KeyboardInputs(player);
-    private final SpriteBatch batch = new SpriteBatch();
     private MapViewer mapViewer;
     private GameCamera gameCamera;
     private final Player player;
@@ -38,6 +32,18 @@ public class GameScreen extends ScreenAdapter {
     private final List<Enemy> enemies = new ArrayList<>();
     private final KeyboardInputs inputs;
     private final Hud hud;
+
+    public GameScreen() {
+        mapViewer = new MapViewer("Map/VillageMap/FirstMap.tmx");
+        gameCamera = new GameCamera(640f, 360f, mapViewer.getWidth(), mapViewer.getHeight());
+        player = new Player(100, 350, mapViewer);
+        inputs = new KeyboardInputs(player, enemies);
+        batch = new SpriteBatch();
+        hud = new Hud(batch, player);
+
+        equipPlayer();
+        spawnEnemies();
+    }
 
     private void changeMap (String mapPath, float spawnX, float spawnY){
         MapViewer oldMap = mapViewer;
@@ -76,17 +82,7 @@ public class GameScreen extends ScreenAdapter {
         }
     }
 
-    public GameScreen() {
-        mapViewer = new MapViewer("Map/ForestMap/ForestMap.tmx");
-        gameCamera = new GameCamera(640f, 360f, mapViewer.getWidth(), mapViewer.getHeight());
-        player = new Player(100, 300, mapViewer);
-        inputs = new KeyboardInputs(player, enemies);
-        batch = new SpriteBatch();
-        hud = new Hud(batch, player);
-
-        equipPlayer();
-        spawnEnemies();
-    }
+    
 
     public void equipPlayer() {
         player.equip(new Weapon(WeaponRegistry.get("iron_sword"), Rarity.NORMAL));
