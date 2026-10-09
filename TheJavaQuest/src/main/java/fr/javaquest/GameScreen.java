@@ -18,14 +18,15 @@ import fr.javaquest.equipments.weapons.Weapon;
 import fr.javaquest.equipments.weapons.WeaponRegistry;
 import fr.javaquest.hud.Hud;
 import fr.javaquest.inputs.KeyboardInputs;
+import com.badlogic.gdx.Input.Keys;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 public class GameScreen extends ScreenAdapter {
-    private final MapViewer mapViewer;
-    private final GameCamera gameCamera;
+    private MapViewer mapViewer;
+    private GameCamera gameCamera;
     private final Player player;
     private final SpriteBatch batch;
     private final List<Enemy> enemies = new ArrayList<>();
@@ -33,9 +34,9 @@ public class GameScreen extends ScreenAdapter {
     private final Hud hud;
 
     public GameScreen() {
-        mapViewer = new MapViewer("Map/ForestMap/ForestMap.tmx");
+        mapViewer = new MapViewer("Map/VillageMap/FirstMap.tmx");
         gameCamera = new GameCamera(640f, 360f, mapViewer.getWidth(), mapViewer.getHeight());
-        player = new Player(100, 300, mapViewer);
+        player = new Player(100, 350, mapViewer);
         inputs = new KeyboardInputs(player, enemies);
         batch = new SpriteBatch();
         hud = new Hud(batch, player);
@@ -43,6 +44,45 @@ public class GameScreen extends ScreenAdapter {
         equipPlayer();
         spawnEnemies();
     }
+
+    private void changeMap (String mapPath, float spawnX, float spawnY){
+        MapViewer oldMap = mapViewer;
+        mapViewer = new MapViewer(mapPath);
+        gameCamera.setMapSize(mapViewer.getWidth(), mapViewer.getHeight());
+        player.setMap(mapViewer);
+        player.setPosition(spawnX, spawnY);
+        Rectangle hitbox = player.getHitbox();
+        gameCamera.follow(
+            hitbox.x + hitbox.width / 2f,
+            hitbox.y + hitbox.height / 2f
+        );
+        oldMap.dispose();
+    }
+    private void checkTeleportToForest(){
+        for (Rectangle rectangle : mapViewer.getForestTeleportRectangles()){
+            if (rectangle.overlaps(player.getHitbox()) && Gdx.input.isKeyPressed(Keys.E)){
+                changeMap(
+                    "Map/ForestMap/ForestMap.tmx",
+                    100,
+                    190);
+                return;
+            }
+        }
+    }
+
+    private  void checkTeleportToVillage(){
+        for (Rectangle rectangle : mapViewer.getTeleportToVillageRectangles()){
+            if (rectangle.overlaps(player.getHitbox())&& Gdx.input.isKeyPressed(Keys.E)){
+                changeMap(
+                    "Map/VillageMap/FirstMap.tmx",
+                    100,
+                    350);
+                return;
+            }
+        }
+    }
+
+    
 
     public void equipPlayer() {
         player.equip(new Weapon(WeaponRegistry.get("iron_sword"), Rarity.NORMAL));
@@ -69,6 +109,9 @@ public class GameScreen extends ScreenAdapter {
         inputs.update(delta);
         player.update(delta);
         for (Enemy enemy : enemies) enemy.update(delta);
+
+        checkTeleportToForest();
+        checkTeleportToVillage();
 
         player.keepInside(mapViewer.getWidth(), mapViewer.getHeight());
 
