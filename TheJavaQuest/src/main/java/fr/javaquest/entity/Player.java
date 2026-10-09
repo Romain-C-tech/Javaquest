@@ -117,6 +117,10 @@ public class Player extends Entity {
         return total;
     }
 
+    public float getVelocityY() {
+        return velocityY;
+    }
+
     @Override
     public void update(float delta) {
         velocityY -= GRAVITY * delta;
