@@ -17,13 +17,43 @@ import fr.javaquest.equipments.weapons.WeaponRegistry;
 import fr.javaquest.inputs.KeyboardInputs;
 
 public class GameScreen extends ScreenAdapter {
-    private final MapViewer mapViewer = new MapViewer("Map/VillageMap/FirstMap.tmx");
-    private final GameCamera gameCamera =
-            new GameCamera(640f, 360f, mapViewer.getWidth(), mapViewer.getHeight());
+    private MapViewer mapViewer = new MapViewer("Map/VillageMap/FirstMap.tmx");
+    private GameCamera gameCamera = new GameCamera(640f, 360f, mapViewer.getWidth(), mapViewer.getHeight());
     private final Player player = new Player(100, 350, mapViewer);
     private final Enemy dummy = new Enemy(EnemyRegistry.get("training_dummy"), 500, 347);
     private final KeyboardInputs inputs = new KeyboardInputs(player);
     private final SpriteBatch batch = new SpriteBatch();
+
+    private void changeMap (String mapPath, float spawnX, float spawnY){
+        MapViewer oldMap = mapViewer;
+        mapViewer = new MapViewer(mapPath);
+        player.setMap(mapViewer);
+        player.setPosition(spawnX, spawnY);
+        oldMap.dispose();
+    }
+    private void checkTeleportToForest(){
+        for (Rectangle rectangle : mapViewer.getForestTeleportRectangles()){
+            if (rectangle.overlaps(player.getHitbox())){
+                changeMap(
+                    "Map/ForestMap/ForestMap.tmx",
+                    100,
+                    190);
+                return;
+            }
+        }
+    }
+
+    private  void checkTeleportToVillage(){
+        for (Rectangle rectangle : mapViewer.getTeleportToVillageRectangles()){
+            if (rectangle.overlaps(player.getHitbox())){
+                changeMap(
+                    "Map/VillageMap/FirstMap.tmx",
+                    100,
+                    350);
+                return;
+            }
+        }
+    }
 
     public GameScreen() {
         player.equip(new Weapon(WeaponRegistry.get("iron_sword"), Rarity.NORMAL));
@@ -32,6 +62,7 @@ public class GameScreen extends ScreenAdapter {
         player.equip(new Armor(ArmorRegistry.get("iron_leggings"), Rarity.NORMAL));
     }
 
+
     @Override
     public void render(float delta) {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) Gdx.app.exit();
@@ -39,6 +70,9 @@ public class GameScreen extends ScreenAdapter {
         inputs.update(delta);
         player.update(delta);
         dummy.update(delta);
+
+        checkTeleportToForest();
+        checkTeleportToVillage();
 
         player.keepInside(mapViewer.getWidth(), mapViewer.getHeight());
 

@@ -20,7 +20,7 @@ public class Player extends Entity {
     private boolean onGround = true;
 
     private final Array<Texture> textures = new Array<>();
-    private final MapViewer mapViewer;
+    private MapViewer mapViewer;
 
     public Player(float x, float y, MapViewer mapViewer) {
         super(100,5 ,200f,1F,null, x, y);
@@ -135,6 +135,14 @@ public class Player extends Entity {
         visual.update(delta);
     }
 
+    public void setMap(MapViewer mapViewer){
+        this.mapViewer = mapViewer;
+    }
+
+    public void setPosition(float x, float y){
+        this.hitbox.x = x;
+        this.hitbox.y = y;
+    }
     public void render(SpriteBatch batch) {
         Rectangle hb = getHitbox();
 

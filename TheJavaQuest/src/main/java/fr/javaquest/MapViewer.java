@@ -18,6 +18,9 @@ public class MapViewer {
 
     // on stock les collisions dans une liste
     private final Array<Rectangle> collisionsRectangles = new Array<>();
+    private final Array<Rectangle> teleportToForestRectangles = new Array<>();
+    private final Array<Rectangle> teleportToVillageRectangles = new Array<>();
+
 
     public MapViewer(String mapPath) {
         map = new TmxMapLoader().load(mapPath);
@@ -33,19 +36,48 @@ public class MapViewer {
 
     private void loadCollisions(){
         MapLayer collisionLayer = map.getLayers().get("collision");
+        MapLayer teleportToForestCollisionLayer = map.getLayers().get("ToForest");
+        MapLayer teleportToVillageCollisionLayer = map.getLayers().get("ToVillage");
 
         if (collisionLayer == null){
-            System.out.println("aucune collisions trouvé pour cette carte");
+            System.out.println("aucune zone de collisions trouvé pour cette carte.");
             return;
         }
+        else {
+            for (MapObject object : collisionLayer.getObjects()){
 
-        for (MapObject object : collisionLayer.getObjects()){
-
-            if (object instanceof RectangleMapObject rectangleObject) {
-                Rectangle rectangle = rectangleObject.getRectangle();
-                collisionsRectangles.add(new Rectangle(rectangle));
+                if (object instanceof RectangleMapObject rectangleObject) {
+                    Rectangle rectangle = rectangleObject.getRectangle();
+                    collisionsRectangles.add(new Rectangle(rectangle));
+                }
             }
         }
+        if (teleportToForestCollisionLayer == null){
+            System.out.println("pas de zone de tp pour aller dans la forêt.");
+        }
+        else {
+            for (MapObject object : teleportToForestCollisionLayer.getObjects()){
+
+                if (object instanceof RectangleMapObject rectangleObject) {
+                    Rectangle rectangleOfForestTp = rectangleObject.getRectangle();
+                    teleportToForestRectangles.add(new Rectangle(rectangleOfForestTp));
+                }
+            }
+        }
+        if (teleportToVillageCollisionLayer == null){
+            System.out.println("pas de zone de tp pour retourner au village");
+        }
+        else {
+            for (MapObject object : teleportToVillageCollisionLayer.getObjects()){
+                if (object instanceof RectangleMapObject rectangleObject){
+                    Rectangle rectangleOfVillageTp = rectangleObject.getRectangle();
+                    teleportToVillageRectangles.add(new Rectangle(rectangleOfVillageTp));
+                }
+            System.out.println(teleportToVillageRectangles.size);
+            }
+        }
+
+
     }
 
     public boolean collides(Rectangle hitbox){
@@ -71,5 +103,11 @@ public class MapViewer {
     public void dispose() {
         map.dispose();
         renderer.dispose();
+    }
+    public Array<Rectangle> getForestTeleportRectangles(){
+        return teleportToForestRectangles;
+    }
+    public Array<Rectangle> getTeleportToVillageRectangles(){
+        return teleportToVillageRectangles;
     }
 }
