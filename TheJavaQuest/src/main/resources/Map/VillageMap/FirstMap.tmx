@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="40" height="22" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="8">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="40" height="22" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="9">
+ <editorsettings>
+  <export target="../ForestMap/ForestMap.tmx" format="tmx"/>
+ </editorsettings>
  <tileset firstgid="1" source="TileSet.tsx"/>
  <tileset firstgid="17" source="Decor.tsx"/>
  <tileset firstgid="238" source="Flowering Tree.tsx"/>
  <tileset firstgid="247" source="TallGrass.tsx"/>
- <objectgroup id="8" name="ToForest">
+ <objectgroup id="8" name="ToForest" visible="0">
   <object id="6" x="1217.33" y="226.667" width="61.3333" height="125.333"/>
  </objectgroup>
  <layer id="4" name="Sky" width="40" height="22">
@@ -163,10 +166,11 @@
 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2
 </data>
  </layer>
- <objectgroup id="5" name="collision">
+ <objectgroup id="5" name="collision" visible="0">
   <object id="1" x="2" y="355" width="1278" height="130.667"/>
   <object id="3" x="578" y="336.364" width="32" height="22.9091"/>
   <object id="4" x="609.455" y="320" width="32.5455" height="40.3636"/>
   <object id="5" x="641.636" y="288.182" width="28" height="68"/>
+  <object id="8" x="66" y="281.091" width="28.7273" height="76"/>
  </objectgroup>
 </map>

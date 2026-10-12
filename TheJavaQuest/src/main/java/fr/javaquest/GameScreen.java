@@ -49,8 +49,8 @@ public class GameScreen extends ScreenAdapter {
     private void changeMap (String mapPath, float spawnX, float spawnY){
         MapViewer oldMap = mapViewer;
         for (Enemy enemy : enemies) enemy.dispose();
-        for (Dummy dummy : dummies) dummy.dispose();
         enemies.clear();
+        for (Dummy dummy : dummies) dummy.dispose();
         dummies.clear();
         mapViewer = new MapViewer(mapPath);
         gameCamera.setMapSize(mapViewer.getWidth(), mapViewer.getHeight());
@@ -67,7 +67,7 @@ public class GameScreen extends ScreenAdapter {
         for (Rectangle rectangle : mapViewer.getForestTeleportRectangles()){
             if (rectangle.overlaps(player.getHitbox()) && Gdx.input.isKeyPressed(Keys.E)){
                 changeMap(
-                    "Map/ForestMap/ForestMap.tmx",
+                    "Map/ForestMap/ForestMa.tmx",
                     100,
                     190);
                 return;
