@@ -1,0 +1,12 @@
+[
+  {
+    "id": "training_dummy",
+    "name": "Mannequin d'entraînement",
+    "hp": 100,
+    "hitbox": {
+      "width": 24,
+      "height": 40
+    },
+    "renderFile" : "Asset/PixelCrawlerFreePack/Entities/Npcs/Dummy/Dummy.png"
+  }
+]

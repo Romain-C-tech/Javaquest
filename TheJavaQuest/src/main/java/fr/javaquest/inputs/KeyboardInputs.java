@@ -29,7 +29,7 @@ public class KeyboardInputs {
         }
         if (Gdx.input.isKeyPressed(Keys.S)) System.out.println("Pressed S");
         if (Gdx.input.isKeyPressed(Keys.DOWN)) System.out.println("Pressed Down arrow");
-        if (Gdx.input.isKeyJustPressed(Keys.SPACE) || Gdx.input.isKeyJustPressed(Keys.UP)) {
+        if (Gdx.input.isKeyJustPressed(Keys.SPACE) || Gdx.input.isKeyJustPressed(Keys.UP) || Gdx.input.isKeyJustPressed(Keys.W)) {
             player.jump();
             moving = true;
         }

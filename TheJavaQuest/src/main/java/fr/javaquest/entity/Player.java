@@ -2,8 +2,6 @@ package fr.javaquest.entity;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
-import fr.javaquest.entity.enemies.Enemy;
-import fr.javaquest.entity.enemies.TrainingDummy;
 import com.badlogic.gdx.utils.Array;
 import fr.javaquest.MapViewer;
 import fr.javaquest.equipments.armors.Armor;
@@ -81,18 +79,16 @@ public class Player extends Entity {
         return armors.remove(slot);
     }
 
-    public void attack(List<Enemy> enemies) {
+    public void attack(List<? extends Entity> targets) {
         if (!canAttack()) return;
 
         attackCooldown = 1f / weapon.getAttackSpeed();
 
         Rectangle zone = weapon.getAttackHitbox(hitbox, visual.facingRight);
 
-        for (Enemy enemy : enemies) {
-            if (zone.overlaps(enemy.getHitbox())) {
-                if (!(enemy instanceof TrainingDummy)) {
-                    enemy.takeDamage(getDamage());
-                }
+        for (Entity target : targets) {
+            if (zone.overlaps(target.getHitbox())) {
+                target.takeDamage(getDamage());
                 return;
             }
         }
