@@ -7,10 +7,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ScreenUtils;
 import fr.javaquest.entity.Player;
-import fr.javaquest.entity.enemies.Enemy;
-import fr.javaquest.entity.enemies.EnemyRegistry;
-import fr.javaquest.entity.enemies.LayeredEnemy;
-import fr.javaquest.entity.enemies.TrainingDummy;
+import fr.javaquest.entity.dummy.Dummy;
+import fr.javaquest.entity.dummy.DummyRegistery;
+import fr.javaquest.entity.dummy.LayeredDummy;
+import fr.javaquest.entity.enemies.*;
 import fr.javaquest.equipments.Rarity;
 import fr.javaquest.equipments.armors.Armor;
 import fr.javaquest.equipments.armors.ArmorRegistry;
@@ -30,6 +30,7 @@ public class GameScreen extends ScreenAdapter {
     private final Player player;
     private final SpriteBatch batch;
     private final List<Enemy> enemies = new ArrayList<>();
+    private final List<Dummy> dummies = new ArrayList<>();
     private final KeyboardInputs inputs;
     private final Hud hud;
 
@@ -42,11 +43,15 @@ public class GameScreen extends ScreenAdapter {
         hud = new Hud(batch, player);
 
         equipPlayer();
-        spawnEnemies();
+        spawnDummy();
     }
 
     private void changeMap (String mapPath, float spawnX, float spawnY){
         MapViewer oldMap = mapViewer;
+        for (Enemy enemy : enemies) enemy.dispose();
+        enemies.clear();
+        for (Dummy dummy : dummies) dummy.dispose();
+        dummies.clear();
         mapViewer = new MapViewer(mapPath);
         gameCamera.setMapSize(mapViewer.getWidth(), mapViewer.getHeight());
         player.setMap(mapViewer);
@@ -77,12 +82,13 @@ public class GameScreen extends ScreenAdapter {
                     "Map/VillageMap/FirstMap.tmx",
                     100,
                     350);
+                spawnDummy();
                 return;
             }
         }
     }
 
-    
+
 
     public void equipPlayer() {
         player.equip(new Weapon(WeaponRegistry.get("iron_sword"), Rarity.NORMAL));
@@ -91,12 +97,14 @@ public class GameScreen extends ScreenAdapter {
         player.equip(new Armor(ArmorRegistry.get("iron_leggings"), Rarity.NORMAL));
     }
 
-    public void spawnEnemies() {
-        spawnNpc("training_dummy", 400, 192);
+    public void spawnDummy() {
+        dummies.add(new LayeredDummy(DummyRegistery.get("training_dummy"), 400, 347));
     }
 
+    public void spawnEnemies() {
+
+    }
     private void spawnNpc(String id, float x, float y) {
-        enemies.add(new TrainingDummy(EnemyRegistry.get(id), x, y));
     }
     private void spawnEnemy(String id, float x, float y) {
         enemies.add(new LayeredEnemy(EnemyRegistry.get(id),x,y));
@@ -134,6 +142,7 @@ public class GameScreen extends ScreenAdapter {
         batch.setProjectionMatrix(gameCamera.getCamera().combined);
         batch.begin();
         for (Enemy enemy : enemies) {enemy.render(batch);}
+        for (Dummy dummy : dummies) {dummy.render(batch);}
         player.render(batch);
         batch.end();
 

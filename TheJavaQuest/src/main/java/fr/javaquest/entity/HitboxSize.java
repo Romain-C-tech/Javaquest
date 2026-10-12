@@ -1,4 +1,4 @@
-package fr.javaquest.entity.enemies;
+package fr.javaquest.entity;
 
 public class HitboxSize {
     public float width, height;
