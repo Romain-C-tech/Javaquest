@@ -67,7 +67,7 @@ public class GameScreen extends ScreenAdapter {
         for (Rectangle rectangle : mapViewer.getForestTeleportRectangles()){
             if (rectangle.overlaps(player.getHitbox()) && Gdx.input.isKeyPressed(Keys.E)){
                 changeMap(
-                    "Map/ForestMap/ForestMa.tmx",
+                    "Map/ForestMap/ForestMap.tmx",
                     100,
                     190);
                 return;
