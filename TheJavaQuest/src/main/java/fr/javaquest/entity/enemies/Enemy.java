@@ -65,6 +65,7 @@ public abstract class Enemy extends Entity {
 
     public void moveLeft(float delta)  { hitbox.x -= movementSpeed * delta; isFacingRight = false; }
     public void moveRight(float delta) { hitbox.x += movementSpeed * delta; isFacingRight = true; }
+    public void setFacingRight(boolean facingRight) { isFacingRight = facingRight; }
 
     public void jump() {
         if (onGround) {
@@ -100,6 +101,7 @@ public abstract class Enemy extends Entity {
 
         if (zone.overlaps(targetHitbox)) {
             targetSteerable.getPlayer().takeDamage(data.damage); //TODO: Add Armor reduction.
+            System.out.println("Hp : " + targetSteerable.getPlayer().getHp());
         }
     }
 

@@ -37,17 +37,18 @@ public class EnemySteerable implements Steerable<Vector2> {
     }
 
     /**
-     * Convertit la force de Steering horizontale en ordres de déplacement pour l'Enemy.
+     * Intègre l'accélération horizontale du steering dans la vélocité de l'ennemi.
      */
     public void applySteering(SteeringAcceleration<Vector2> steering, float delta) {
-        float forceX = steering.linear.x;
+        linearVelocity.x += steering.linear.x * delta;
 
-        if (Math.abs(forceX) > 0.1f) {
-            if (forceX < 0) {
-                enemy.moveLeft(delta);
-            } else {
-                enemy.moveRight(delta);
-            }
+        float maxSpeed = enemy.getMovementSpeed();
+        linearVelocity.x = Math.max(-maxSpeed, Math.min(linearVelocity.x, maxSpeed));
+
+        if (linearVelocity.x < -zeroLinearSpeedThreshold) {
+            enemy.setFacingRight(false);
+        } else if (linearVelocity.x > zeroLinearSpeedThreshold) {
+            enemy.setFacingRight(true);
         }
     }
 
