@@ -1,7 +1,8 @@
-package fr.javaquest.entity;
+package fr.javaquest.entity.PlayerEntity;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
+import fr.javaquest.entity.Entity;
 import fr.javaquest.entity.enemies.Enemy;
 import fr.javaquest.entity.enemies.TrainingDummy;
 import com.badlogic.gdx.utils.Array;

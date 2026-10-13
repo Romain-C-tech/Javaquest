@@ -4,7 +4,6 @@ import com.badlogic.gdx.ai.steer.Steerable;
 import com.badlogic.gdx.ai.utils.Location;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import fr.javaquest.entity.Player;
 import fr.javaquest.inputs.KeyboardInputs;
 
 public class PlayerSteerable implements Steerable<Vector2> {
@@ -37,6 +36,7 @@ public class PlayerSteerable implements Steerable<Vector2> {
     @Override public Vector2 getPosition() {return position;}
     @Override public Vector2 getLinearVelocity() {return linearVelocity;}
 
+    public Player getPlayer() {return player;}
 
     @Override public float getAngularVelocity() {return 0;}
     @Override public float getBoundingRadius() {return 0;}

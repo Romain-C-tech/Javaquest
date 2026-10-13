@@ -1,10 +1,11 @@
-package fr.javaquest.entity.enemies;
+package fr.javaquest.entity.enemies.ai;
 
 import com.badlogic.gdx.ai.steer.Steerable;
 import com.badlogic.gdx.ai.steer.SteeringAcceleration;
 import com.badlogic.gdx.ai.utils.Location;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import fr.javaquest.entity.enemies.Enemy;
 
 public class EnemySteerable implements Steerable<Vector2> {
 

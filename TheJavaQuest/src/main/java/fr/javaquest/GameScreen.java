@@ -6,7 +6,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ScreenUtils;
-import fr.javaquest.entity.Player;
+import fr.javaquest.entity.PlayerEntity.Player;
 import fr.javaquest.entity.enemies.Enemy;
 import fr.javaquest.entity.enemies.EnemyRegistry;
 import fr.javaquest.entity.enemies.LayeredEnemy;
