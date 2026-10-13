@@ -10,6 +10,18 @@
       "width": 24,
       "height": 40
     },
-    "renderFile" : "Asset/PixelCrawlerFreePack/Entities/Npcs/Dummy/Dummy.png"
+    "renderFile": "Asset/PixelCrawlerFreePack/Entities/Npcs/Dummy/Dummy.png"
+  },
+  {
+    "id": "wild_boar",
+    "name": "Sanglier sauvage",
+    "hp": 40,
+    "damage": 10,
+    "movementSpeed": 100,
+    "attackSpeed": 1,
+    "hitbox": {
+      "width": 24,
+      "height": 40
+    }
   }
 ]

@@ -12,12 +12,13 @@ import fr.javaquest.entity.Entity;
 import fr.javaquest.entity.PlayerEntity.PlayerSteerable;
 import fr.javaquest.entity.enemies.ai.EnemyState;
 import fr.javaquest.entity.enemies.ai.EnemySteerable;
+import fr.javaquest.equipments.weapons.HitboxData;
 import fr.javaquest.equipments.weapons.Weapon;
 import fr.javaquest.equipments.weapons.WeaponRegistry;
 
 public abstract class Enemy extends Entity {
 
-    private DefaultStateMachine<Enemy, EnemyState> stateMachine;
+    private final DefaultStateMachine<Enemy, EnemyState> stateMachine;
     private PlayerSteerable targetSteerable;
 
     protected static final float JUMP_SPEED = 400f;
@@ -34,18 +35,20 @@ public abstract class Enemy extends Entity {
 
     private float attackCooldown = 0f;
 
-    public Enemy(EnemyData data, float x, float y, MapViewer mapViewer) {
+    public Enemy(EnemyData data, float x, float y, MapViewer mapViewer, PlayerSteerable targetSteerable) {
         super(data.hp, data.damage, data.movementSpeed, data.attackSpeed,
                 createWeapon(data), x, y);
         this.data = data;
         hitbox.setSize(data.hitbox.width, data.hitbox.height);
+        this.targetSteerable = targetSteerable;
 
         this.steerable = new EnemySteerable(this);
         this.steeringAcceleration = new SteeringAcceleration<>(new Vector2());
         this.visual = new Rectangle(x,y, 20,20); // TODO : replace by visual size.
         this.mapViewer = mapViewer;
 
-        initPursueSteeringBehavior(targetSteerable);
+        initPursueSteeringBehavior(this.targetSteerable);
+        this.stateMachine = new DefaultStateMachine<>(this, EnemyState.PATROL);
     }
 
     private static Weapon createWeapon(EnemyData data) {
@@ -77,10 +80,13 @@ public abstract class Enemy extends Entity {
 
     public void attack() {
         if (!canAttack()) return;
+        attackCooldown = 1f / data.attackSpeed;
 
-        attackCooldown = 1f / attackSpeed;
+        HitboxSize hitboxData = data.hitbox;
+        float x = isFacingRight ? this.hitbox.x + hitboxData.width : this.hitbox.x - hitbox.width;
+        float y = this.hitbox.y;
 
-        Rectangle zone = weapon.getAttackHitbox(hitbox, isFacingRight);
+        Rectangle zone = new Rectangle(x,y, hitboxData.width, hitboxData.height);
 
         Vector2 targetpos = targetSteerable.getPosition();
 
@@ -93,24 +99,25 @@ public abstract class Enemy extends Entity {
                 playerHeight);
 
         if (zone.overlaps(targetHitbox)) {
-            targetSteerable.getPlayer().takeDamage(getDamage());
-            attackCooldown = 1f / attackSpeed;
+            targetSteerable.getPlayer().takeDamage(data.damage); //TODO: Add Armor reduction.
         }
     }
 
     public boolean canAttack() {
-        return attackCooldown <= 0;
+        return attackCooldown <= 0 && attackSpeed > 0f;
     }
 
     @Override public void update(float delta) {
-        if (steeringBehavior != null) {
-            steerable.updatePositionFromHitbox();
+        steerable.updatePositionFromHitbox();
 
+        if (movementSpeed > 0f) {
+            stateMachine.update();
+        }
+
+        if (steeringBehavior != null) {
             steeringBehavior.calculateSteering(steeringAcceleration);
 
             steerable.applySteering(steeringAcceleration,delta);
-
-            stateMachine.update();
 
             if (onGround) {
                 velocityY = 0;
