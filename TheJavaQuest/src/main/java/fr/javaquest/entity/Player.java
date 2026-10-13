@@ -1,9 +1,11 @@
 package fr.javaquest.entity;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import fr.javaquest.MapViewer;
+import fr.javaquest.entity.weaponRenderer.WeaponRenderer;
 import fr.javaquest.equipments.armors.Armor;
 import fr.javaquest.equipments.armors.ArmorSlot;
 import fr.javaquest.equipments.weapons.Weapon;
@@ -21,6 +23,7 @@ public class Player extends Entity {
     private float attackCooldown = 0f;
     private float velocityY = 0;
     private boolean onGround = true;
+    private WeaponRenderer weaponRenderer;
 
     private final Array<Texture> textures = new Array<>();
     private MapViewer mapViewer;
@@ -65,10 +68,12 @@ public class Player extends Entity {
 
     public void equip(Weapon newWeapon) {
         weapon = newWeapon;
+        weaponRenderer.setWeapon();
     }
 
     public void unequip() {
         weapon = null;
+        weaponRenderer.setWeapon();
     }
 
     public void equip(Armor armor) {
@@ -81,6 +86,7 @@ public class Player extends Entity {
 
     public void attack(List<? extends Entity> targets) {
         if (!canAttack()) return;
+        visual.startAttack();
 
         attackCooldown = 1f / weapon.getAttackSpeed();
 

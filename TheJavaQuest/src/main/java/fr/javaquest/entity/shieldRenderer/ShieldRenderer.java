@@ -104,4 +104,7 @@ public class ShieldRenderer {
         );
     }
 
+    public void setCurrentShield(Animation<TextureRegion> currentShield) {
+        CurrentShield = currentShield;
+    }
 }
