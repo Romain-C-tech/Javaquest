@@ -21,6 +21,9 @@ public class KeyboardInputs {
     }
 
     public void update(float delta) {
+        isMovingLeft = false;
+        isMovingRight = false;
+
         // Sur un clavier AZERTY, la touche Q correspond à Keys.A (LibGDX utilise la position physique)
         boolean moving = false;
         if (Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT)) {
@@ -43,8 +46,5 @@ public class KeyboardInputs {
         if (Gdx.input.isKeyJustPressed(Keys.F)) {
             player.attack(enemies);
         }
-
-        isMovingLeft = false;
-        isMovingRight = false;
     }
 }
