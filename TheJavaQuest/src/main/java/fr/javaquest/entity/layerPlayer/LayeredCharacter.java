@@ -152,6 +152,7 @@ public class LayeredCharacter {
 
     public void update(float delta) {
         stateTime += delta;
+        weapon.updateAnimation(delta);
     }
 
     public void setIdle() {
@@ -175,10 +176,14 @@ public class LayeredCharacter {
         }
     }
 
+    public void startAttack(){
+        weapon.startAttack();
+    }
+
     public void draw(SpriteBatch batch) {
 
         drawLayer(batch, currentAnimation, 0, 0, 0);
-        drawLayer(batch, weapon.getCurrentWeapon(), 18,18, 0);
+        drawWeaponLayer(batch, weapon.getCurrentWeapon(), weapon.getAttackTime(), 18,18, 0);
         drawLayer(batch, hands, 1, -1, 0);
         if (shield.getCurrentShield() != null){drawLayer(batch, shield.getCurrentShield(), 0, -18, 0);}
     }
@@ -219,7 +224,43 @@ public class LayeredCharacter {
             );
         }
     }
+    private void drawWeaponLayer(
+        SpriteBatch batch,
+        Animation<TextureRegion> animation,
+        float time,
+        float offSetRightX,
+        float offSetLeftX,
+        float offSetY
+    ) {
+        TextureRegion frame =
+            animation.getKeyFrame(
+                time,
+                false
+            );
 
+        float width = frame.getRegionWidth();
+        float height = frame.getRegionHeight();
+
+        if (facingRight) {
+
+            batch.draw(
+                frame,
+                x + offSetRightX,
+                y + offSetY,
+                width,
+                height
+            );
+
+        } else {
+            batch.draw(
+                frame,
+                x - offSetLeftX + width,
+                y + offSetY,
+                -width,
+                height
+            );
+        }
+    }
     public void dispose() {
         for (Texture texture : textures) {
             texture.dispose();

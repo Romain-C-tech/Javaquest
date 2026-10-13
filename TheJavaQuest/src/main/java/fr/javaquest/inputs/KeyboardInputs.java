@@ -2,16 +2,18 @@ package fr.javaquest.inputs;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import fr.javaquest.entity.Entity;
 import fr.javaquest.entity.Player;
 import fr.javaquest.entity.enemies.Enemy;
+import fr.javaquest.entity.weaponRenderer.WeaponRenderer;
 
 import java.util.List;
 
 public class KeyboardInputs {
     private final Player player;
-    private final List<Enemy> enemies;
+    private final List<? extends Entity> enemies;
 
-    public KeyboardInputs(Player player, List<Enemy> enemies) {
+    public KeyboardInputs(Player player, List<? extends Entity> enemies) {
         this.player = player;
         this.enemies = enemies;
     }
