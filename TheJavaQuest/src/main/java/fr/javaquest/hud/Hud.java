@@ -43,6 +43,10 @@ public class Hud implements Disposable {
         orbeVie.setPosition(6 * echelle, 6 * echelle);
     }
 
+    public void update() {
+        setVie(player.getHp());
+    }
+
     @Override
     public void dispose() {
         orbeVie.dispose();

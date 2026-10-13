@@ -29,7 +29,7 @@ public class Player extends Entity {
     private final MapViewer mapViewer;
 
     public Player(float x, float y, MapViewer mapViewer) {
-        super(100,5 ,200f,1F,null, x, y);
+        super(200,5 ,200f,1F,null, x, y);
         visual = new LayeredCharacter();
         this.mapViewer = mapViewer;
     }

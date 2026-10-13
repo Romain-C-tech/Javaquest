@@ -12,7 +12,6 @@ import fr.javaquest.entity.Entity;
 import fr.javaquest.entity.PlayerEntity.PlayerSteerable;
 import fr.javaquest.entity.enemies.ai.EnemyState;
 import fr.javaquest.entity.enemies.ai.EnemySteerable;
-import fr.javaquest.equipments.weapons.HitboxData;
 import fr.javaquest.equipments.weapons.Weapon;
 import fr.javaquest.equipments.weapons.WeaponRegistry;
 
@@ -21,7 +20,6 @@ public abstract class Enemy extends Entity {
     private final DefaultStateMachine<Enemy, EnemyState> stateMachine;
     private PlayerSteerable targetSteerable;
 
-    protected static final float JUMP_SPEED = 400f;
     protected float velocityY = 0f;
     protected boolean onGround = true;
     protected final EnemyData data;
@@ -63,16 +61,7 @@ public abstract class Enemy extends Entity {
     public PlayerSteerable getTargetSteerable() {return targetSteerable;}
     public DefaultStateMachine<Enemy, EnemyState> getStateMachine() {return stateMachine;}
 
-    public void moveLeft(float delta)  { hitbox.x -= movementSpeed * delta; isFacingRight = false; }
-    public void moveRight(float delta) { hitbox.x += movementSpeed * delta; isFacingRight = true; }
     public void setFacingRight(boolean facingRight) { isFacingRight = facingRight; }
-
-    public void jump() {
-        if (onGround) {
-            this.velocityY = JUMP_SPEED;
-            this.onGround = false;
-        }
-    }
 
     public void initPursueSteeringBehavior(PlayerSteerable playerSteerable) {
         this.targetSteerable = playerSteerable;
@@ -101,7 +90,6 @@ public abstract class Enemy extends Entity {
 
         if (zone.overlaps(targetHitbox)) {
             targetSteerable.getPlayer().takeDamage(data.damage); //TODO: Add Armor reduction.
-            System.out.println("Hp : " + targetSteerable.getPlayer().getHp());
         }
     }
 

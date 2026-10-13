@@ -74,6 +74,7 @@ public class GameScreen extends ScreenAdapter {
         inputs.update(delta);
         player.update(delta);
         playerSteerable.update();
+        hud.update();
         for (Enemy enemy : enemies) enemy.update(delta);
 
         player.keepInside(mapViewer.getWidth(), mapViewer.getHeight());
