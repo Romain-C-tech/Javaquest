@@ -68,7 +68,6 @@ public class Player extends Entity {
 
     public void equip(Weapon newWeapon) {
         weapon = newWeapon;
-        weaponRenderer.setWeapon();
     }
 
     public void unequip() {

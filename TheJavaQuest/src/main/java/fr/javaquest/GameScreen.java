@@ -15,6 +15,7 @@ import fr.javaquest.equipments.Rarity;
 import fr.javaquest.equipments.armors.Armor;
 import fr.javaquest.equipments.armors.ArmorRegistry;
 import fr.javaquest.equipments.weapons.Weapon;
+import fr.javaquest.equipments.weapons.WeaponData;
 import fr.javaquest.equipments.weapons.WeaponRegistry;
 import fr.javaquest.hud.Hud;
 import fr.javaquest.inputs.KeyboardInputs;
