@@ -42,7 +42,7 @@ public class KeyboardInputs {
             player.jump();
             moving = true;
         }
-        if (!moving) {
+        if (!moving || ((Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT)) && (Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT)))) {
             player.idle();
         }
         if (Gdx.input.isKeyJustPressed(Keys.F)) {
