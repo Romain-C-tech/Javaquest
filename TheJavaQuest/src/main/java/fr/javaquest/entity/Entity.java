@@ -29,6 +29,10 @@ public abstract class Entity implements Combatant {
         this.attackSpeed = attackSpeed;
         this.weapon = weapon;
     }
+    public Entity(int hp, float x, float y){
+        this.hp = hp;
+        this.hitbox = new Rectangle(x , y , 24, 28 );
+    }
 
     @Override public int getMaxHp() {return maxHp;}
     @Override public int getHp() {return hp;}

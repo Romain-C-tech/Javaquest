@@ -11,7 +11,10 @@ import fr.javaquest.entity.PlayerEntity.PlayerSteerable;
 import fr.javaquest.entity.enemies.Enemy;
 import fr.javaquest.entity.enemies.EnemyRegistry;
 import fr.javaquest.entity.enemies.LayeredEnemy;
-import fr.javaquest.entity.enemies.TrainingDummy;
+import fr.javaquest.entity.dummy.Dummy;
+import fr.javaquest.entity.dummy.DummyRegistery;
+import fr.javaquest.entity.dummy.LayeredDummy;
+import fr.javaquest.entity.enemies.*;
 import fr.javaquest.equipments.Rarity;
 import fr.javaquest.equipments.armors.Armor;
 import fr.javaquest.equipments.armors.ArmorRegistry;
@@ -19,33 +22,79 @@ import fr.javaquest.equipments.weapons.Weapon;
 import fr.javaquest.equipments.weapons.WeaponRegistry;
 import fr.javaquest.hud.Hud;
 import fr.javaquest.inputs.KeyboardInputs;
+import com.badlogic.gdx.Input.Keys;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 public class GameScreen extends ScreenAdapter {
-    private final MapViewer mapViewer;
-    private final GameCamera gameCamera;
+    private MapViewer mapViewer;
+    private GameCamera gameCamera;
     private final Player player;
     private final PlayerSteerable playerSteerable;
     private final SpriteBatch batch;
     private final List<Enemy> enemies = new ArrayList<>();
+    private final List<Dummy> dummies = new ArrayList<>();
     private final KeyboardInputs inputs;
     private final Hud hud;
 
     public GameScreen() {
-        mapViewer = new MapViewer("Map/ForestMap/ForestMap.tmx");
+        mapViewer = new MapViewer("Map/VillageMap/FirstMap.tmx");
         gameCamera = new GameCamera(640f, 360f, mapViewer.getWidth(), mapViewer.getHeight());
-        player = new Player(100, 300, mapViewer);
+        player = new Player(100, 350, mapViewer);
         inputs = new KeyboardInputs(player, enemies);
         playerSteerable = new PlayerSteerable(player, inputs);
         batch = new SpriteBatch();
         hud = new Hud(batch, player);
 
         equipPlayer();
-        spawnEnemies();
+        spawnDummy();
     }
+
+    private void changeMap (String mapPath, float spawnX, float spawnY){
+        MapViewer oldMap = mapViewer;
+        for (Enemy enemy : enemies) enemy.dispose();
+        enemies.clear();
+        for (Dummy dummy : dummies) dummy.dispose();
+        dummies.clear();
+        mapViewer = new MapViewer(mapPath);
+        gameCamera.setMapSize(mapViewer.getWidth(), mapViewer.getHeight());
+        player.setMap(mapViewer);
+        player.setPosition(spawnX, spawnY);
+        Rectangle hitbox = player.getHitbox();
+        gameCamera.follow(
+            hitbox.x + hitbox.width / 2f,
+            hitbox.y + hitbox.height / 2f
+        );
+        oldMap.dispose();
+    }
+    private void checkTeleportToForest(){
+        for (Rectangle rectangle : mapViewer.getForestTeleportRectangles()){
+            if (rectangle.overlaps(player.getHitbox()) && Gdx.input.isKeyPressed(Keys.E)){
+                changeMap(
+                    "Map/ForestMap/ForestMap.tmx",
+                    100,
+                    190);
+                return;
+            }
+        }
+    }
+
+    private  void checkTeleportToVillage(){
+        for (Rectangle rectangle : mapViewer.getTeleportToVillageRectangles()){
+            if (rectangle.overlaps(player.getHitbox())&& Gdx.input.isKeyPressed(Keys.E)){
+                changeMap(
+                    "Map/VillageMap/FirstMap.tmx",
+                    100,
+                    350);
+                spawnDummy();
+                return;
+            }
+        }
+    }
+
+
 
     public void equipPlayer() {
         player.equip(new Weapon(WeaponRegistry.get("iron_sword"), Rarity.NORMAL));
@@ -54,13 +103,17 @@ public class GameScreen extends ScreenAdapter {
         player.equip(new Armor(ArmorRegistry.get("iron_leggings"), Rarity.NORMAL));
     }
 
+    public void spawnDummy() {
+        dummies.add(new LayeredDummy(DummyRegistery.get("training_dummy"), 400, 347));
+    }
+
     public void spawnEnemies() {
         spawnNpc("training_dummy", 400, 192);
         spawnEnemy("wild_boar", 300, 192);
     }
 
+    }
     private void spawnNpc(String id, float x, float y) {
-        enemies.add(new TrainingDummy(EnemyRegistry.get(id), x, y, mapViewer, playerSteerable));
     }
 
     private void spawnEnemy(String id, float x, float y) {
@@ -76,6 +129,9 @@ public class GameScreen extends ScreenAdapter {
         playerSteerable.update();
         hud.update();
         for (Enemy enemy : enemies) enemy.update(delta);
+
+        checkTeleportToForest();
+        checkTeleportToVillage();
 
         player.keepInside(mapViewer.getWidth(), mapViewer.getHeight());
 
@@ -98,6 +154,7 @@ public class GameScreen extends ScreenAdapter {
         batch.setProjectionMatrix(gameCamera.getCamera().combined);
         batch.begin();
         for (Enemy enemy : enemies) {enemy.render(batch);}
+        for (Dummy dummy : dummies) {dummy.render(batch);}
         player.render(batch);
         batch.end();
 

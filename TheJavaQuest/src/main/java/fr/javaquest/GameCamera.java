@@ -7,8 +7,8 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 public class GameCamera {
     private final OrthographicCamera camera = new OrthographicCamera();
     private final ExtendViewport viewport;
-    private final float mapWidth;
-    private final float mapHeight;
+    private float mapWidth;
+    private float mapHeight;
 
     public GameCamera(float viewWidth, float viewHeight, float mapWidth, float mapHeight) {
         this.mapWidth = mapWidth;
@@ -39,5 +39,10 @@ public class GameCamera {
 
     public OrthographicCamera getCamera() {
         return camera;
+    }
+
+    public void setMapSize(float mapWidth, float mapHeight){
+        this.mapHeight = mapHeight;
+        this.mapWidth = mapWidth;
     }
 }

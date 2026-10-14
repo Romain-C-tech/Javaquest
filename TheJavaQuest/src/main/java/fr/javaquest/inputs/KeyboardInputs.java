@@ -2,18 +2,21 @@ package fr.javaquest.inputs;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import fr.javaquest.entity.Entity;
+import fr.javaquest.entity.Player;
 import fr.javaquest.entity.PlayerEntity.Player;
 import fr.javaquest.entity.enemies.Enemy;
+import fr.javaquest.entity.weaponRenderer.WeaponRenderer;
 
 import java.util.List;
 
 public class KeyboardInputs {
     private final Player player;
-    private final List<Enemy> enemies;
+    private final List<? extends Entity> enemies;
     public boolean isMovingRight;
     public boolean isMovingLeft;
 
-    public KeyboardInputs(Player player, List<Enemy> enemies) {
+    public KeyboardInputs(Player player, List<? extends Entity> enemies) {
         this.player = player;
         this.enemies = enemies;
         this.isMovingLeft = false;
@@ -36,7 +39,7 @@ public class KeyboardInputs {
         }
         if (Gdx.input.isKeyPressed(Keys.S)) System.out.println("Pressed S");
         if (Gdx.input.isKeyPressed(Keys.DOWN)) System.out.println("Pressed Down arrow");
-        if (Gdx.input.isKeyJustPressed(Keys.SPACE) || Gdx.input.isKeyJustPressed(Keys.UP)) {
+        if (Gdx.input.isKeyJustPressed(Keys.SPACE) || Gdx.input.isKeyJustPressed(Keys.UP) || Gdx.input.isKeyJustPressed(Keys.W)) {
             player.jump();
             moving = true;
         }

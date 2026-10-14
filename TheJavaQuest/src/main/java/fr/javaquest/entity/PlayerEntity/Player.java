@@ -1,12 +1,14 @@
 package fr.javaquest.entity.PlayerEntity;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import fr.javaquest.entity.Entity;
 import fr.javaquest.entity.enemies.Enemy;
 import fr.javaquest.entity.enemies.TrainingDummy;
 import com.badlogic.gdx.utils.Array;
 import fr.javaquest.MapViewer;
+import fr.javaquest.entity.weaponRenderer.WeaponRenderer;
 import fr.javaquest.equipments.armors.Armor;
 import fr.javaquest.equipments.armors.ArmorSlot;
 import fr.javaquest.equipments.weapons.Weapon;
@@ -24,9 +26,10 @@ public class Player extends Entity {
     private float attackCooldown = 0f;
     private float velocityY = 0;
     private boolean onGround = true;
+    private WeaponRenderer weaponRenderer;
 
     private final Array<Texture> textures = new Array<>();
-    private final MapViewer mapViewer;
+    private MapViewer mapViewer;
 
     public Player(float x, float y, MapViewer mapViewer) {
         super(200,5 ,200f,1F,null, x, y);
@@ -72,6 +75,7 @@ public class Player extends Entity {
 
     public void unequip() {
         weapon = null;
+        weaponRenderer.setWeapon();
     }
 
     public void equip(Armor armor) {
@@ -82,18 +86,17 @@ public class Player extends Entity {
         return armors.remove(slot);
     }
 
-    public void attack(List<Enemy> enemies) {
+    public void attack(List<? extends Entity> targets) {
         if (!canAttack()) return;
+        visual.startAttack();
 
         attackCooldown = 1f / weapon.getAttackSpeed();
 
         Rectangle zone = weapon.getAttackHitbox(hitbox, visual.facingRight);
 
-        for (Enemy enemy : enemies) {
-            if (zone.overlaps(enemy.getHitbox())) {
-                if (!(enemy instanceof TrainingDummy)) {
-                    enemy.takeDamage(getDamage());
-                }
+        for (Entity target : targets) {
+            if (zone.overlaps(target.getHitbox())) {
+                target.takeDamage(getDamage());
                 return;
             }
         }
@@ -170,6 +173,14 @@ public class Player extends Entity {
         if (attackCooldown > 0f) attackCooldown -= delta;
     }
 
+    public void setMap(MapViewer mapViewer){
+        this.mapViewer = mapViewer;
+    }
+
+    public void setPosition(float x, float y){
+        this.hitbox.x = x;
+        this.hitbox.y = y;
+    }
     public void render(SpriteBatch batch) {
         Rectangle hb = getHitbox();
 
