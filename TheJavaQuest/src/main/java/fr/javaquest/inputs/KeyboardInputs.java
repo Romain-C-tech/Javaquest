@@ -29,10 +29,12 @@ public class KeyboardInputs {
         if (Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT)) {
             player.moveLeft(delta);
             isMovingLeft = true;
+            moving = true;
         }
         if (Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT)) {
             player.moveRight(delta);
             isMovingRight = true;
+            moving = true;
         }
         if (Gdx.input.isKeyPressed(Keys.S)) System.out.println("Pressed S");
         if (Gdx.input.isKeyPressed(Keys.DOWN)) System.out.println("Pressed Down arrow");
