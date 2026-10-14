@@ -76,7 +76,7 @@ public class GameScreen extends ScreenAdapter {
                         "Map/ForestMap/ForestMap.tmx",
                         100,
                         192);
-                spawnGladeEnemies();
+                spawnForestEnemies();
                 return;
             }
         }
@@ -107,7 +107,7 @@ public class GameScreen extends ScreenAdapter {
         dummies.add(new LayeredDummy(DummyRegistery.get("training_dummy"), 400, 347));
     }
 
-    public void spawnGladeEnemies() {
+    public void spawnForestEnemies() {
         spawnEnemy("wild_boar", 320, 288);
         spawnEnemy("wild_boar", 320,192);
         spawnEnemy("wild_boar", 100,415);
