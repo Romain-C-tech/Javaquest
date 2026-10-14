@@ -1,4 +1,4 @@
-package fr.javaquest.entity.PlayerEntity;
+package fr.javaquest.entity.playerEntity;
 
 import com.badlogic.gdx.ai.steer.Steerable;
 import com.badlogic.gdx.ai.utils.Location;

@@ -1,4 +1,4 @@
-package fr.javaquest.equipments;
+package fr.javaquest.entity.equipments;
 
 import java.awt.*;
 

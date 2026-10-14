@@ -2,9 +2,9 @@ package fr.javaquest.entity;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
-import fr.javaquest.equipments.armors.Armor;
-import fr.javaquest.equipments.armors.ArmorSlot;
-import fr.javaquest.equipments.weapons.Weapon;
+import fr.javaquest.entity.equipments.armors.Armor;
+import fr.javaquest.entity.equipments.armors.ArmorSlot;
+import fr.javaquest.entity.equipments.weapons.Weapon;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -38,7 +38,6 @@ public abstract class Entity implements Combatant {
     @Override public int getHp() {return hp;}
     @Override public int getDamage() {return damage;}
     @Override public float getMovementSpeed() {return movementSpeed;}
-    @Override public float getAttackSpeed() {return attackSpeed;}
     @Override public Rectangle getHitbox() {return hitbox;}
 
     @Override

@@ -2,16 +2,16 @@ package fr.javaquest.entity.enemies;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import fr.javaquest.MapViewer;
-import fr.javaquest.entity.PlayerEntity.PlayerSteerable;
-import fr.javaquest.entity.layerPlayer.LayeredCharacter;
+import fr.javaquest.entity.playerEntity.PlayerSteerable;
+import fr.javaquest.entity.playerEntity.LayeredPlayer;
 
 public class LayeredEnemy extends Enemy {
 
-    private final LayeredCharacter character;
+    private final LayeredPlayer character;
 
     public LayeredEnemy(EnemyData data, float x, float y, MapViewer mapViewer, PlayerSteerable targetSteerable) {
         super(data, x, y, mapViewer, targetSteerable);
-        character = new LayeredCharacter();
+        character = new LayeredPlayer();
     }
 
     @Override

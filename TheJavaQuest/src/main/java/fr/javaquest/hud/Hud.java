@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import fr.javaquest.entity.PlayerEntity.Player;
+import fr.javaquest.entity.playerEntity.Player;
 import fr.javaquest.hud.components.HealthOrb;
 import fr.javaquest.hud.components.PlayerPos;
 

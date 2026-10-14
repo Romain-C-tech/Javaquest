@@ -1,4 +1,4 @@
-package fr.javaquest.equipments.weapons;
+package fr.javaquest.entity.equipments.weapons;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;

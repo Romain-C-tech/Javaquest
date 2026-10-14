@@ -1,4 +1,4 @@
-package fr.javaquest.entity.npcRenderer;
+package fr.javaquest.entity.npc.npcRenderer;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

@@ -1,7 +1,7 @@
 package fr.javaquest.entity.enemies;
 
 import fr.javaquest.entity.HitboxSize;
-import fr.javaquest.equipments.Rarity;
+import fr.javaquest.entity.equipments.Rarity;
 
 public class EnemyData {
     public String id;

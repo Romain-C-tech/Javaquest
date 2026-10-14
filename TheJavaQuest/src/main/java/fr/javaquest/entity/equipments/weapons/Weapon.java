@@ -1,10 +1,8 @@
-package fr.javaquest.equipments.weapons;
+package fr.javaquest.entity.equipments.weapons;
 
 import com.badlogic.gdx.math.Rectangle;
-import fr.javaquest.equipments.Equipment;
-import fr.javaquest.equipments.Rarity;
-
-import java.awt.*;
+import fr.javaquest.entity.equipments.Equipment;
+import fr.javaquest.entity.equipments.Rarity;
 
 public class Weapon  implements Equipment {
     private final WeaponData data;
@@ -16,7 +14,7 @@ public class Weapon  implements Equipment {
     }
 
     public com.badlogic.gdx.math.Rectangle getAttackHitbox(Rectangle owner, boolean facingRight) {
-        HitboxData h = data.hitbox;
+        WeaponHitboxData h = data.hitbox;
         float x = facingRight ? owner.x + owner.width : owner.x - h.width;
         float y = owner.y + h.offsetY;
         return new com.badlogic.gdx.math.Rectangle((int) x, (int) y, (int) h.width, (int) h.height);

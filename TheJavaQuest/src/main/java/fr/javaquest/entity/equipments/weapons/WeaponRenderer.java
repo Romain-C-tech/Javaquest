@@ -1,11 +1,9 @@
-package fr.javaquest.entity.weaponRenderer;
+package fr.javaquest.entity.equipments.weapons;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
-import fr.javaquest.equipments.weapons.Weapon;
 
 import java.util.List;
 import java.util.Objects;

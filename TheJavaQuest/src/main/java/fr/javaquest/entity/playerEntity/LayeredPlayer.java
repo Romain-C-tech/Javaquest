@@ -1,14 +1,13 @@
-package fr.javaquest.entity.layerPlayer;
+package fr.javaquest.entity.playerEntity;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
-import fr.javaquest.entity.shieldRenderer.ShieldRenderer;
-import fr.javaquest.entity.weaponRenderer.WeaponRenderer;
+import fr.javaquest.entity.equipments.weapons.WeaponRenderer;
 
-public class LayeredCharacter {
+public class LayeredPlayer {
 
     private Animation<TextureRegion> idle;
     private Animation<TextureRegion> run;
@@ -28,7 +27,7 @@ public class LayeredCharacter {
     private WeaponRenderer weapon;
     private ShieldRenderer shield;
 
-    public LayeredCharacter() {
+    public LayeredPlayer() {
 
         idle = load(
             "Asset/PixelCrawlerFreePack/Entities/Npcs/Knight/Idle/Idle-Sheet.png",

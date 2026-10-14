@@ -3,7 +3,7 @@ package fr.javaquest.inputs;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import fr.javaquest.entity.Entity;
-import fr.javaquest.entity.PlayerEntity.Player;
+import fr.javaquest.entity.playerEntity.Player;
 
 import java.util.List;
 

@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Disposable;
-import fr.javaquest.entity.PlayerEntity.Player;
+import fr.javaquest.entity.playerEntity.Player;
 
 public class PlayerPos  extends Actor implements Disposable {
     protected Player player;

@@ -1,19 +1,15 @@
-package fr.javaquest.entity.PlayerEntity;
+package fr.javaquest.entity.playerEntity;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import fr.javaquest.entity.Entity;
-import fr.javaquest.entity.enemies.Enemy;
-import fr.javaquest.entity.enemies.TrainingDummy;
 import com.badlogic.gdx.utils.Array;
 import fr.javaquest.MapViewer;
-import fr.javaquest.entity.weaponRenderer.WeaponRenderer;
-import fr.javaquest.equipments.armors.Armor;
-import fr.javaquest.equipments.armors.ArmorSlot;
-import fr.javaquest.equipments.weapons.Weapon;
+import fr.javaquest.entity.equipments.weapons.WeaponRenderer;
+import fr.javaquest.entity.equipments.armors.Armor;
+import fr.javaquest.entity.equipments.armors.ArmorSlot;
+import fr.javaquest.entity.equipments.weapons.Weapon;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import fr.javaquest.entity.layerPlayer.*;
 
 import java.util.List;
 
@@ -22,7 +18,7 @@ public class Player extends Entity {
     private static final float JUMP_SPEED = 400f;
     private static final float GRAVITY = 1000f;
 
-    private final LayeredCharacter visual;
+    private final LayeredPlayer visual;
     private float attackCooldown = 0f;
     private float velocityY = 0;
     private boolean onGround = true;
@@ -33,7 +29,7 @@ public class Player extends Entity {
 
     public Player(float x, float y, MapViewer mapViewer) {
         super(200,5 ,200f,1F,null, x, y);
-        visual = new LayeredCharacter();
+        visual = new LayeredPlayer();
         this.mapViewer = mapViewer;
     }
 

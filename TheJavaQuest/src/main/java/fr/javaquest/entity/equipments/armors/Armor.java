@@ -1,7 +1,7 @@
-package fr.javaquest.equipments.armors;
+package fr.javaquest.entity.equipments.armors;
 
-import fr.javaquest.equipments.Equipment;
-import fr.javaquest.equipments.Rarity;
+import fr.javaquest.entity.equipments.Equipment;
+import fr.javaquest.entity.equipments.Rarity;
 
 public class Armor implements Equipment {
     private final ArmorData data;

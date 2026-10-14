@@ -1,4 +1,4 @@
-package fr.javaquest.entity.shieldRenderer;
+package fr.javaquest.entity.playerEntity;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;

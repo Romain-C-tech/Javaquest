@@ -1,4 +1,4 @@
-package fr.javaquest.equipments.armors;
+package fr.javaquest.entity.equipments.armors;
 
 
 public class ArmorData {
