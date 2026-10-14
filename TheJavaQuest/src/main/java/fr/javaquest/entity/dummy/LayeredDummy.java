@@ -1,7 +1,7 @@
 package fr.javaquest.entity.dummy;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import fr.javaquest.entity.npc.NpcRenderer;
+import fr.javaquest.entity.npc.npcRenderer.NpcRenderer;
 
 public class LayeredDummy extends Dummy {
 
