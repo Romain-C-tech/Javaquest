@@ -14,7 +14,6 @@ import fr.javaquest.entity.enemies.LayeredEnemy;
 import fr.javaquest.entity.dummy.Dummy;
 import fr.javaquest.entity.dummy.DummyRegistery;
 import fr.javaquest.entity.dummy.LayeredDummy;
-import fr.javaquest.entity.enemies.*;
 import fr.javaquest.equipments.Rarity;
 import fr.javaquest.equipments.armors.Armor;
 import fr.javaquest.equipments.armors.ArmorRegistry;
@@ -52,7 +51,7 @@ public class GameScreen extends ScreenAdapter {
         spawnDummy();
     }
 
-    private void changeMap (String mapPath, float spawnX, float spawnY){
+    private void changeMap(String mapPath, float spawnX, float spawnY) {
         MapViewer oldMap = mapViewer;
         for (Enemy enemy : enemies) enemy.dispose();
         enemies.clear();
@@ -64,36 +63,37 @@ public class GameScreen extends ScreenAdapter {
         player.setPosition(spawnX, spawnY);
         Rectangle hitbox = player.getHitbox();
         gameCamera.follow(
-            hitbox.x + hitbox.width / 2f,
-            hitbox.y + hitbox.height / 2f
+                hitbox.x + hitbox.width / 2f,
+                hitbox.y + hitbox.height / 2f
         );
         oldMap.dispose();
     }
-    private void checkTeleportToForest(){
-        for (Rectangle rectangle : mapViewer.getForestTeleportRectangles()){
-            if (rectangle.overlaps(player.getHitbox()) && Gdx.input.isKeyPressed(Keys.E)){
+
+    private void checkTeleportToForest() {
+        for (Rectangle rectangle : mapViewer.getForestTeleportRectangles()) {
+            if (rectangle.overlaps(player.getHitbox()) && Gdx.input.isKeyPressed(Keys.E)) {
                 changeMap(
-                    "Map/ForestMap/ForestMap.tmx",
-                    100,
-                    190);
+                        "Map/ForestMap/ForestMap.tmx",
+                        100,
+                        190);
+                spawnEnemies();
                 return;
             }
         }
     }
 
-    private  void checkTeleportToVillage(){
-        for (Rectangle rectangle : mapViewer.getTeleportToVillageRectangles()){
-            if (rectangle.overlaps(player.getHitbox())&& Gdx.input.isKeyPressed(Keys.E)){
+    private void checkTeleportToVillage() {
+        for (Rectangle rectangle : mapViewer.getTeleportToVillageRectangles()) {
+            if (rectangle.overlaps(player.getHitbox()) && Gdx.input.isKeyPressed(Keys.E)) {
                 changeMap(
-                    "Map/VillageMap/FirstMap.tmx",
-                    100,
-                    350);
+                        "Map/VillageMap/FirstMap.tmx",
+                        100,
+                        350);
                 spawnDummy();
                 return;
             }
         }
     }
-
 
 
     public void equipPlayer() {
@@ -108,12 +108,7 @@ public class GameScreen extends ScreenAdapter {
     }
 
     public void spawnEnemies() {
-        spawnNpc("training_dummy", 400, 192);
         spawnEnemy("wild_boar", 300, 192);
-    }
-
-    }
-    private void spawnNpc(String id, float x, float y) {
     }
 
     private void spawnEnemy(String id, float x, float y) {

@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import fr.javaquest.MapViewer;
 import fr.javaquest.entity.Entity;
+import fr.javaquest.entity.HitboxSize;
 import fr.javaquest.entity.PlayerEntity.PlayerSteerable;
 import fr.javaquest.entity.enemies.ai.EnemyState;
 import fr.javaquest.entity.enemies.ai.EnemySteerable;
