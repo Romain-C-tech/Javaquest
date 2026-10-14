@@ -75,8 +75,8 @@ public class GameScreen extends ScreenAdapter {
                 changeMap(
                         "Map/ForestMap/ForestMap.tmx",
                         100,
-                        190);
-                spawnEnemies();
+                        192);
+                spawnGladeEnemies();
                 return;
             }
         }
@@ -107,8 +107,18 @@ public class GameScreen extends ScreenAdapter {
         dummies.add(new LayeredDummy(DummyRegistery.get("training_dummy"), 400, 347));
     }
 
-    public void spawnEnemies() {
-        spawnEnemy("wild_boar", 300, 192);
+    public void spawnGladeEnemies() {
+        spawnEnemy("wild_boar", 320, 288);
+        spawnEnemy("wild_boar", 320,192);
+        spawnEnemy("wild_boar", 100,415);
+        spawnEnemy("wild_boar", 640,478);
+        spawnEnemy("wild_boar", 580,478);
+        spawnEnemy("wild_boar", 988,640);
+        spawnEnemy("wild_boar", 1200,318);
+        spawnEnemy("wild_boar", 1250,318);
+        spawnEnemy("wild_boar", 1800,349);
+        spawnEnemy("wild_boar", 1600,542);
+        spawnEnemy("wild_boar", 1650,542);
     }
 
     private void spawnEnemy(String id, float x, float y) {
