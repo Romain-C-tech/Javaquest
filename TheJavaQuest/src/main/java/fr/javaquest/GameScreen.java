@@ -117,8 +117,11 @@ public class GameScreen extends ScreenAdapter {
         spawnEnemy("wild_boar", 1200,318);
         spawnEnemy("wild_boar", 1250,318);
         spawnEnemy("wild_boar", 1800,349);
+        spawnEnemy("wild_boar", 1550,542);
         spawnEnemy("wild_boar", 1600,542);
         spawnEnemy("wild_boar", 1650,542);
+        spawnEnemy("wild_boar", 1700,542);
+        spawnEnemy("wild_boar", 2750,192);
     }
 
     private void spawnEnemy(String id, float x, float y) {

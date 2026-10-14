@@ -1,16 +1,39 @@
 [
   {
-    "id": "training_dummy",
-    "name": "Mannequin d'entraînement",
-    "hp": 100,
-    "damage": 0,
-    "movementSpeed": 0,
-    "attackSpeed": 0,
+    "id": "wild_boar",
+    "name": "Sanglier sauvage",
+    "hp": 40,
+    "damage": 10,
+    "movementSpeed": 100,
+    "attackSpeed": 1,
     "hitbox": {
       "width": 24,
       "height": 40
-    },
-    "renderFile": "Asset/PixelCrawlerFreePack/Entities/Npcs/Dummy/Dummy.png"
+    }
+  },
+  {
+    "id": "wild_boar_black",
+    "name": "Sanglier Noir sauvage",
+    "hp": 80,
+    "damage": 15,
+    "movementSpeed": 100,
+    "attackSpeed": 1,
+    "hitbox": {
+      "width": 24,
+      "height": 40
+    }
+  },
+  {
+    "id": "wild_white_boar",
+    "name": "Sanglier Albinos sauvage",
+    "hp": 60,
+    "damage": 12,
+    "movementSpeed": 100,
+    "attackSpeed": 1,
+    "hitbox": {
+      "width": 24,
+      "height": 40
+    }
   },
   {
     "id": "wild_boar",
@@ -24,4 +47,5 @@
       "height": 40
     }
   }
+
 ]
