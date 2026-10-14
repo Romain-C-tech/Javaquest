@@ -111,17 +111,17 @@ public class GameScreen extends ScreenAdapter {
         spawnEnemy("wild_boar", 320, 288);
         spawnEnemy("wild_boar", 320,192);
         spawnEnemy("wild_boar", 100,415);
-        spawnEnemy("wild_boar", 640,478);
-        spawnEnemy("wild_boar", 580,478);
-        spawnEnemy("wild_boar", 988,640);
-        spawnEnemy("wild_boar", 1200,318);
-        spawnEnemy("wild_boar", 1250,318);
-        spawnEnemy("wild_boar", 1800,349);
-        spawnEnemy("wild_boar", 1550,542);
-        spawnEnemy("wild_boar", 1600,542);
-        spawnEnemy("wild_boar", 1650,542);
-        spawnEnemy("wild_boar", 1700,542);
-        spawnEnemy("wild_boar", 2750,192);
+        spawnEnemy("wild_white_boar", 640,478);
+        spawnEnemy("wild_white_boar", 580,478);
+        spawnEnemy("wild_white_boar", 988,640);
+        spawnEnemy("wild_black_boar", 1200,318);
+        spawnEnemy("wild_black_boar", 1250,318);
+        spawnEnemy("wild_black_boar", 1800,349);
+        spawnEnemy("wild_black_boar", 1550,542);
+        spawnEnemy("wild_black_boar", 1600,542);
+        spawnEnemy("wild_black_boar", 1650,542);
+        spawnEnemy("wild_black_boar", 1700,542);
+        spawnEnemy("troll_skull_breaker", 2750,192);
     }
 
     private void spawnEnemy(String id, float x, float y) {

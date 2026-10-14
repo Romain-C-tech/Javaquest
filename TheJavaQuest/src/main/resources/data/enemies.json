@@ -4,7 +4,7 @@
     "name": "Sanglier sauvage",
     "hp": 40,
     "damage": 10,
-    "movementSpeed": 100,
+    "movementSpeed": 75,
     "attackSpeed": 1,
     "hitbox": {
       "width": 24,
@@ -12,7 +12,7 @@
     }
   },
   {
-    "id": "wild_boar_black",
+    "id": "wild_black_boar",
     "name": "Sanglier Noir sauvage",
     "hp": 80,
     "damage": 15,
@@ -28,7 +28,7 @@
     "name": "Sanglier Albinos sauvage",
     "hp": 60,
     "damage": 12,
-    "movementSpeed": 100,
+    "movementSpeed": 75,
     "attackSpeed": 1,
     "hitbox": {
       "width": 24,
@@ -36,15 +36,15 @@
     }
   },
   {
-    "id": "wild_boar",
-    "name": "Sanglier sauvage",
-    "hp": 40,
-    "damage": 10,
-    "movementSpeed": 100,
-    "attackSpeed": 1,
+    "id": "troll_skull_breaker",
+    "name": "Troll Brise-Crâne",
+    "hp": 400,
+    "damage": 50,
+    "movementSpeed": 30,
+    "attackSpeed": 0.2,
     "hitbox": {
-      "width": 24,
-      "height": 40
+      "width": 72,
+      "height": 80
     }
   }
 
