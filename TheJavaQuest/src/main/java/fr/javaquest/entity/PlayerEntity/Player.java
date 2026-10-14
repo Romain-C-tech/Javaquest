@@ -1,8 +1,11 @@
-package fr.javaquest.entity;
+package fr.javaquest.entity.PlayerEntity;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import fr.javaquest.entity.Entity;
+import fr.javaquest.entity.enemies.Enemy;
+import fr.javaquest.entity.enemies.TrainingDummy;
 import com.badlogic.gdx.utils.Array;
 import fr.javaquest.MapViewer;
 import fr.javaquest.entity.weaponRenderer.WeaponRenderer;
@@ -29,7 +32,7 @@ public class Player extends Entity {
     private MapViewer mapViewer;
 
     public Player(float x, float y, MapViewer mapViewer) {
-        super(100,5 ,200f,1F,null, x, y);
+        super(200,5 ,200f,1F,null, x, y);
         visual = new LayeredCharacter();
         this.mapViewer = mapViewer;
     }
@@ -116,6 +119,10 @@ public class Player extends Entity {
             total += armor.getHp();
         }
         return total;
+    }
+
+    public float getVelocityY() {
+        return velocityY;
     }
 
     @Override
