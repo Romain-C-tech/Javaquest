@@ -1,27 +1,51 @@
 [
   {
-    "id": "training_dummy",
-    "name": "Mannequin d'entraînement",
-    "hp": 100,
-    "damage": 0,
-    "movementSpeed": 0,
-    "attackSpeed": 0,
-    "hitbox": {
-      "width": 24,
-      "height": 40
-    },
-    "renderFile": "Asset/PixelCrawlerFreePack/Entities/Npcs/Dummy/Dummy.png"
-  },
-  {
     "id": "wild_boar",
     "name": "Sanglier sauvage",
     "hp": 40,
     "damage": 10,
+    "movementSpeed": 75,
+    "attackSpeed": 1,
+    "hitbox": {
+      "width": 24,
+      "height": 40
+    }
+  },
+  {
+    "id": "wild_black_boar",
+    "name": "Sanglier Noir sauvage",
+    "hp": 80,
+    "damage": 15,
     "movementSpeed": 100,
     "attackSpeed": 1,
     "hitbox": {
       "width": 24,
       "height": 40
     }
+  },
+  {
+    "id": "wild_white_boar",
+    "name": "Sanglier Albinos sauvage",
+    "hp": 60,
+    "damage": 12,
+    "movementSpeed": 75,
+    "attackSpeed": 1,
+    "hitbox": {
+      "width": 24,
+      "height": 40
+    }
+  },
+  {
+    "id": "troll_skull_breaker",
+    "name": "Troll Brise-Crâne",
+    "hp": 400,
+    "damage": 50,
+    "movementSpeed": 30,
+    "attackSpeed": 0.2,
+    "hitbox": {
+      "width": 72,
+      "height": 80
+    }
   }
+
 ]

@@ -1,4 +1,4 @@
-package fr.javaquest.hud;
+package fr.javaquest.hud.components;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
