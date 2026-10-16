@@ -37,11 +37,13 @@ public class GameScreen extends ScreenAdapter {
     private final List<Dummy> dummies = new ArrayList<>();
     private final KeyboardInputs inputs;
     private final Hud hud;
+    private final Game javaQuest;
 
-    public GameScreen() {
+    public GameScreen(Game javaQuest) {
+        this.javaQuest = javaQuest;
         mapViewer = new MapViewer("Map/VillageMap/FirstMap.tmx");
         gameCamera = new GameCamera(640f, 360f, mapViewer.getWidth(), mapViewer.getHeight());
-        player = new Player(100, 350, mapViewer);
+        player = new Player(100, 355, mapViewer);
         inputs = new KeyboardInputs(player, enemies);
         playerSteerable = new PlayerSteerable(player, inputs);
         batch = new SpriteBatch();
@@ -49,6 +51,11 @@ public class GameScreen extends ScreenAdapter {
 
         equipPlayer();
         spawnDummy();
+    }
+
+    @Override
+    public void show() {
+        super.show();
     }
 
     private void changeMap(String mapPath, float spawnX, float spawnY) {
@@ -75,7 +82,7 @@ public class GameScreen extends ScreenAdapter {
                 changeMap(
                         "Map/ForestMap/ForestMap.tmx",
                         100,
-                        192);
+                        195);
                 spawnForestEnemies();
                 return;
             }
@@ -130,7 +137,11 @@ public class GameScreen extends ScreenAdapter {
 
     @Override
     public void render(float delta) {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) Gdx.app.exit();
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+            javaQuest.setScreen(javaQuest.getMenuScreen());
+            javaQuest.pause();
+            return;
+        }
 
         inputs.update(delta);
         player.update(delta);
