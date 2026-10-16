@@ -97,6 +97,16 @@ public class GameScreen extends ScreenAdapter {
         }
     }
 
+    private void checkRestoreLife(){
+        for (Rectangle rectangle : mapViewer.getRestoreLifeRectangle()){
+            if (rectangle.overlaps(player.getHitbox())){
+                player.restoreLife(1);
+                System.out.println(player.getHp());
+            }
+            return;
+        }
+    }
+
 
     public void equipPlayer() {
         player.equip(new Weapon(WeaponRegistry.get("iron_sword"), Rarity.NORMAL));
@@ -146,6 +156,7 @@ public class GameScreen extends ScreenAdapter {
 
         checkTeleportToForest();
         checkTeleportToVillage();
+        checkRestoreLife();
 
         player.keepInside(mapViewer.getWidth(), mapViewer.getHeight());
 

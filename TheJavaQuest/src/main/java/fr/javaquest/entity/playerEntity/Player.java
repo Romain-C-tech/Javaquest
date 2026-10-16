@@ -32,6 +32,11 @@ public class Player extends Entity {
         visual = new LayeredPlayer();
         this.mapViewer = mapViewer;
     }
+    public void restoreLife(int restorehp){
+        if (this.hp < getMaxHp()){
+            this.hp += restorehp;
+        }
+    }
 
     private boolean canMoveTo(float nextX, float nextY){
         Rectangle nextHitbox = new Rectangle(nextX, nextY, hitbox.width, hitbox.height);
@@ -76,6 +81,8 @@ public class Player extends Entity {
 
     public void equip(Armor armor) {
         armors.put(armor.getSlot(), armor);
+        maxHp += armor.getHp();
+        hp += armor.getHp();
     }
 
     public Armor unequip(ArmorSlot slot) {
