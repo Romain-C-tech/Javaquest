@@ -25,7 +25,6 @@ public abstract class Enemy extends Entity {
     protected boolean onGround = true;
     protected final EnemyData data;
     protected final MapViewer mapViewer;
-    protected final Rectangle visual;
     private final EnemySteerable steerable;
     private SteeringBehavior<Vector2> steeringBehavior;
     private final SteeringAcceleration<Vector2> steeringAcceleration;
@@ -43,7 +42,6 @@ public abstract class Enemy extends Entity {
 
         this.steerable = new EnemySteerable(this);
         this.steeringAcceleration = new SteeringAcceleration<>(new Vector2());
-        this.visual = new Rectangle(x, y, 20, 20); // TODO : replace by visual size.
         this.mapViewer = mapViewer;
 
         initPursueSteeringBehavior(this.targetSteerable);
@@ -55,29 +53,12 @@ public abstract class Enemy extends Entity {
         return new Weapon(WeaponRegistry.get(data.weapon), data.weaponRarity);
     }
 
-    public void setSteeringBehavior(SteeringBehavior<Vector2> behavior) {
-        this.steeringBehavior = behavior;
-    }
-
-    public EnemySteerable getSteerable() {
-        return steerable;
-    }
-
-    public SteeringBehavior<Vector2> getPursueBehavior() {
-        return this.pursueBehavior;
-    }
-
-    public PlayerSteerable getTargetSteerable() {
-        return targetSteerable;
-    }
-
-    public DefaultStateMachine<Enemy, EnemyState> getStateMachine() {
-        return stateMachine;
-    }
-
-    public void setFacingRight(boolean facingRight) {
-        isFacingRight = facingRight;
-    }
+    public void setSteeringBehavior(SteeringBehavior<Vector2> behavior) {this.steeringBehavior = behavior;}
+    public EnemySteerable getSteerable() {return steerable;}
+    public SteeringBehavior<Vector2> getPursueBehavior() {return this.pursueBehavior;}
+    public PlayerSteerable getTargetSteerable() {return targetSteerable;}
+    public DefaultStateMachine<Enemy, EnemyState> getStateMachine() {return stateMachine;}
+    public void setFacingRight(boolean facingRight) {isFacingRight = facingRight;}
 
     public void initPursueSteeringBehavior(PlayerSteerable playerSteerable) {
         this.targetSteerable = playerSteerable;
@@ -113,32 +94,6 @@ public abstract class Enemy extends Entity {
         return attackCooldown <= 0 && attackSpeed > 0f;
     }
 
-    private boolean canMoveTo(float nextX, float nextY) {
-        Rectangle nextHitbox = new Rectangle(nextX, nextY, hitbox.width, hitbox.height);
-        return !mapViewer.collides(nextHitbox);
-    }
-
-    private boolean canMoveHorizontally() {
-        return false;
-    }
-
-    private boolean canMoveRight(float delta) {
-        float nextX = hitbox.x + movementSpeed * delta;
-        if (canMoveTo(nextX, hitbox.y)) {
-            hitbox.x = nextX;
-            return true;
-        }
-        return false;
-    }
-
-    private boolean canMoveLeft(float delta) {
-        float nextX = hitbox.x - movementSpeed * delta;
-        if (canMoveTo(nextX, hitbox.y)) {
-            hitbox.x = nextX;
-            return true;
-        }
-        return false;
-    }
 
     @Override
     public void update(float delta) {
