@@ -53,11 +53,6 @@ public class GameScreen extends ScreenAdapter {
         spawnDummy();
     }
 
-    @Override
-    public void show() {
-        super.show();
-    }
-
     private void changeMap(String mapPath, float spawnX, float spawnY) {
         MapViewer oldMap = mapViewer;
         for (Enemy enemy : enemies) enemy.dispose();
