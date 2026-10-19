@@ -187,6 +187,9 @@ public class Player extends Entity {
 
         visual.draw(batch);
     }
+    public void setMapViewer(MapViewer mapViewer){
+        this.mapViewer = mapViewer;
+    }
 
     public void dispose() {
         visual.dispose();

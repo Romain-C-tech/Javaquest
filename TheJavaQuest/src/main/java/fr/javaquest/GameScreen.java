@@ -61,7 +61,7 @@ public class GameScreen extends ScreenAdapter {
         dummies.clear();
         mapViewer = new MapViewer(mapPath);
         gameCamera.setMapSize(mapViewer.getWidth(), mapViewer.getHeight());
-        player.setMap(mapViewer);
+        player.setMapViewer(mapViewer);
         player.setPosition(spawnX, spawnY);
         Rectangle hitbox = player.getHitbox();
         gameCamera.follow(
@@ -77,7 +77,7 @@ public class GameScreen extends ScreenAdapter {
                 changeMap(
                         "Map/ForestMap/ForestMap.tmx",
                         100,
-                        195);
+                        190);
                 spawnForestEnemies();
                 return;
             }
