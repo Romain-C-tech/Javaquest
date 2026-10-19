@@ -81,8 +81,6 @@ public class Player extends Entity {
 
     public void equip(Armor armor) {
         armors.put(armor.getSlot(), armor);
-        maxHp += armor.getHp();
-        hp += armor.getHp();
     }
 
     public Armor unequip(ArmorSlot slot) {
@@ -174,10 +172,6 @@ public class Player extends Entity {
         visual.update(delta);
 
         if (attackCooldown > 0f) attackCooldown -= delta;
-    }
-
-    public void setMap(MapViewer mapViewer){
-        this.mapViewer = mapViewer;
     }
 
     public void setPosition(float x, float y){
