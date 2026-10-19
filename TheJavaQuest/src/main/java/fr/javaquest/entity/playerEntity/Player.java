@@ -31,6 +31,11 @@ public class Player extends Entity {
         visual = new LayeredPlayer();
         this.mapViewer = mapViewer;
     }
+    public void restoreLife(int restorehp){
+        if (this.hp < getMaxHp()){
+            this.hp += restorehp;
+        }
+    }
 
     private boolean canMoveTo(float nextX, float nextY){
         Rectangle nextHitbox = new Rectangle(nextX, nextY, hitbox.width, hitbox.height);
@@ -166,10 +171,6 @@ public class Player extends Entity {
         visual.update(delta);
 
         if (attackCooldown > 0f) attackCooldown -= delta;
-    }
-
-    public void setMap(MapViewer mapViewer){
-        this.mapViewer = mapViewer;
     }
 
     public void setPosition(float x, float y){

@@ -58,6 +58,10 @@ public class HealthOrb extends Actor implements Disposable {
     @Override
     public void dispose() { texCadre.dispose(); texLiquide.dispose(); }
 
+    public void setMax(float maxHp){
+
+    }
+
     public void setEchelle(int e) {
         setSize(texCadre.getWidth() * e, texCadre.getHeight() * e);
     }
