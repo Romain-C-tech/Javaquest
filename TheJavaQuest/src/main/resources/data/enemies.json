@@ -9,7 +9,9 @@
     "hitbox": {
       "width": 24,
       "height": 40
-    }
+    },
+    "renderFileRun" : "Asset/PixelCrawlerFreePack/Entities/Mobs/Boar/Run/Run-Sheet.png",
+    "renderFileGetHit" : "Asset/PixelCrawlerFreePack/Entities/Mobs/Boar/Hit-Vanish/Hit-Sheet.png"
   },
   {
     "id": "wild_black_boar",
@@ -21,7 +23,9 @@
     "hitbox": {
       "width": 24,
       "height": 40
-    }
+    },
+    "renderFileRun" : "Asset/PixelCrawlerFreePack/Entities/Mobs/Boar/Run/Run-Sheet-Black.png",
+    "renderFileGetHit" : "Asset/PixelCrawlerFreePack/Entities/Mobs/Boar/Hit-Vanish/Hit-Black.png"
   },
   {
     "id": "wild_white_boar",
@@ -33,19 +37,24 @@
     "hitbox": {
       "width": 24,
       "height": 40
-    }
+    },
+    "renderFileRun" : "Asset/PixelCrawlerFreePack/Entities/Mobs/Boar/Run/Run-Sheet-White.png",
+    "renderFileGetHit" : "Asset/PixelCrawlerFreePack/Entities/Mobs/Boar/Hit-Vanish/Hit-Sheet-White.png"
   },
   {
-    "id": "troll_skull_breaker",
-    "name": "Troll Brise-Crâne",
-    "hp": 400,
+    "id": "frappe_moi_fort_pls",
+    "name": "Grosse Trolleuse",
+    "hp": 4000,
     "damage": 50,
-    "movementSpeed": 30,
-    "attackSpeed": 0.2,
+    "movementSpeed": 300,
+    "attackSpeed": 0.4,
     "hitbox": {
       "width": 72,
       "height": 80
-    }
+    },
+    "renderFileRun" : "Asset/PixelCrawlerFreePack/Entities/Characters/Body_A/Animations/Run_Base/Run_Side-Sheet.png",
+    "renderFileGetHit" : "Asset/PixelCrawlerFreePack/Entities/Characters/Body_A/Animations/Walk_Base/Hit-Sheet.png",
+    "renderfileHit" : "Asset/PixelCrawlerFreePack/Entities/Characters/Body_A/Animations/Slice_Base/Slice_Side.png"
   }
 
 ]

@@ -1,11 +1,16 @@
 package fr.javaquest.entity.enemies;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import fr.javaquest.MapViewer;
 import fr.javaquest.entity.playerEntity.PlayerSteerable;
 import fr.javaquest.entity.playerEntity.LayeredPlayer;
 
 public class LayeredEnemy extends Enemy {
+
+    private Animation<TextureRegion> run;
+    private Animation<TextureRegion> death;
 
     private final LayeredPlayer character;
 
