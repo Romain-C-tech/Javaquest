@@ -16,7 +16,6 @@ import java.util.List;
 public class Player extends Entity {
 
     private static final float JUMP_SPEED = 400f;
-    private static final float GRAVITY = 1000f;
 
     private final LayeredPlayer visual;
     private float attackCooldown = 0f;
