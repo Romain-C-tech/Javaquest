@@ -1,6 +1,6 @@
 package fr.javaquest.entity;
 
 public class HitboxSize {
-    public float width, height;
+    public int width, height;
     public HitboxSize() {}
 }

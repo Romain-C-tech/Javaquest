@@ -121,7 +121,7 @@ public class GameScreen extends ScreenAdapter {
         spawnEnemy("wild_black_boar", 1600,542);
         spawnEnemy("wild_black_boar", 1650,542);
         spawnEnemy("wild_black_boar", 1700,542);
-        spawnEnemy("troll_skull_breaker", 2750,192);
+        spawnEnemy("red_eyes_grizzly_boss", 2750,192);
     }
 
     private void spawnEnemy(String id, float x, float y) {
@@ -149,7 +149,7 @@ public class GameScreen extends ScreenAdapter {
         Iterator<Enemy> it = enemies.iterator();
         while (it.hasNext()) {
             Enemy enemy = it.next();
-            if (enemy.isDead()) {
+            if (enemy.isRemovable()) {
                 enemy.dispose();
                 it.remove();
             }

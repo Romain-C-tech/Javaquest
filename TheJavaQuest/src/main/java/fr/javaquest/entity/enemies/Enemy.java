@@ -168,6 +168,9 @@ public abstract class Enemy extends Entity {
         }
         return collision;
     }
+    public boolean isRemovable() {
+        return isDead();
+    }
 
     public abstract void render(SpriteBatch batch);
     public abstract void dispose();
