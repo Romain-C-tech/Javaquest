@@ -10,6 +10,16 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Array;
 
+/**
+ * Affichage de la carte.
+ * <p>
+ *     Récupération des zones de collisions.
+ *     Zones récupérées pour limiter les déplacements du joueur et des ennemis,
+ *     avoir une zone pour récupérer des points de vie, permettre la téléportation sur d'autres cartes.
+ * </p>
+ *
+ * @author ssamepi
+ */
 public class MapViewer {
     private final TiledMap map;
     private final OrthogonalTiledMapRenderer renderer;
@@ -20,7 +30,6 @@ public class MapViewer {
     private final Array<Rectangle> collisionsRectangles = new Array<>();
     private final Array<Rectangle> teleportToForestRectangles = new Array<>();
     private final Array<Rectangle> teleportToVillageRectangles = new Array<>();
-
 
     public MapViewer(String mapPath) {
         map = new TmxMapLoader().load(mapPath);

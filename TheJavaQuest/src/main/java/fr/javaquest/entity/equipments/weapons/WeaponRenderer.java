@@ -8,6 +8,14 @@ import com.badlogic.gdx.utils.Array;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Animation d'attaque et Affichage pour chaque arme.
+ * <p>
+ *     L'arme de base est la SwordIron.
+ *     Le joueur peux changer d'arme.
+ *
+ * </p>
+ */
 public class WeaponRenderer {
 
     private Animation<TextureRegion> CurrentWeapon;
@@ -125,7 +133,17 @@ public class WeaponRenderer {
 
     public void setCurrentWeapon(Animation<TextureRegion> currentWeapon) {this.CurrentWeapon = currentWeapon; }
 
-
+    /**
+     * Chargement du png, découpage en plusieurs images et joue l'animation.
+     *
+     * @param file est le chemin où le png est stocké.
+     * @param frameTime est la durée d'animation en seconde pour chaque image.
+     * @param from est l'indice de la première image.
+     * @param to est l'indice de la dernière image.
+     * @param frameWidth est la largeur de chaque image découpée.
+     * @param frameHeight est la hauteur de chaque image découpée.
+     * @return joue l'animation
+     */
     private Animation<TextureRegion> load(
             String file,
         float frameTime,
@@ -181,6 +199,13 @@ public class WeaponRenderer {
         attackTime = 0f;
     }
 
+    /**
+     * Joue l'animation d'attaque.
+     *
+     * @param delta Le temps en secondes depuis le dernier rendu.
+     *
+     * @author ssamepi
+     */
     public void updateAnimation(float delta) {
         if (!attacking) return;
 

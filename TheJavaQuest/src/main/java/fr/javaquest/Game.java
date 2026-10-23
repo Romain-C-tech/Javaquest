@@ -1,17 +1,50 @@
 package fr.javaquest;
 
+import com.badlogic.gdx.Screen;
 import fr.javaquest.entity.dummy.DummyRegistery;
 import fr.javaquest.entity.enemies.EnemyRegistry;
 import fr.javaquest.entity.equipments.armors.ArmorRegistry;
 import fr.javaquest.entity.equipments.weapons.WeaponRegistry;
 
+/**
+ * Gestion de l'affichage du menu et du jeu.
+ *
+ * @author ssamepi, Romain-C-tech
+ */
 public class Game extends com.badlogic.gdx.Game {
+    private GameScreen gameScreen;
+    private SceneUI menuScreen;
+
+    /**
+     * Chargement des armes/armures/ennemis/mannequin/menu pour le premier affichage.
+     *
+     * @author ssamepi, Romain-C-tech
+     */
     @Override
     public void create() {
         WeaponRegistry.load();
         ArmorRegistry.load();
         EnemyRegistry.load();
         DummyRegistery.load();
-        setScreen(new GameScreen());
+        setScreen(getMenuScreen());
+    }
+    public GameScreen getGameScreen(){
+        return gameScreen;
+    }
+    public void setGameScreen(GameScreen gameScreen){
+        this.gameScreen = gameScreen;
+    }
+
+    /**
+     * Création d'un menu ou réutilisation d'un menu existant.
+     *
+     * @return pour avoir le menu.
+     * @author ssamepi
+     */
+    public Screen getMenuScreen() {
+        if (menuScreen == null){
+            menuScreen = new SceneUI(this);
+        }
+        return menuScreen;
     }
 }

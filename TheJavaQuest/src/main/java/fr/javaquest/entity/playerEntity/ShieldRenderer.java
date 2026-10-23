@@ -5,6 +5,11 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
+/**
+ * Affichage du bouclier qui est équipé par le personnage.
+ *
+ * @author ssamepi
+ */
 public class ShieldRenderer {
 
     private Animation<TextureRegion> CurrentShield;
@@ -54,6 +59,16 @@ public class ShieldRenderer {
         return CurrentShield;
     }
 
+    /**
+     *
+     * @param file est le chemin où est le png.
+     * @param frameTime est la temps alloué a chaque image.
+     * @param from est l'indice de la première image découpée dans le png.
+     * @param to est l'indice de la dernière image découpée dans le png.
+     * @param frameWidth est la longueur de chaque image découpée dans le png.
+     * @param frameHeight est la hauteur de chaque image découpée dans le png.
+     * @return renvois la durée d'animation de chaque image découpée dans le png et toutes les images découpées dans une liste.
+     */
     private Animation<TextureRegion> load(
         String file,
         float frameTime,

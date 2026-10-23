@@ -7,6 +7,14 @@ import fr.javaquest.entity.playerEntity.Player;
 
 import java.util.List;
 
+/**
+ * Gestion des touches.
+ * <p>
+ *     Le joueur peux déplacer son personnage de droite a gauche, sauter et attaquer.
+ * </p>
+ *
+ * @author ssamepi
+ */
 public class KeyboardInputs {
     private final Player player;
     private final List<? extends Entity> enemies;
@@ -20,6 +28,12 @@ public class KeyboardInputs {
         this.isMovingRight = false;
     }
 
+    /**
+     * Affichage dynamique du personnage qui dépend des actions sur le clavier du joueur.
+     * @param delta est le temps en secondes entre chaque affichage.
+     *
+     * @author ssamepi
+     */
     public void update(float delta) {
         isMovingLeft = false;
         isMovingRight = false;
@@ -36,8 +50,8 @@ public class KeyboardInputs {
             isMovingRight = true;
             moving = true;
         }
-        if (Gdx.input.isKeyPressed(Keys.S)) System.out.println("Pressed S");
-        if (Gdx.input.isKeyPressed(Keys.DOWN)) System.out.println("Pressed Down arrow");
+//        if (Gdx.input.isKeyPressed(Keys.S)) System.out.println("Pressed S");
+//        if (Gdx.input.isKeyPressed(Keys.DOWN)) System.out.println("Pressed Down arrow");
         if (Gdx.input.isKeyJustPressed(Keys.SPACE) || Gdx.input.isKeyJustPressed(Keys.UP) || Gdx.input.isKeyJustPressed(Keys.W)) {
             player.jump();
             moving = true;

@@ -9,7 +9,10 @@ import fr.javaquest.entity.equipments.weapons.Weapon;
 import java.util.EnumMap;
 import java.util.Map;
 
-public abstract class Entity implements Combatant {
+/**
+ *
+ */
+public abstract class Entity implements Fighter {
 
     protected int maxHp;
     protected int hp;

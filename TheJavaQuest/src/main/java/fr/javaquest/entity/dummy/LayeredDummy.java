@@ -3,6 +3,11 @@ package fr.javaquest.entity.dummy;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import fr.javaquest.entity.npc.npcRenderer.NpcRenderer;
 
+/**
+ * Affichage du mannequin.
+ *
+ * @author ssamepi
+ */
 public class LayeredDummy extends Dummy {
 
     private NpcRenderer character;

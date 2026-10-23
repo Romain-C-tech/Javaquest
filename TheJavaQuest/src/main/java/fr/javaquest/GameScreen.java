@@ -27,6 +27,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Rendu visuel affiché sur l'écran du joueur.
+ * <p>
+ *      Permet l'affichage des différentes cartes de jeux, du joueur, l'affichage d'ennemis et le changement entre carte de jeux.
+ * </p>
+ *
+ * @author ssamepi, Romain-C-tech
+ */
+
 public class GameScreen extends ScreenAdapter {
     private MapViewer mapViewer;
     private GameCamera gameCamera;
@@ -37,11 +46,23 @@ public class GameScreen extends ScreenAdapter {
     private final List<Dummy> dummies = new ArrayList<>();
     private final KeyboardInputs inputs;
     private final Hud hud;
+    private final Game javaQuest;
 
-    public GameScreen() {
+    /**
+     * Affichage du rendu du jeu avec la carte de départ, le joueur et un mannequin d'entraînement.
+     * <p>
+     *     On retrouve le suivi de la camera centrée sur le joueur et l'emplacement initial du joueur.
+     *     Il y a également l'affichage des déplacements du joueur.
+     * </p>
+     *
+     * @param javaQuest instance de jeu qui est lancé
+     * @author ssamepi, Romain-C-tech
+     */
+    public GameScreen(Game javaQuest) {
+        this.javaQuest = javaQuest;
         mapViewer = new MapViewer("Map/VillageMap/FirstMap.tmx");
         gameCamera = new GameCamera(640f, 360f, mapViewer.getWidth(), mapViewer.getHeight());
-        player = new Player(100, 350, mapViewer);
+        player = new Player(100, 355, mapViewer);
         inputs = new KeyboardInputs(player, enemies);
         playerSteerable = new PlayerSteerable(player, inputs);
         batch = new SpriteBatch();
@@ -51,6 +72,22 @@ public class GameScreen extends ScreenAdapter {
         spawnDummy();
     }
 
+    /**
+     * Fonction qui permet de changer de carte de jeu.
+     * <p>
+     *     Destruction de toutes les anciennes entités de l'ancienne carte de jeu.
+     *     Création d'un nouveau visuel pour la carte.
+     *     La caméra prend maintenant la taille de la nouvelle carte en compte.
+     *     La position initiale du joueur est donnée en fonction de la carte.
+     *     L'ancienne carte est détruite.
+     * </p>
+     *
+     * @param mapPath chemin qui permet l'affichage de la carte.
+     * @param spawnX position x où le joueur va apparaitre.
+     * @param spawnY position y où le joueur va apparaitre.
+     *
+     * @author ssamepi
+     */
     private void changeMap(String mapPath, float spawnX, float spawnY) {
         MapViewer oldMap = mapViewer;
         for (Enemy enemy : enemies) enemy.dispose();
@@ -59,7 +96,7 @@ public class GameScreen extends ScreenAdapter {
         dummies.clear();
         mapViewer = new MapViewer(mapPath);
         gameCamera.setMapSize(mapViewer.getWidth(), mapViewer.getHeight());
-        player.setMap(mapViewer);
+        player.setMapViewer(mapViewer);
         player.setPosition(spawnX, spawnY);
         Rectangle hitbox = player.getHitbox();
         gameCamera.follow(
@@ -69,19 +106,37 @@ public class GameScreen extends ScreenAdapter {
         oldMap.dispose();
     }
 
+    /**
+     * Vérification qui permet au joueur de changer pour la carte "Forêt".
+     * <p>
+     *     On vérifie que le joueur est bien dans la zone et qu'il appuie sur E.
+     *     Si c'est le cas on change de carte et appelle la fonction qui crée le/les ennemie(s) associés à la carte.
+     * </p>
+     *
+     * @author ssamepi
+     */
     private void checkTeleportToForest() {
         for (Rectangle rectangle : mapViewer.getForestTeleportRectangles()) {
             if (rectangle.overlaps(player.getHitbox()) && Gdx.input.isKeyPressed(Keys.E)) {
                 changeMap(
                         "Map/ForestMap/ForestMap.tmx",
                         100,
-                        192);
+                        190);
                 spawnForestEnemies();
                 return;
             }
         }
     }
 
+    /**
+     * Vérification qui permet au joueur de changer pour la carte "Village".
+     * <p>
+     *     On vérifie que le joueur est bien dans la zone et qu'il appuie sur E.
+     *     Si c'est le cas on change de carte et appelle la fonction qui crée le/les ennemie(s) associés à la carte.
+     * </p>
+     *
+     * @author ssamepi
+     */
     private void checkTeleportToVillage() {
         for (Rectangle rectangle : mapViewer.getTeleportToVillageRectangles()) {
             if (rectangle.overlaps(player.getHitbox()) && Gdx.input.isKeyPressed(Keys.E)) {
@@ -95,6 +150,21 @@ public class GameScreen extends ScreenAdapter {
         }
     }
 
+    /**
+     * Vérification qui permet au joueur de récupérer des points de vie perdu.
+     * <p>
+     *     Vérification si le joueur est dans une zone donnée.
+     * </p>
+     */
+    private void checkRestoreLife(){
+        for (Rectangle rectangle : mapViewer.getRestoreLifeRectangle()){
+            if (rectangle.overlaps(player.getHitbox())){
+                player.restoreLife(1);
+            }
+            return;
+        }
+    }
+
 
     public void equipPlayer() {
         player.equip(new Weapon(WeaponRegistry.get("iron_sword"), Rarity.NORMAL));
@@ -103,10 +173,20 @@ public class GameScreen extends ScreenAdapter {
         player.equip(new Armor(ArmorRegistry.get("iron_leggings"), Rarity.NORMAL));
     }
 
+    /**
+     * Permet d'affiché un mannequin d'entrainement aux positions données.
+     *
+     * @ author Romain-C-tech
+     */
     public void spawnDummy() {
         dummies.add(new LayeredDummy(DummyRegistery.get("training_dummy"), 400, 347));
     }
 
+    /**
+     * Création des ennemies avec leur id et la position où chaque ennemi va apparaitre.
+     *
+     * @author Romain-C-tech
+     */
     public void spawnForestEnemies() {
         spawnEnemy("wild_boar", 320, 288);
         spawnEnemy("wild_boar", 320,192);
@@ -124,13 +204,37 @@ public class GameScreen extends ScreenAdapter {
         spawnEnemy("red_eyes_grizzly_boss", 2750,192);
     }
 
+    /**
+     *
+     * Permet la création d'un ennemi.
+     *
+     * @param id nom de l'ennemi
+     * @param x position de l'ennemi en x
+     * @param y position de l'ennemi en y
+     *
+     * @author Romain-C-tech
+     */
     private void spawnEnemy(String id, float x, float y) {
         enemies.add(new LayeredEnemy(EnemyRegistry.get(id), x, y, mapViewer, playerSteerable));
     }
 
+    /**
+     * Affichage dynamique (joueur/ennemis) et mise en pause du jeu possible.
+     * <p>
+     *     Gestion d'un timing pour retirer l'entité apriès avoir fait son animation de mort.
+     * </p>
+     * @param delta Le temps en secondes depuis le dernier rendu.
+     * {@link Hud}
+     *
+     * @author ssamepi, Romain-C-tech
+     */
     @Override
     public void render(float delta) {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) Gdx.app.exit();
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+            javaQuest.setScreen(javaQuest.getMenuScreen());
+            javaQuest.pause();
+            return;
+        }
 
         inputs.update(delta);
         player.update(delta);
@@ -140,6 +244,7 @@ public class GameScreen extends ScreenAdapter {
 
         checkTeleportToForest();
         checkTeleportToVillage();
+        checkRestoreLife();
 
         player.keepInside(mapViewer.getWidth(), mapViewer.getHeight());
 
