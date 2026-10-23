@@ -143,10 +143,6 @@ public class Player extends Entity {
         playerVisual.draw(batch);
     }
 
-    public void setPosition(float x, float y){
-        this.hitbox.x = x;
-        this.hitbox.y = y;
-    }
     public LayeredPlayer getVisual() {
         if (visual == null) {
             visual = new LayeredPlayer();
@@ -173,7 +169,7 @@ public class Player extends Entity {
     public void idle(){ getVisual().setIdle(); }
 
 
-    private boolean canAttack() {return attackCooldown <= 0;}
+    public boolean canAttack() {return attackCooldown <= 0;}
     @Override public int getDamage() {return super.getDamage() + (weapon != null ? weapon.getDamage() : 5);}
     public float getVelocityY() {return velocityY;}
     public void setVelocityY(float velocityY) {this.velocityY = velocityY;}
@@ -182,6 +178,7 @@ public class Player extends Entity {
     public void setOnGround(boolean onGround) {this.onGround = onGround;}
     public static float getJumpSpeed() {return JUMP_SPEED;}
     public void setVisual(LayeredPlayer visualMock) {visual = visualMock;}
+    public void setAttackCooldown(float attackCooldown) {this.attackCooldown = attackCooldown;}
 
     public void dispose() {
         if (visual != null) {
