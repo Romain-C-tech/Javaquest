@@ -33,7 +33,6 @@ import java.util.List;
 public class Player extends Entity {
 
     private static final float JUMP_SPEED = 400f;
-    private static final float GRAVITY = 1000f;
 
     private final LayeredPlayer visual;
     private float attackCooldown = 0f;
@@ -48,6 +47,11 @@ public class Player extends Entity {
         super(200,5 ,200f,1F,null, x, y);
         visual = new LayeredPlayer();
         this.mapViewer = mapViewer;
+    }
+    public void restoreLife(int restorehp){
+        if (this.hp < getMaxHp()){
+            this.hp += restorehp;
+        }
     }
 
     /**
@@ -242,10 +246,6 @@ public class Player extends Entity {
         visual.update(delta);
 
         if (attackCooldown > 0f) attackCooldown -= delta;
-    }
-
-    public void setMap(MapViewer mapViewer){
-        this.mapViewer = mapViewer;
     }
 
     public void setPosition(float x, float y){

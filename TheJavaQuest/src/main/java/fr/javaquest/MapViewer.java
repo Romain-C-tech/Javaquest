@@ -28,6 +28,7 @@ public class MapViewer {
 
     // on stock les collisions dans une liste
     private final Array<Rectangle> collisionsRectangles = new Array<>();
+    private final Array<Rectangle> restoreLifeRectangle = new Array<>();
     private final Array<Rectangle> teleportToForestRectangles = new Array<>();
     private final Array<Rectangle> teleportToVillageRectangles = new Array<>();
 
@@ -45,6 +46,7 @@ public class MapViewer {
 
     private void loadCollisions(){
         MapLayer collisionLayer = map.getLayers().get("collision");
+        MapLayer restoreLife = map.getLayers().get("restoreLife");
         MapLayer teleportToForestCollisionLayer = map.getLayers().get("ToForest");
         MapLayer teleportToVillageCollisionLayer = map.getLayers().get("ToVillage");
 
@@ -58,6 +60,17 @@ public class MapViewer {
                 if (object instanceof RectangleMapObject rectangleObject) {
                     Rectangle rectangle = rectangleObject.getRectangle();
                     collisionsRectangles.add(new Rectangle(rectangle));
+                }
+            }
+        }
+        if (restoreLife == null){
+            System.out.println("pas de zone pour restaurer sa vie");
+        }
+        else {
+            for (MapObject object : restoreLife.getObjects()){
+                if (object instanceof RectangleMapObject rectangleObject){
+                    Rectangle rectangleOfLife = rectangleObject.getRectangle();
+                    restoreLifeRectangle.add(new Rectangle(rectangleOfLife));
                 }
             }
         }
@@ -118,4 +131,5 @@ public class MapViewer {
     public Array<Rectangle> getTeleportToVillageRectangles(){
         return teleportToVillageRectangles;
     }
+    public Array<Rectangle> getRestoreLifeRectangle(){ return  restoreLifeRectangle; }
 }

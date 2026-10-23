@@ -25,7 +25,6 @@ public abstract class Enemy extends Entity {
     protected boolean onGround = true;
     protected final EnemyData data;
     protected final MapViewer mapViewer;
-    protected final Rectangle visual;
     private final EnemySteerable steerable;
     private SteeringBehavior<Vector2> steeringBehavior;
     private final SteeringAcceleration<Vector2> steeringAcceleration;
@@ -43,7 +42,6 @@ public abstract class Enemy extends Entity {
 
         this.steerable = new EnemySteerable(this);
         this.steeringAcceleration = new SteeringAcceleration<>(new Vector2());
-        this.visual = new Rectangle(x,y, 20,20); // TODO : replace by visual size.
         this.mapViewer = mapViewer;
 
         initPursueSteeringBehavior(this.targetSteerable);
@@ -58,11 +56,9 @@ public abstract class Enemy extends Entity {
     public void setSteeringBehavior(SteeringBehavior<Vector2> behavior) {this.steeringBehavior = behavior;}
     public EnemySteerable getSteerable() {return steerable;}
     public SteeringBehavior<Vector2> getPursueBehavior() {return this.pursueBehavior;}
-
     public PlayerSteerable getTargetSteerable() {return targetSteerable;}
     public DefaultStateMachine<Enemy, EnemyState> getStateMachine() {return stateMachine;}
-
-    public void setFacingRight(boolean facingRight) { isFacingRight = facingRight; }
+    public void setFacingRight(boolean facingRight) {isFacingRight = facingRight;}
 
     public void initPursueSteeringBehavior(PlayerSteerable playerSteerable) {
         this.targetSteerable = playerSteerable;
@@ -77,15 +73,15 @@ public abstract class Enemy extends Entity {
         float x = isFacingRight ? this.hitbox.x + hitboxData.width : this.hitbox.x - hitbox.width;
         float y = this.hitbox.y;
 
-        Rectangle zone = new Rectangle(x,y, hitboxData.width, hitboxData.height);
+        Rectangle zone = new Rectangle(x, y, hitboxData.width, hitboxData.height);
 
         Vector2 targetpos = targetSteerable.getPosition();
 
         float playerWidth = 32f;
         float playerHeight = 32f;
         Rectangle targetHitbox = new Rectangle(
-                targetpos.x - playerHeight /2,
-                targetpos.y - playerWidth /2,
+                targetpos.x - playerHeight / 2,
+                targetpos.y - playerWidth / 2,
                 playerWidth,
                 playerHeight);
 
@@ -98,7 +94,9 @@ public abstract class Enemy extends Entity {
         return attackCooldown <= 0 && attackSpeed > 0f;
     }
 
-    @Override public void update(float delta) {
+
+    @Override
+    public void update(float delta) {
         steerable.updatePositionFromHitbox();
 
         if (movementSpeed > 0f) {
@@ -108,38 +106,54 @@ public abstract class Enemy extends Entity {
         if (steeringBehavior != null) {
             steeringBehavior.calculateSteering(steeringAcceleration);
 
-            steerable.applySteering(steeringAcceleration,delta);
+            steerable.applySteering(steeringAcceleration, delta);
 
             if (onGround) {
                 velocityY = 0;
+            } else {
+                velocityY -= GRAVITY * delta;
             }
+            boolean collisionX = false; // Pour les collisions avec les murs.
+            boolean collisionY = false; // Pour les collisions avec le sol.
 
             float newX = hitbox.x + steerable.getLinearVelocity().x * delta;
+            Rectangle futureHitboxX = new Rectangle(newX, hitbox.y, hitbox.width, hitbox.height);
+
+            for (Rectangle collider: mapViewer.getCollisionsRectangles()) {
+                if (futureHitboxX.overlaps(collider)) {
+                    if (newX > hitbox.x) {
+                        hitbox.x = collider.x - hitbox.width;
+                        collisionX = true;
+                    } else if (newX < hitbox.x) {
+                        hitbox.x = collider.x + collider.width;
+                        collisionX = true;
+                    }
+                }
+            }
+
+            if (!collisionX) {
+                hitbox.x = newX;
+            }
+
             float newY = hitbox.y + velocityY * delta;
 
-            hitbox.x = newX;
-
-            Rectangle futureHitbox = new Rectangle(
+            Rectangle futureHitboxY = new Rectangle(
                     hitbox.x,
                     newY,
                     hitbox.width,
                     hitbox.height
             );
 
-            boolean collision = false;
-
             for (Rectangle collider : mapViewer.getCollisionsRectangles()) {
 
-                if (futureHitbox.overlaps(collider)) {
+                if (futureHitboxY.overlaps(collider)) {
 
-                    collision = isFalling(collider, collision);
-                    if (collision) break;
-
-                    collision = isJumping(collider, collision);
+                    collisionY = isFalling(collider, collisionY);
+                    if (collisionY) break;
+                    collisionY = isJumping(collider, collisionY);
                 }
             }
-
-            if (!collision) {
+            if (!collisionY) {
                 hitbox.y = newY;
                 onGround = false;
             }
@@ -173,5 +187,6 @@ public abstract class Enemy extends Entity {
     }
 
     public abstract void render(SpriteBatch batch);
+
     public abstract void dispose();
 }

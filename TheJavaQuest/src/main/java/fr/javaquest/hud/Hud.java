@@ -34,7 +34,7 @@ public class Hud implements Disposable {
         stage = new Stage(viewport, batch);
         this.player = player;
 
-        orbeVie = new HealthOrb(player.getMaxHp(),1);
+        orbeVie = new HealthOrb(510,1); // player.getMaxHp() a la place de "510" quand la vie que donne l'armure sera ajoutée au joueur
         playerPos = new PlayerPos(player);
 
         stage.addActor(orbeVie);

@@ -24,6 +24,8 @@ public abstract class Entity implements Fighter {
     protected final Map<ArmorSlot, Armor> armors = new EnumMap<>(ArmorSlot.class);
     protected Rectangle hitbox;
 
+    protected static final float GRAVITY = 1000f;
+
     public Entity(int hp, int damage, float movementSpeed, float attackSpeed, Weapon weapon, float x, float y) {
         this.hp = hp;
         this.damage = damage;
