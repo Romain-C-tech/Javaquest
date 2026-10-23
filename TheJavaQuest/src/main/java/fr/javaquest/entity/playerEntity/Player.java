@@ -53,36 +53,18 @@ public class Player extends Entity {
 
     public void moveRight(float delta) {
         float nextX = hitbox.x + movementSpeed * delta;
-        if (canMoveTo(nextX, hitbox.y)){
+        if (canMoveTo(nextX, hitbox.y)) {
             hitbox.x = nextX;
         }
         getVisual().facingRight = true;
         getVisual().setRun();
     }
-    public void idle(){ getVisual().setIdle(); }
 
     public void jump() {
         if (onGround) {
             onGround = false;
             velocityY = JUMP_SPEED;
         }
-    }
-
-    public void equip(Weapon newWeapon) {
-        weapon = newWeapon;
-    }
-
-    public void unequip() {
-        weapon = null;
-        weaponRenderer.setWeapon();
-    }
-
-    public void equip(Armor armor) {
-        armors.put(armor.getSlot(), armor);
-    }
-
-    public Armor unequip(ArmorSlot slot) {
-        return armors.remove(slot);
     }
 
     public void attack(List<? extends Entity> targets) {
@@ -99,35 +81,6 @@ public class Player extends Entity {
                 return;
             }
         }
-    }
-
-    private boolean canAttack() {
-        return attackCooldown <= 0;
-    }
-
-    public LayeredPlayer getVisual() {
-        if (visual == null) {
-            visual = new LayeredPlayer();
-        }
-        return visual;
-    }
-
-    @Override
-    public int getDamage() {
-        return super.getDamage() + (weapon != null ? weapon.getDamage() : 5);
-    }
-
-    @Override
-    public int getMaxHp() {
-        int total = 200;
-        for (Armor armor : armors.values()) {
-            total += armor.getHp();
-        }
-        return total;
-    }
-
-    public float getVelocityY() {
-        return velocityY;
     }
 
     @Override
@@ -178,10 +131,6 @@ public class Player extends Entity {
         if (attackCooldown > 0f) attackCooldown -= delta;
     }
 
-    public void setPosition(float x, float y){
-        this.hitbox.x = x;
-        this.hitbox.y = y;
-    }
     public void render(SpriteBatch batch) {
         Rectangle hb = getHitbox();
 
@@ -193,9 +142,46 @@ public class Player extends Entity {
 
         playerVisual.draw(batch);
     }
-    public void setMapViewer(MapViewer mapViewer){
-        this.mapViewer = mapViewer;
+
+    public void setPosition(float x, float y){
+        this.hitbox.x = x;
+        this.hitbox.y = y;
     }
+    public LayeredPlayer getVisual() {
+        if (visual == null) {
+            visual = new LayeredPlayer();
+        }
+        return visual;
+    }
+
+    @Override
+    public int getMaxHp() {
+        int total = 200;
+        for (Armor armor : armors.values()) {
+            total += armor.getHp();
+        }
+        return total;
+    }
+
+    public void unequip() {
+        weapon = null;
+        weaponRenderer.setWeapon();
+    }
+    public void equip(Weapon newWeapon) {weapon = newWeapon;}
+    public void equip(Armor armor) {armors.put(armor.getSlot(), armor);}
+    public Armor unequip(ArmorSlot slot) {return armors.remove(slot);}
+    public void idle(){ getVisual().setIdle(); }
+
+
+    private boolean canAttack() {return attackCooldown <= 0;}
+    @Override public int getDamage() {return super.getDamage() + (weapon != null ? weapon.getDamage() : 5);}
+    public float getVelocityY() {return velocityY;}
+    public void setVelocityY(float velocityY) {this.velocityY = velocityY;}
+    public void setMapViewer(MapViewer mapViewer){this.mapViewer = mapViewer;}
+    public boolean isOnGround() {return onGround;}
+    public void setOnGround(boolean onGround) {this.onGround = onGround;}
+    public static float getJumpSpeed() {return JUMP_SPEED;}
+    public void setVisual(LayeredPlayer visualMock) {visual = visualMock;}
 
     public void dispose() {
         if (visual != null) {
@@ -203,7 +189,5 @@ public class Player extends Entity {
         }
     }
 
-    public void setVisual(LayeredPlayer visualMock) {
-        visual = visualMock;
-    }
+
 }

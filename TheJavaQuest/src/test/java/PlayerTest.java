@@ -74,7 +74,7 @@ public class PlayerTest {
     }
 
     @Test
-    @DisplayName("Test de mouvement latéral")
+    @DisplayName("Test de mouvement latéral gauche")
     public void given_playerInputs_when_pressButtonLeft_then_moveToTheLeft() {
         // Given : delta de 0.5 seconde -> distance = 200 * 0.5 = 100 pixels.
         // Nouveau X attendu = 100 - 100 = 0
@@ -85,8 +85,55 @@ public class PlayerTest {
 
         // Then
         assertEquals(0F,player.getHitbox().x, 0.001F);
-
         assertFalse(player.getVisual().isFacingRight());
         verify(visualMock, times(1)).setRun();
+    }
+
+    @Test
+    @DisplayName("Test de mouvement latéral droit")
+    public void given_playerInputs_when_pressButtonRight_then_moveToTheRight() {
+        // Given : delta de 0.5 seconde -> distance = 200 * 0.5 = 100 pixels.
+        // Nouveau X attendu = 100 + 100 = 200
+        float delta = 0.5f;
+
+        // When
+        player.moveRight(delta);
+
+        // Then
+        assertEquals(200F, player.getHitbox().x, 0.001F);
+        assertTrue(player.getVisual().isFacingRight());
+        verify(visualMock, times(1)).setRun();
+    }
+
+    @Test
+    @DisplayName("Test de mouvement, jump quand le joueur est sur le sol.")
+    public void given_onGround_when_pressButtonSpace_then_jump() {
+        // Given
+        player.setOnGround(true);
+        player.setVelocityY(0f);
+
+        float expectedJumpSpeed = Player.getJumpSpeed();
+
+        // When
+        player.jump();
+
+        // Then
+        assertFalse(player.isOnGround());
+        assertEquals(expectedJumpSpeed, player.getVelocityY(), 0.001f);
+    }
+
+    @Test
+    @DisplayName("Test de mouvement, jump quand le joueur est en l'air.")
+    public void give_notOnGround_when_pressButtonSpace_then_jump() {
+        // Given
+        player.setOnGround(false);
+        player.setVelocityY(50f);
+
+        // When
+        player.jump();
+
+        // Then
+        assertFalse(player.isOnGround());
+        assertEquals(50f, player.getVelocityY(), 0.001f);
     }
 }
