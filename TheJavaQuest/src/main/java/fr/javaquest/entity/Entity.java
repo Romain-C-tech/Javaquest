@@ -41,6 +41,8 @@ public abstract class Entity implements Combatant {
     @Override public int getDamage() {return damage;}
     @Override public float getMovementSpeed() {return movementSpeed;}
     @Override public Rectangle getHitbox() {return hitbox;}
+    @Override public float getAttackSpeed() {return attackSpeed;}
+    @Override public Weapon getWeapon() {return weapon;}
 
     @Override
     public void takeDamage(int damage) {

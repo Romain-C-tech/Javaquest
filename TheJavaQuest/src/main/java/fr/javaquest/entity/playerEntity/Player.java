@@ -17,7 +17,7 @@ public class Player extends Entity {
 
     private static final float JUMP_SPEED = 400f;
 
-    private final LayeredPlayer visual;
+    private LayeredPlayer visual;
     private float attackCooldown = 0f;
     private float velocityY = 0;
     private boolean onGround = true;
@@ -27,8 +27,7 @@ public class Player extends Entity {
     private MapViewer mapViewer;
 
     public Player(float x, float y, MapViewer mapViewer) {
-        super(200,5 ,200f,1F,null, x, y);
-        visual = new LayeredPlayer();
+        super(200,0 ,200f,1F,null, x, y);
         this.mapViewer = mapViewer;
     }
     public void restoreLife(int restorehp){
@@ -48,8 +47,8 @@ public class Player extends Entity {
             hitbox.x = nextX;
         }
 
-        visual.facingRight = false;
-        visual.setRun();
+        getVisual().facingRight = false;
+        getVisual().setRun();
     }
 
     public void moveRight(float delta) {
@@ -57,10 +56,10 @@ public class Player extends Entity {
         if (canMoveTo(nextX, hitbox.y)){
             hitbox.x = nextX;
         }
-        visual.facingRight = true;
-        visual.setRun();
+        getVisual().facingRight = true;
+        getVisual().setRun();
     }
-    public void idle(){ visual.setIdle(); }
+    public void idle(){ getVisual().setIdle(); }
 
     public void jump() {
         if (onGround) {
@@ -88,11 +87,11 @@ public class Player extends Entity {
 
     public void attack(List<? extends Entity> targets) {
         if (!canAttack()) return;
-        visual.startAttack();
+        getVisual().startAttack();
 
         attackCooldown = 1f / weapon.getAttackSpeed();
 
-        Rectangle zone = weapon.getAttackHitbox(hitbox, visual.facingRight);
+        Rectangle zone = weapon.getAttackHitbox(hitbox, getVisual().facingRight);
 
         for (Entity target : targets) {
             if (zone.overlaps(target.getHitbox())) {
@@ -106,6 +105,12 @@ public class Player extends Entity {
         return attackCooldown <= 0;
     }
 
+    public LayeredPlayer getVisual() {
+        if (visual == null) {
+            visual = new LayeredPlayer();
+        }
+        return visual;
+    }
 
     @Override
     public int getDamage() {
@@ -168,7 +173,7 @@ public class Player extends Entity {
             onGround = false;
         }
 
-        visual.update(delta);
+        getVisual().update(delta);
 
         if (attackCooldown > 0f) attackCooldown -= delta;
     }
@@ -180,18 +185,25 @@ public class Player extends Entity {
     public void render(SpriteBatch batch) {
         Rectangle hb = getHitbox();
 
-        visual.x =
+        LayeredPlayer playerVisual = getVisual();
+        playerVisual.x =
                 hb.x + hb.width / 2f - 32 / 2f;
 
-        visual.y = hb.y;
+        playerVisual.y = hb.y;
 
-        visual.draw(batch);
+        playerVisual.draw(batch);
     }
     public void setMapViewer(MapViewer mapViewer){
         this.mapViewer = mapViewer;
     }
 
     public void dispose() {
-        visual.dispose();
+        if (visual != null) {
+            visual.dispose();
+        }
+    }
+
+    public void setVisual(LayeredPlayer visualMock) {
+        visual = visualMock;
     }
 }

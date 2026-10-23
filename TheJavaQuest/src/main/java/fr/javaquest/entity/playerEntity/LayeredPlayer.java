@@ -260,6 +260,8 @@ public class LayeredPlayer {
             );
         }
     }
+
+    public boolean isFacingRight() {return facingRight;}
     public void dispose() {
         for (Texture texture : textures) {
             texture.dispose();
