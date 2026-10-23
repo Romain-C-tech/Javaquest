@@ -1,5 +1,4 @@
 
-import com.badlogic.gdx.math.Vector2;
 import fr.javaquest.MapViewer;
 import fr.javaquest.entity.enemies.Enemy;
 import fr.javaquest.entity.enemies.EnemyRegistry;

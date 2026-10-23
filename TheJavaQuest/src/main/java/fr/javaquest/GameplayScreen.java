@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class GameScreen extends ScreenAdapter {
+public class GameplayScreen extends ScreenAdapter {
     private MapViewer mapViewer;
     private GameCamera gameCamera;
     private final Player player;
@@ -39,7 +39,7 @@ public class GameScreen extends ScreenAdapter {
     private final Hud hud;
     private final Game javaQuest;
 
-    public GameScreen(Game javaQuest) {
+    public GameplayScreen(Game javaQuest) {
         this.javaQuest = javaQuest;
         mapViewer = new MapViewer("Map/VillageMap/FirstMap.tmx");
         gameCamera = new GameCamera(640f, 360f, mapViewer.getWidth(), mapViewer.getHeight());

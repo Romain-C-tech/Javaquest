@@ -51,11 +51,11 @@ public class SceneUI extends ScreenAdapter {
         playButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                GameScreen oldGame = javaQuest.getGameScreen();
+                GameplayScreen oldGame = javaQuest.getGameScreen();
                 if (oldGame != null){
                     oldGame.dispose();
                 }
-                GameScreen newGame = new GameScreen(javaQuest);
+                GameplayScreen newGame = new GameplayScreen(javaQuest);
                 javaQuest.setGameScreen(newGame);
                 javaQuest.setScreen(newGame);
             }

@@ -7,7 +7,7 @@ import fr.javaquest.entity.equipments.armors.ArmorRegistry;
 import fr.javaquest.entity.equipments.weapons.WeaponRegistry;
 
 public class Game extends com.badlogic.gdx.Game {
-    private GameScreen gameScreen;
+    private GameplayScreen gameplayScreen;
     private SceneUI menuScreen;
 
     @Override
@@ -18,11 +18,11 @@ public class Game extends com.badlogic.gdx.Game {
         DummyRegistery.load();
         setScreen(getMenuScreen());
     }
-    public GameScreen getGameScreen(){
-        return gameScreen;
+    public GameplayScreen getGameScreen(){
+        return gameplayScreen;
     }
-    public void setGameScreen(GameScreen gameScreen){
-        this.gameScreen = gameScreen;
+    public void setGameScreen(GameplayScreen gameplayScreen){
+        this.gameplayScreen = gameplayScreen;
     }
 
     public Screen getMenuScreen() {
