@@ -30,6 +30,7 @@ public class PlayerTest {
         ArmorRegistry.load();
 
         visualMock = mock(LayeredPlayer.class);
+        doCallRealMethod().when(visualMock).isFacingRight();
         player.setVisual(visualMock);
 
     }
@@ -85,7 +86,7 @@ public class PlayerTest {
 
         // Then
         assertEquals(0F,player.getHitbox().x, 0.001F);
-        assertFalse(player.getVisual().isFacingRight());
+        assertFalse(visualMock.isFacingRight());
         verify(visualMock, times(1)).setRun();
     }
 
@@ -101,7 +102,7 @@ public class PlayerTest {
 
         // Then
         assertEquals(200F, player.getHitbox().x, 0.001F);
-        assertTrue(player.getVisual().isFacingRight());
+        assertTrue(visualMock.isFacingRight());
         verify(visualMock, times(1)).setRun();
     }
 
