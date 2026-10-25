@@ -2,6 +2,11 @@ package fr.javaquest.entity.enemies;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+/**
+ * Cette interface permet de voir les différentes annimations de Sprite que chaque ennemies possèdent,
+ * ainsi que des caractéristiques de positions du Sprite.
+ * @author ssamepi
+ */
 public interface EnemyRenderer {
     void update(float delta);
     void draw(SpriteBatch batch);

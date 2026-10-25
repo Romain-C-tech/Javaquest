@@ -6,6 +6,11 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import fr.javaquest.inputs.KeyboardInputs;
 
+/**
+ * Récupère la vélocité du personnage pour le fournir aux ennemis.
+ *
+ * @author Romain-C-tech
+ */
 public class PlayerSteerable implements Steerable<Vector2> {
     private final Player player;
     private final Vector2 position = new Vector2();
@@ -17,6 +22,11 @@ public class PlayerSteerable implements Steerable<Vector2> {
         this.inputs = inputs;
     }
 
+    /**
+     * Récupération de la vitesse du joueur en continu.
+     *
+     * @author Romain-C-tech
+     */
     public void update() {
         Rectangle hitbox = player.getHitbox();
         this.position.set(hitbox.x + hitbox.width / 2f,hitbox.y + hitbox.height / 2f);

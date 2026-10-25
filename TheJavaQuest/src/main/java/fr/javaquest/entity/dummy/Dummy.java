@@ -3,6 +3,11 @@ package fr.javaquest.entity.dummy;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import fr.javaquest.entity.Entity;
 
+/**
+ * Donne au mannequin des points de vie et permet son affichage.
+ *
+ * @author ssamepi
+ */
 public abstract class Dummy extends Entity {
 
     protected final DummyData data;

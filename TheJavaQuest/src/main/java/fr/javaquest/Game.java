@@ -7,8 +7,13 @@ import fr.javaquest.entity.equipments.armors.ArmorRegistry;
 import fr.javaquest.entity.equipments.weapons.WeaponRegistry;
 import fr.javaquest.menu.SceneUI;
 
+/**
+ * Gestion de l'affichage du menu et du jeu.
+ *
+ * @author ssamepi, Romain-C-tech
+ */
 public class Game extends com.badlogic.gdx.Game {
-    private GameScreen gameScreen;
+    private GameplayScreen gameplayScreen;
     private SceneUI menuScreen;
 
     private static final float[] BRIGHTNESS_VALUES = {1f, 0.7f, 0.4f};
@@ -26,6 +31,12 @@ public class Game extends com.badlogic.gdx.Game {
     public String getBrightnessLabel() {
         return BRIGHTNESS_LABELS[brightnessLevel];
     }
+
+    /**
+     * Chargement des armes/armures/ennemis/mannequin/menu pour le premier affichage.
+     *
+     * @author ssamepi, Romain-C-tech
+     */
     @Override
     public void create() {
         WeaponRegistry.load();
@@ -34,13 +45,19 @@ public class Game extends com.badlogic.gdx.Game {
         DummyRegistery.load();
         setScreen(getMenuScreen());
     }
-    public GameScreen getGameScreen(){
-        return gameScreen;
+    public GameplayScreen getGameScreen(){
+        return gameplayScreen;
     }
-    public void setGameScreen(GameScreen gameScreen){
-        this.gameScreen = gameScreen;
+    public void setGameScreen(GameplayScreen gameplayScreen){
+        this.gameplayScreen = gameplayScreen;
     }
 
+    /**
+     * Création d'un menu ou réutilisation d'un menu existant.
+     *
+     * @return pour avoir le menu.
+     * @author ssamepi
+     */
     public Screen getMenuScreen() {
         if (menuScreen == null){
             menuScreen = new SceneUI(this);

@@ -7,6 +7,15 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import fr.javaquest.entity.equipments.weapons.WeaponRenderer;
 
+/**
+ * Animations du personnage.
+ * <p>
+ *     Statique, course, mort, avec un bouclier, avec une épée, les mains.
+ *     L'animation de base est "statique".
+ * </p>
+ *
+ * @author ssamepi
+ */
 public class LayeredPlayer {
 
     private Animation<TextureRegion> idle;
@@ -65,6 +74,17 @@ public class LayeredPlayer {
         currentAnimation = idle;
     }
 
+    /**
+     * Découpage d'un png.
+     *
+     * @param file est le chemin où est le png.
+     * @param frameTime est la durée allouée à chaque image découpée.
+     * @param from est l'indice de la première image.
+     * @param to est l'indice de la dernière image.
+     * @param frameWidth est la taille en largueur de chaque image découpée.
+     * @param frameHeight est la taille en hauteur de chaque image découpée.
+     * @return renvois la durée allouée à chaque image découpée et une liste contenant toutes les images.
+     */
     private Animation<TextureRegion> load(
         String file,
         float frameTime,
@@ -114,7 +134,17 @@ public class LayeredPlayer {
             subset
         );
     }
-
+    /**
+     * Découpage d'un png.
+     * <p>
+     *     Récupération de la partie nécessaire du png.
+     *     Le png ayant un format spécial vis a vis des autres animations il faut récupérer la partie voulu sur chaque image
+     *     avant de les stockés dans la liste.
+     * </p>
+     * @param file est le chemin où est le png.
+     * @param frameTime est la durée allouée à chaque image découpée.
+     * @return renvois la durée allouée à chaque image découpée et une liste contenant toutes les images.
+     */
     private Animation<TextureRegion> loadRun(
         String file,
         float frameTime
@@ -179,14 +209,31 @@ public class LayeredPlayer {
         weapon.startAttack();
     }
 
+    /**
+     * Affichage complet du joueur avec son équipement.
+     *
+     * @param batch est un lot de sprite.
+     *
+     * @author ssamepi
+     */
     public void draw(SpriteBatch batch) {
-
         drawLayer(batch, currentAnimation, 0, 0, 0);
         drawWeaponLayer(batch, weapon.getCurrentWeapon(), weapon.getAttackTime(), 18,18, 0);
         drawLayer(batch, hands, 1, -1, 0);
         if (shield.getCurrentShield() != null){drawLayer(batch, shield.getCurrentShield(), 0, -18, 0);}
     }
 
+    /**
+     * Affichage complet de l'image en fonction de la direction de déplacement du personnage.
+     *
+     * @param batch est un lot de sprite.
+     * @param animation est l'animation à jouée.
+     * @param offSetRightX est la position de joueur sur l'axe des x.
+     * @param offSetLeftX est la position du joueur sur l'axe des y.
+     * @param offSetY sert à décalé l'image sur l'axe des y.
+     *
+     * @author ssamepi
+     */
     private void drawLayer(
         SpriteBatch batch,
         Animation<TextureRegion> animation,
@@ -223,6 +270,18 @@ public class LayeredPlayer {
             );
         }
     }
+
+    /**
+     * Affichage complet de l'arme en fonction de la direction de déplacement.
+     *
+     * @param batch est un lot de sprite.
+     * @param animation est l'animation à jouée.
+     * @param offSetRightX est la position de joueur sur l'axe des x.
+     * @param offSetLeftX est la position du joueur sur l'axe des y.
+     * @param offSetY sert à décalé l'image sur l'axe des y.
+     *
+     * @author ssamepi
+     */
     private void drawWeaponLayer(
         SpriteBatch batch,
         Animation<TextureRegion> animation,
@@ -260,6 +319,8 @@ public class LayeredPlayer {
             );
         }
     }
+
+    public boolean isFacingRight() {return facingRight;}
     public void dispose() {
         for (Texture texture : textures) {
             texture.dispose();
