@@ -40,11 +40,18 @@ public abstract class Entity implements Fighter {
         this.hitbox = new Rectangle(x , y , 24, 28 );
     }
 
+    public void setPosition(float x, float y){
+        this.hitbox.x = x;
+        this.hitbox.y = y;
+    }
+
     @Override public int getMaxHp() {return maxHp;}
     @Override public int getHp() {return hp;}
     @Override public int getDamage() {return damage;}
     @Override public float getMovementSpeed() {return movementSpeed;}
     @Override public Rectangle getHitbox() {return hitbox;}
+    @Override public float getAttackSpeed() {return attackSpeed;}
+    @Override public Weapon getWeapon() {return weapon;}
 
     @Override
     public void takeDamage(int damage) {

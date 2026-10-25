@@ -35,8 +35,7 @@ import java.util.List;
  *
  * @author ssamepi, Romain-C-tech
  */
-
-public class GameScreen extends ScreenAdapter {
+public class GameplayScreen extends ScreenAdapter {
     private MapViewer mapViewer;
     private GameCamera gameCamera;
     private final Player player;
@@ -58,7 +57,7 @@ public class GameScreen extends ScreenAdapter {
      * @param javaQuest instance de jeu qui est lancé
      * @author ssamepi, Romain-C-tech
      */
-    public GameScreen(Game javaQuest) {
+    public GameplayScreen(Game javaQuest) {
         this.javaQuest = javaQuest;
         mapViewer = new MapViewer("Map/VillageMap/FirstMap.tmx");
         gameCamera = new GameCamera(640f, 360f, mapViewer.getWidth(), mapViewer.getHeight());
