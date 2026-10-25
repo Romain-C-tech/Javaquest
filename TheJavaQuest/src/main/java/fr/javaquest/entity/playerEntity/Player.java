@@ -32,7 +32,12 @@ public class Player extends Entity {
     }
     public void restoreLife(int restorehp){
         if (this.hp < getMaxHp()){
-            this.hp += restorehp;
+            if ((getMaxHp() - this.hp) < restorehp){
+                this.hp = getMaxHp();
+            }
+            else {
+                this.hp += restorehp;
+            }
         }
     }
 

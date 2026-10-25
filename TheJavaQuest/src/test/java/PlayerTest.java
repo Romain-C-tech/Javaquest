@@ -1,5 +1,7 @@
 
+import com.badlogic.gdx.math.Rectangle;
 import fr.javaquest.MapViewer;
+import fr.javaquest.entity.Entity;
 import fr.javaquest.entity.enemies.Enemy;
 import fr.javaquest.entity.enemies.EnemyRegistry;
 import fr.javaquest.entity.equipments.Rarity;
@@ -28,10 +30,11 @@ public class PlayerTest {
     private Player player;
     private LayeredPlayer visualMock;
     private Enemy target;
+    private MapViewer mapViewer;
 
     @BeforeEach
     public void setUp() {
-        MapViewer mapViewer = mock(MapViewer.class);
+        mapViewer = mock(MapViewer.class);
         player = new Player(100, 100, mapViewer);
         WeaponRegistry.load();
         ArmorRegistry.load();
@@ -90,6 +93,46 @@ public class PlayerTest {
     }
 
     @Test
+    @DisplayName("Test de restoration maximale des points de vie.")
+    public void given_playerIsFullHealth_when_nearToAngleStatue_then_hpIsNotHigherThanMaxHp() {
+        //Given
+        int maximumHp = player.getMaxHp();
+
+        //When
+        player.restoreLife(50);
+
+        // Then
+        assertEquals(maximumHp,player.getHp());
+    }
+
+    @Test
+    @DisplayName("Test de restoration de points de vie quand la restoration de points de vie exède le manque.")
+    public void given_playerIsCloseToFullHp_when_restoreMoreHpThanPlayerNeed_then_hpPlayerIsMaxHpOfPlayer() {
+        //Given
+        player.takeDamage(5);
+
+        //When
+        player.restoreLife(10);
+
+        //Then
+        assertEquals(player.getMaxHp(), player.getHp());
+    }
+
+    @Test
+    @DisplayName("Test des points de vie du joueur quand les dégats subis sont suppérieur à ses points de vie actuel.")
+    public void given_playerIsCloseToDeath_when_playerTakeDamageHigherThenHisActualHp_then_hpPlayerEqualToZero(){
+        //Given
+        int actualHp = player.getHp();
+
+        //When
+        player.takeDamage((player.getHp()+5));
+
+        //Then
+        assertEquals(0, player.getHp());
+        assertTrue(player.isDead());
+    }
+
+    @Test
     @DisplayName("Test de mouvement latéral gauche")
     public void given_playerInputs_when_pressButtonLeft_then_moveToTheLeft() {
         // Given : delta de 0.5 seconde -> distance = 200 * 0.5 = 100 pixels.
@@ -120,6 +163,39 @@ public class PlayerTest {
         assertTrue(visualMock.isFacingRight());
         verify(visualMock, times(1)).setRun();
     }
+
+    @Test
+    @DisplayName("Test de mouvement, le joueur va vers la droite et rencontre un mur.")
+    public void given_wallInTheRight_when_moveRight_then_positionDoNotChange(){
+        //Given
+        when(mapViewer.collides(any(Rectangle.class))).thenReturn(true);
+        float xBefore = player.getHitbox().x;
+
+        //When
+        player.moveRight(1);
+
+        //Then
+        assertEquals(xBefore, player.getHitbox().x);
+        assertTrue(visualMock.isFacingRight());
+    }
+
+    @Test
+    @DisplayName("Test de mouvement, le joueur va vers la gauche et rencontre un mur.")
+    public void given_wallInTheleft_when_moveLeft_then_positionDoNotChange(){
+        //Given
+        when(mapViewer.collides(any(Rectangle.class))).thenReturn(true);
+        float yBefore = player.getHitbox().y;
+
+        //When
+        player.moveLeft(1);
+
+        //Then
+        assertEquals(yBefore, player.getHitbox().y);
+        assertFalse(visualMock.isFacingRight());
+
+
+    }
+
 
     @Test
     @DisplayName("Test de mouvement, jump quand le joueur est sur le sol.")
