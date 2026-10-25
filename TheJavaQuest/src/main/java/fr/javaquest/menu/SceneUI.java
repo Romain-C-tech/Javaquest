@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import fr.javaquest.Game;
-import fr.javaquest.GameScreen;
+import fr.javaquest.GameplayScreen;
 
 
 /**
