@@ -125,7 +125,7 @@ public class PlayerTest {
         int actualHp = player.getHp();
 
         //When
-        player.takeDamage((player.getHp()+5));
+        player.takeDamage((actualHp+5));
 
         //Then
         assertEquals(0, player.getHp());
