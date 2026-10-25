@@ -1,4 +1,4 @@
-package fr.javaquest;
+package fr.javaquest.menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
@@ -11,6 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import fr.javaquest.Game;
+import fr.javaquest.GameplayScreen;
 
 
 /**
@@ -23,6 +25,7 @@ public class SceneUI extends ScreenAdapter {
     private Stage stage;
     private Skin skin;
     private final Game javaQuest;
+    private BrightnessOverlay overlay;
 
     public SceneUI(Game javaQuest){
         this.javaQuest = javaQuest;
@@ -40,6 +43,7 @@ public class SceneUI extends ScreenAdapter {
     @Override
     public void show() {
         skin = new Skin(Gdx.files.internal("Asset/Ui/uiskin.json"));
+        overlay = new BrightnessOverlay();
 
         stage = new Stage(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
         Gdx.input.setInputProcessor(stage);
@@ -56,9 +60,8 @@ public class SceneUI extends ScreenAdapter {
         mainTable.add(resumeButton).row();
         resumeButton.setDisabled(javaQuest.getGameScreen() == null);
 
-        TextButton parametersButton = new TextButton("Parameters", skin);
-        mainTable.add(parametersButton);
-        parametersButton.setDisabled(javaQuest.getGameScreen() == null); // desactive pour le moment vu qu'on a pas la fonctionnalité
+        TextButton brightnessButton = new TextButton("Luminosity: " + javaQuest.getBrightnessLabel(), skin);
+        mainTable.add(brightnessButton);
 
         TextButton exitButton = new TextButton("Exit", skin);
         mainTable.add(exitButton);
@@ -82,6 +85,13 @@ public class SceneUI extends ScreenAdapter {
                      javaQuest.resume();
                  }
              });
+        brightnessButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                javaQuest.cycleBrightness();
+                brightnessButton.setText("Luminosity: "+ javaQuest.getBrightnessLabel());
+            }
+        });
 
         exitButton.addListener(new ChangeListener() {
             @Override
@@ -116,6 +126,7 @@ public class SceneUI extends ScreenAdapter {
         stage.getViewport().apply();
         stage.act(delta);
         stage.draw();
+        overlay.render(javaQuest.getBrightness());
     }
 
     /**
@@ -134,6 +145,7 @@ public class SceneUI extends ScreenAdapter {
     public void dispose() {
         stage.dispose();
         skin.dispose();
+        overlay.dispose();
     }
 
 }

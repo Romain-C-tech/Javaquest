@@ -22,6 +22,7 @@ import fr.javaquest.entity.equipments.weapons.WeaponRegistry;
 import fr.javaquest.hud.Hud;
 import fr.javaquest.inputs.KeyboardInputs;
 import com.badlogic.gdx.Input.Keys;
+import fr.javaquest.menu.BrightnessOverlay;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -46,6 +47,7 @@ public class GameplayScreen extends ScreenAdapter {
     private final KeyboardInputs inputs;
     private final Hud hud;
     private final Game javaQuest;
+    private BrightnessOverlay overlay;
 
     /**
      * Affichage du rendu du jeu avec la carte de départ, le joueur et un mannequin d'entraînement.
@@ -69,6 +71,7 @@ public class GameplayScreen extends ScreenAdapter {
 
         equipPlayer();
         spawnDummy();
+        overlay = new BrightnessOverlay();
     }
 
     /**
@@ -272,6 +275,7 @@ public class GameplayScreen extends ScreenAdapter {
 
         hud.stage.act(delta);
         hud.stage.draw();
+        overlay.render(javaQuest.getBrightness());
     }
 
     @Override
@@ -286,5 +290,6 @@ public class GameplayScreen extends ScreenAdapter {
         hud.dispose();
         batch.dispose();
         player.dispose();
+        if (overlay != null) overlay.dispose();
     }
 }
