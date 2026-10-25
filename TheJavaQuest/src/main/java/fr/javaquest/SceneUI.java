@@ -12,6 +12,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
+
+/**
+ * Affichage du menu et de ses boutons.
+ *
+ * @author ssamepi
+ */
 public class SceneUI extends ScreenAdapter {
 
     private Stage stage;
@@ -22,6 +28,15 @@ public class SceneUI extends ScreenAdapter {
         this.javaQuest = javaQuest;
     }
 
+    /**
+     * Mise en place du menu et de ses boutons.
+     * <p>
+     *     Gestion de la taille, couleur, espacement des boutons.
+     *     Gestion des actions pour chaque bouton.
+     * </p>
+     *
+     * @author ssamepi
+     */
     @Override
     public void show() {
         skin = new Skin(Gdx.files.internal("Asset/Ui/uiskin.json"));
@@ -77,11 +92,23 @@ public class SceneUI extends ScreenAdapter {
 
     }
 
+    /**
+     * Permet de redéfinir la taille de la caméra.
+     * @param width est la longueur.
+     * @param height est la hauteur.
+     *
+     * @author ssamepi
+     */
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
     }
 
+
+    /**
+     * Permet l'affichage dynamique.
+     * @param delta Le temps en secondes depuis le dernier affichage.
+     */
     @Override
     public void render(float delta) {
         ScreenUtils.clear(Color.BLACK);
@@ -91,6 +118,12 @@ public class SceneUI extends ScreenAdapter {
         stage.draw();
     }
 
+    /**
+     * Permet de cacher le menu.
+     * <p>
+     *     Cette fonction permet de garder le menu associé au jeu et d'alterné entre le menu et le jeu.
+     * </p>
+     */
     @Override
     public void hide() {
         Gdx.input.setInputProcessor(null);

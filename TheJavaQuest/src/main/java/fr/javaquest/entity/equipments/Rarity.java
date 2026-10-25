@@ -2,6 +2,11 @@ package fr.javaquest.entity.equipments;
 
 import java.awt.*;
 
+/**
+ * Définie les raretés.
+ *
+ * @author Romain-C-tech
+ */
 public enum Rarity {
     COMMON("Common",Color.gray, 1.0F),
     UNCOMMON("Uncommon", Color.green, 1.1F),

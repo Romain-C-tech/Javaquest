@@ -5,8 +5,12 @@ import com.badlogic.gdx.ai.msg.Telegram;
 import com.badlogic.gdx.math.Vector2;
 import fr.javaquest.entity.enemies.Enemy;
 
+/**
+ * StateMachine permettant de définir les différents comportements des ennemies / Boss.
+ * @author Romain-C-tech
+ */
 public enum EnemyState implements State<Enemy> {
-
+    // Comportement de Patrouille quand le joueur n'a pas été détecté par l'ennemi.
     PATROL {
         @Override
         public void enter(Enemy enemy) {
@@ -23,7 +27,7 @@ public enum EnemyState implements State<Enemy> {
             }
         }
     },
-
+    // Comportement de poursuite quand le joueur à été détecté par l'ennemi
     CHASE {
         @Override
         public void enter(Enemy enemy) {
@@ -43,7 +47,7 @@ public enum EnemyState implements State<Enemy> {
             }
         }
     },
-
+    // Comportement d'attaque quand le joueur est à porté d'attaque.
     ATTACK {
         @Override
         public void enter(Enemy enemy) {
