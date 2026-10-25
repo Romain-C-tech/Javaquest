@@ -11,7 +11,15 @@ public class EnemyData {
     public float movementSpeed;
     public float attackSpeed;
     public HitboxSize hitbox;
-    public String renderFile;
+
+    public int frameWidth;
+    public int frameHeight;
+    public String renderFileIdle;
+    public String renderFileRun;
+    public String renderFileGetHit;
+    public String renderFileHit;
+    public String renderFileDeath;
+
     public String weapon;
     public Rarity weaponRarity = Rarity.COMMON;
 

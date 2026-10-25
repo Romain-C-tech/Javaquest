@@ -9,7 +9,12 @@
     "hitbox": {
       "width": 24,
       "height": 40
-    }
+    },
+    "frameHeight" : 32,
+    "frameWidth" : 48,
+    "renderFileIdle": "Asset/PixelCrawlerFreePack/Entities/Mobs/Boar/Idle/Idle-Sheet.png",
+    "renderFileRun" : "Asset/PixelCrawlerFreePack/Entities/Mobs/Boar/Run/Run-Sheet.png",
+    "renderFileGetHit" : "Asset/PixelCrawlerFreePack/Entities/Mobs/Boar/Hit-Vanish/Hit-Sheet.png"
   },
   {
     "id": "wild_black_boar",
@@ -21,7 +26,12 @@
     "hitbox": {
       "width": 24,
       "height": 40
-    }
+    },
+    "frameHeight" : 32,
+    "frameWidth" : 48,
+    "renderFileIdle" : "Asset/PixelCrawlerFreePack/Entities/Mobs/Boar/Idle/Idle-Sheet-Black.png",
+    "renderFileRun" : "Asset/PixelCrawlerFreePack/Entities/Mobs/Boar/Run/Run-Sheet-Black.png",
+    "renderFileGetHit" : "Asset/PixelCrawlerFreePack/Entities/Mobs/Boar/Hit-Vanish/Hit-Sheet-Black.png"
   },
   {
     "id": "wild_white_boar",
@@ -33,19 +43,28 @@
     "hitbox": {
       "width": 24,
       "height": 40
-    }
+    },
+    "frameHeight" : 32,
+    "frameWidth" : 48,
+    "renderFileIdle" : "Asset/PixelCrawlerFreePack/Entities/Mobs/Boar/Idle/Idle-Sheet-White.png",
+    "renderFileRun" : "Asset/PixelCrawlerFreePack/Entities/Mobs/Boar/Run/Run-Sheet-White.png",
+    "renderFileGetHit" : "Asset/PixelCrawlerFreePack/Entities/Mobs/Boar/Hit-Vanish/Hit-Sheet-White.png"
   },
   {
-    "id": "troll_skull_breaker",
-    "name": "Troll Brise-Crâne",
-    "hp": 400,
+    "id": "red_eyes_grizzly_boss",
+    "name": "Grosse Trolleuse",
+    "hp": 4000,
     "damage": 50,
-    "movementSpeed": 30,
-    "attackSpeed": 0.2,
+    "movementSpeed": 300,
+    "attackSpeed": 0.4,
     "hitbox": {
       "width": 72,
       "height": 80
-    }
+    },
+    "frameWidth" : 128,
+    "frameHeight" : 96,
+    "renderFileRun" : "Asset/PixelCrawlerFreePack/Entities/Mobs/Boss/Walk/Bear-walk-animation.png",
+    "renderFileDeath" : "Asset/PixelCrawlerFreePack/Entities/Mobs/Boss/Death/Bear-death-animation.png",
+    "renderFileHit" : "Asset/PixelCrawlerFreePack/Entities/Mobs/Boss/Attack/Bear-attack-animation.png"
   }
-
 ]

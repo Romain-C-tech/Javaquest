@@ -115,7 +115,7 @@ public class WeaponRenderer {
         );
 
         if (getCurrentWeapon() == null){
-            CurrentWeapon = Stick;
+            CurrentWeapon = SwordIron;   // Doit être changer si on fait le changement d'arme
         }
 
     }
