@@ -22,6 +22,7 @@ import fr.javaquest.entity.equipments.weapons.WeaponRegistry;
 import fr.javaquest.hud.Hud;
 import fr.javaquest.inputs.KeyboardInputs;
 import com.badlogic.gdx.Input.Keys;
+import fr.javaquest.menu.BrightnessOverlay;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -38,6 +39,7 @@ public class GameScreen extends ScreenAdapter {
     private final KeyboardInputs inputs;
     private final Hud hud;
     private final Game javaQuest;
+    private BrightnessOverlay overlay;
 
     public GameScreen(Game javaQuest) {
         this.javaQuest = javaQuest;
@@ -51,6 +53,7 @@ public class GameScreen extends ScreenAdapter {
 
         equipPlayer();
         spawnDummy();
+        overlay = new BrightnessOverlay();
     }
 
     private void changeMap(String mapPath, float spawnX, float spawnY) {
@@ -185,6 +188,7 @@ public class GameScreen extends ScreenAdapter {
 
         hud.stage.act(delta);
         hud.stage.draw();
+        overlay.render(javaQuest.getBrightness());
     }
 
     @Override
@@ -199,5 +203,6 @@ public class GameScreen extends ScreenAdapter {
         hud.dispose();
         batch.dispose();
         player.dispose();
+        if (overlay != null) overlay.dispose();
     }
 }
