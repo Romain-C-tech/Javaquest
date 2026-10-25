@@ -1,6 +1,7 @@
 package fr.javaquest.entity;
 
 import com.badlogic.gdx.math.Rectangle;
+import fr.javaquest.entity.equipments.weapons.Weapon;
 
 /**
  * Tout les combattants ont des points de vie, des points de vie maximum, ont des points de dégats,
@@ -15,4 +16,6 @@ public interface Fighter {
     float getMovementSpeed();
     Rectangle getHitbox();
     void takeDamage(int amount);
+    float getAttackSpeed();
+    Weapon getWeapon();
 }
