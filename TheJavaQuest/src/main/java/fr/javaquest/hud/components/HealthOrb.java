@@ -7,6 +7,9 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Disposable;
 
+/**
+ * Affichage de la sphère de vie.
+ */
 public class HealthOrb extends Actor implements Disposable {
     private static final int LIQ_TOP = 4, LIQ_H = 54;
 
@@ -31,6 +34,11 @@ public class HealthOrb extends Actor implements Disposable {
         setSize(texCadre.getWidth() * echelle, texCadre.getHeight() * echelle);
     }
 
+    /**
+     * Méthode permettant de modifier la valeur de la vie sur l'HUD.
+     * @param v
+     * @author Romain-C-tech
+     */
     public void setValeur(float v) { valeur = MathUtils.clamp(v, 0, max); }
 
     @Override
@@ -58,10 +66,11 @@ public class HealthOrb extends Actor implements Disposable {
     @Override
     public void dispose() { texCadre.dispose(); texLiquide.dispose(); }
 
-    public void setMax(float maxHp){
-
-    }
-
+    /**
+     * Méthode permettant de syncroniser la taille de l'HUD en fonction de l'écran.
+     * @param e
+     * @author Romain-C-tech
+     */
     public void setEchelle(int e) {
         setSize(texCadre.getWidth() * e, texCadre.getHeight() * e);
     }

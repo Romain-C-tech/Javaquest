@@ -7,6 +7,11 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Disposable;
 import fr.javaquest.entity.playerEntity.Player;
 
+/**
+ * Affichage de la position du joueur.
+ *
+ * @author Romain-C-tech
+ */
 public class PlayerPos  extends Actor implements Disposable {
     protected Player player;
     protected float x;

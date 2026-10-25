@@ -6,10 +6,20 @@ import fr.javaquest.entity.enemies.EnemyRegistry;
 import fr.javaquest.entity.equipments.armors.ArmorRegistry;
 import fr.javaquest.entity.equipments.weapons.WeaponRegistry;
 
+/**
+ * Gestion de l'affichage du menu et du jeu.
+ *
+ * @author ssamepi, Romain-C-tech
+ */
 public class Game extends com.badlogic.gdx.Game {
     private GameplayScreen gameplayScreen;
     private SceneUI menuScreen;
 
+    /**
+     * Chargement des armes/armures/ennemis/mannequin/menu pour le premier affichage.
+     *
+     * @author ssamepi, Romain-C-tech
+     */
     @Override
     public void create() {
         WeaponRegistry.load();
@@ -25,6 +35,12 @@ public class Game extends com.badlogic.gdx.Game {
         this.gameplayScreen = gameplayScreen;
     }
 
+    /**
+     * Création d'un menu ou réutilisation d'un menu existant.
+     *
+     * @return pour avoir le menu.
+     * @author ssamepi
+     */
     public Screen getMenuScreen() {
         if (menuScreen == null){
             menuScreen = new SceneUI(this);

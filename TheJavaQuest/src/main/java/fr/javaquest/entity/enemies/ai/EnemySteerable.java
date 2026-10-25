@@ -7,6 +7,10 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import fr.javaquest.entity.enemies.Enemy;
 
+/**
+ * Classe permettant de donner à un ennemi toutes les caractéristiques réquises au bon fonctionnement de l'IA.
+ * @author Romain-C-tech
+ */
 public class EnemySteerable implements Steerable<Vector2> {
 
     private final Enemy enemy;
@@ -30,6 +34,7 @@ public class EnemySteerable implements Steerable<Vector2> {
 
     /**
      * Synchronise la position du Steerable avec le centre de la Hitbox de l'ennemi.
+     * @author Romain-C-tech
      */
     public void updatePositionFromHitbox() {
         Rectangle hb = enemy.getHitbox();
@@ -38,6 +43,7 @@ public class EnemySteerable implements Steerable<Vector2> {
 
     /**
      * Intègre l'accélération horizontale du steering dans la vélocité de l'ennemi.
+     * @author Romain-C-tech
      */
     public void applySteering(SteeringAcceleration<Vector2> steering, float delta) {
         linearVelocity.x += steering.linear.x * delta;
