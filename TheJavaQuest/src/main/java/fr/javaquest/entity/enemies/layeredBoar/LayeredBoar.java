@@ -8,6 +8,10 @@ import com.badlogic.gdx.utils.Array;
 import fr.javaquest.entity.enemies.EnemyData;
 import fr.javaquest.entity.enemies.EnemyRenderer;
 
+/**
+ * Classe permettant l'affichage des annimations et de la mise à jour de position du Sprite d'un ennemi.
+ * @author ssamepi
+ */
 public class LayeredBoar implements EnemyRenderer {
     private Animation<TextureRegion> idle;
     private Animation<TextureRegion> run;

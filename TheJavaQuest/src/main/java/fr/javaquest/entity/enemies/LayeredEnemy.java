@@ -8,6 +8,11 @@ import fr.javaquest.entity.enemies.layeredBoar.LayeredBoar;
 import fr.javaquest.entity.enemies.layeredBoss.LayeredBoss;
 import fr.javaquest.entity.playerEntity.PlayerSteerable;
 
+/**
+ * Classe permettant de gérer le type de rendu en fonction de l'ennemi
+ * avec gestion des annimations en fonction du comportement de l'ennemi
+ * @author ssamepi
+ */
 public class LayeredEnemy extends Enemy {
 
     private final EnemyRenderer renderer;
@@ -59,6 +64,11 @@ public class LayeredEnemy extends Enemy {
         renderer.update(delta);
     }
 
+    /**
+     * Méthode permettant la vérification de la la fin de l'annimation de mort de l'ennemi.
+     * @return boolean
+     * @author ssamepi
+     */
     public boolean isDeathAnimationFinished() {
         return isDead() && deathTimer >= DEATH_DURATION;
     }

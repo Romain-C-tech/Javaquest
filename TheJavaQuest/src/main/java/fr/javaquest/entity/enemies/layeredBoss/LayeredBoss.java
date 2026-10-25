@@ -8,6 +8,10 @@ import com.badlogic.gdx.utils.Array;
 import fr.javaquest.entity.enemies.EnemyData;
 import fr.javaquest.entity.enemies.EnemyRenderer;
 
+/**
+ * Classe permettant l'affichage des annimations et de la mise à jour de position du Sprite d'un Boss.
+ * @author ssamepi
+ */
 public class LayeredBoss implements EnemyRenderer {
 
     private final Animation<TextureRegion> idle;
@@ -35,6 +39,16 @@ public class LayeredBoss implements EnemyRenderer {
         currentAnimation = idle;
     }
 
+    /**
+     * Découpage d'un png.
+     *
+     * @param file est le chemin où est le png.
+     * @param frameTime est la durée allouée à chaque image découpée.
+     * @param from est l'indice de la première image.
+     * @param to est l'indice de la dernière image.
+     * @return renvois la durée allouée à chaque image découpée et une liste contenant toutes les images.
+     * @author ssamepi
+     */
     private Animation<TextureRegion> load(String file, float frameTime,
                                           int from, int to, EnemyData data) {
         if (file == null) {
@@ -71,6 +85,11 @@ public class LayeredBoss implements EnemyRenderer {
         return new Animation<>(frameTime, subset);
     }
 
+    /**
+     * Méthode permettant de jouer l'annimation en paramétre.
+     * @param anim
+     * @author ssamepi
+     */
     private void play(Animation<TextureRegion> anim) {
         if (currentAnimation == death) return;
         if (currentAnimation != anim) {

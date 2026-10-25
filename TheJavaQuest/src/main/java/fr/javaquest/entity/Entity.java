@@ -10,7 +10,8 @@ import java.util.EnumMap;
 import java.util.Map;
 
 /**
- *
+ * Classe Parente de Enemy et Player, regroupant les caractéristiques et méthodes communes de ces 2 type d'entité.
+ * @author Romain-C-tech
  */
 public abstract class Entity implements Fighter {
 
@@ -54,10 +55,20 @@ public abstract class Entity implements Fighter {
         }
     }
 
+    /**
+     * Vérification des point de vie de l'entité.
+     * @return boolean
+     * @author Romain-C-tech
+     */
     public boolean isDead() {
         return  getHp() <= 0;
     }
 
+    /**
+     * Méthode permettant à l'entité de ne pas dépassé les bordure de la carte.
+     * @param mapWidth
+     * @param mapHeight
+     */
     public void keepInside(float mapWidth, float mapHeight) {
         hitbox.x = MathUtils.clamp(hitbox.x, 0, mapWidth - hitbox.width);
         hitbox.y = MathUtils.clamp(hitbox.y, 0, mapHeight - hitbox.height);

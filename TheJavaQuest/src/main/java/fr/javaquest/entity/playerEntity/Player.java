@@ -48,11 +48,6 @@ public class Player extends Entity {
         visual = new LayeredPlayer();
         this.mapViewer = mapViewer;
     }
-    public void restoreLife(int restorehp){
-        if (this.hp < getMaxHp()){
-            this.hp += restorehp;
-        }
-    }
 
     /**
      * Redonne au joueur des points de vie.
