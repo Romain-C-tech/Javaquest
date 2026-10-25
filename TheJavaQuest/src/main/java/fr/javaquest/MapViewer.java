@@ -10,6 +10,16 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Array;
 
+/**
+ * Affichage de la carte.
+ * <p>
+ *     Récupération des zones de collisions.
+ *     Zones récupérées pour limiter les déplacements du joueur et des ennemis,
+ *     avoir une zone pour récupérer des points de vie, permettre la téléportation sur d'autres cartes.
+ * </p>
+ *
+ * @author ssamepi
+ */
 public class MapViewer {
     private final TiledMap map;
     private final OrthogonalTiledMapRenderer renderer;
@@ -18,9 +28,9 @@ public class MapViewer {
 
     // on stock les collisions dans une liste
     private final Array<Rectangle> collisionsRectangles = new Array<>();
+    private final Array<Rectangle> restoreLifeRectangle = new Array<>();
     private final Array<Rectangle> teleportToForestRectangles = new Array<>();
     private final Array<Rectangle> teleportToVillageRectangles = new Array<>();
-
 
     public MapViewer(String mapPath) {
         map = new TmxMapLoader().load(mapPath);
@@ -36,6 +46,7 @@ public class MapViewer {
 
     private void loadCollisions(){
         MapLayer collisionLayer = map.getLayers().get("collision");
+        MapLayer restoreLife = map.getLayers().get("restoreLife");
         MapLayer teleportToForestCollisionLayer = map.getLayers().get("ToForest");
         MapLayer teleportToVillageCollisionLayer = map.getLayers().get("ToVillage");
 
@@ -49,6 +60,17 @@ public class MapViewer {
                 if (object instanceof RectangleMapObject rectangleObject) {
                     Rectangle rectangle = rectangleObject.getRectangle();
                     collisionsRectangles.add(new Rectangle(rectangle));
+                }
+            }
+        }
+        if (restoreLife == null){
+            System.out.println("pas de zone pour restaurer sa vie");
+        }
+        else {
+            for (MapObject object : restoreLife.getObjects()){
+                if (object instanceof RectangleMapObject rectangleObject){
+                    Rectangle rectangleOfLife = rectangleObject.getRectangle();
+                    restoreLifeRectangle.add(new Rectangle(rectangleOfLife));
                 }
             }
         }
@@ -109,4 +131,5 @@ public class MapViewer {
     public Array<Rectangle> getTeleportToVillageRectangles(){
         return teleportToVillageRectangles;
     }
+    public Array<Rectangle> getRestoreLifeRectangle(){ return  restoreLifeRectangle; }
 }

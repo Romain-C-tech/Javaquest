@@ -1,6 +1,11 @@
 package fr.javaquest.entity;
 
+/**
+ * Utilisé pour récupérer les informations des hitboxs depuis un fichier json
+ *
+ * @author Romain-C-tech
+ */
 public class HitboxSize {
-    public float width, height;
+    public int width, height;
     public HitboxSize() {}
 }

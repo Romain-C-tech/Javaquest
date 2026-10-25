@@ -194,7 +194,7 @@
   <object id="23" x="1122" y="385.333" width="187.333" height="28.6667"/>
   <object id="24" x="833.5" y="194" width="32" height="60.5"/>
   <object id="25" x="864" y="129.5" width="34.5" height="95"/>
-  <object id="26" x="900" y="98.5" width="35" height="58"/>
+  <object id="26" x="900" y="98.5" width="32.0909" height="58"/>
   <object id="27" x="960" y="64" width="60" height="93.5"/>
   <object id="29" x="1014.5" y="97" width="72" height="60"/>
   <object id="30" x="920.833" y="226.833" width="165.333" height="59.3333"/>

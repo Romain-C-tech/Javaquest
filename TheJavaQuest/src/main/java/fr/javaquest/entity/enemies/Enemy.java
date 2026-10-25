@@ -1,31 +1,248 @@
 package fr.javaquest.entity.enemies;
 
+import com.badlogic.gdx.ai.fsm.DefaultStateMachine;
+import com.badlogic.gdx.ai.steer.SteeringAcceleration;
+import com.badlogic.gdx.ai.steer.SteeringBehavior;
+import com.badlogic.gdx.ai.steer.behaviors.Pursue;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import fr.javaquest.MapViewer;
 import fr.javaquest.entity.Entity;
-import fr.javaquest.equipments.weapons.Weapon;
-import fr.javaquest.equipments.weapons.WeaponRegistry;
+import fr.javaquest.entity.HitboxSize;
+import fr.javaquest.entity.playerEntity.PlayerSteerable;
+import fr.javaquest.entity.enemies.ai.EnemyState;
+import fr.javaquest.entity.enemies.ai.EnemySteerable;
+import fr.javaquest.entity.equipments.weapons.Weapon;
+import fr.javaquest.entity.equipments.weapons.WeaponRegistry;
 
+/**
+ * Toutes les possibilités d'un ennemi.
+ *
+ * <p>
+ *     - Attaque
+ *     - Equipement de son arme
+ *     - Déplacements vers la cible
+ * </p>
+ *
+ * @author Romain-C-tech, ssamepi
+ */
 public abstract class Enemy extends Entity {
 
-    protected final EnemyData data;
+    private final DefaultStateMachine<Enemy, EnemyState> stateMachine;
+    private PlayerSteerable targetSteerable;
 
-    public Enemy(EnemyData data, float x, float y) {
+    protected float velocityY = 0f;
+    protected boolean onGround = true;
+    protected final EnemyData data;
+    protected final MapViewer mapViewer;
+    private final EnemySteerable steerable;
+    private SteeringBehavior<Vector2> steeringBehavior;
+    private final SteeringAcceleration<Vector2> steeringAcceleration;
+
+    private SteeringBehavior<Vector2> pursueBehavior;
+
+    private float attackCooldown = 0f;
+
+    public Enemy(EnemyData data, float x, float y, MapViewer mapViewer, PlayerSteerable targetSteerable) {
         super(data.hp, data.damage, data.movementSpeed, data.attackSpeed,
                 createWeapon(data), x, y);
         this.data = data;
         hitbox.setSize(data.hitbox.width, data.hitbox.height);
+        this.targetSteerable = targetSteerable;
+
+        this.steerable = new EnemySteerable(this);
+        this.steeringAcceleration = new SteeringAcceleration<>(new Vector2());
+        this.mapViewer = mapViewer;
+
+        initPursueSteeringBehavior(this.targetSteerable);
+        this.stateMachine = new DefaultStateMachine<>(this, EnemyState.PATROL);
     }
 
+    /**
+     * Méthode utilisé dans le but d'équiper l'arme désigné pour un ennemi lors de sa création
+     * @param data
+     * @return Weapon
+     * @author Romain-C-tech
+     */
     private static Weapon createWeapon(EnemyData data) {
         if (data.weapon == null) return null;
         return new Weapon(WeaponRegistry.get(data.weapon), data.weaponRarity);
     }
 
-    public void moveLeft(float delta)  { hitbox.x -= movementSpeed * delta; isFacingRight = false; }
-    public void moveRight(float delta) { hitbox.x += movementSpeed * delta; isFacingRight = true; }
+    public void setSteeringBehavior(SteeringBehavior<Vector2> behavior) {this.steeringBehavior = behavior;}
+    public EnemySteerable getSteerable() {return steerable;}
+    public SteeringBehavior<Vector2> getPursueBehavior() {return this.pursueBehavior;}
+    public PlayerSteerable getTargetSteerable() {return targetSteerable;}
+    public DefaultStateMachine<Enemy, EnemyState> getStateMachine() {return stateMachine;}
+    public void setFacingRight(boolean facingRight) {isFacingRight = facingRight;}
 
-    @Override public void update(float delta) {}
+    /**
+     * Permet d'assigné le joueur comme étant la cible de l'ennemi. Dans un comportement de poursuite (Chase)
+     * @param playerSteerable
+     * @author Romain-C-tech
+     */
+    public void initPursueSteeringBehavior(PlayerSteerable playerSteerable) {
+        this.targetSteerable = playerSteerable;
+        this.pursueBehavior = new Pursue<>(this.steerable, this.targetSteerable);
+    }
+
+    /**
+     * La méthode d'attaque permettant à l'ennemi d'attaquer le joueur
+     * s'il est dans sa porté et s'il peux attaquer à cause du Cooldown
+     * @author Romain-C-tech
+     */
+    public void attack() {
+        if (!canAttack()) return;
+        attackCooldown = 1f / data.attackSpeed;
+
+        HitboxSize hitboxData = data.hitbox;
+        float x = isFacingRight ? this.hitbox.x + hitboxData.width : this.hitbox.x - hitbox.width;
+        float y = this.hitbox.y;
+
+        Rectangle zone = new Rectangle(x, y, hitboxData.width, hitboxData.height);
+
+        Vector2 targetpos = targetSteerable.getPosition();
+
+        float playerWidth = 32f;
+        float playerHeight = 32f;
+        Rectangle targetHitbox = new Rectangle(
+                targetpos.x - playerHeight / 2,
+                targetpos.y - playerWidth / 2,
+                playerWidth,
+                playerHeight);
+
+        if (zone.overlaps(targetHitbox)) {
+            targetSteerable.getPlayer().takeDamage(data.damage); //TODO: Add Armor reduction.
+        }
+    }
+
+    /**
+     * Méthode de vérification du Cooldown d'attaque
+     * @return boolean
+     */
+    public boolean canAttack() {
+        return attackCooldown <= 0 && attackSpeed > 0f;
+    }
+
+
+    /**
+     * Méthode permettant la mise à jour de la position de l'ennemi en fonction des collisions.
+     * @param delta
+     * @author Romain-C-tech
+     */
+    @Override
+    public void update(float delta) {
+        steerable.updatePositionFromHitbox();
+
+        if (movementSpeed > 0f) {
+            stateMachine.update();
+        }
+
+        if (steeringBehavior != null) {
+            steeringBehavior.calculateSteering(steeringAcceleration);
+
+            steerable.applySteering(steeringAcceleration, delta);
+
+            if (onGround) {
+                velocityY = 0;
+            } else {
+                velocityY -= GRAVITY * delta;
+            }
+            boolean collisionX = false; // Pour les collisions avec les murs.
+            boolean collisionY = false; // Pour les collisions avec le sol.
+
+            float newX = hitbox.x + steerable.getLinearVelocity().x * delta;
+            Rectangle futureHitboxX = new Rectangle(newX, hitbox.y, hitbox.width, hitbox.height);
+
+            for (Rectangle collider: mapViewer.getCollisionsRectangles()) {
+                if (futureHitboxX.overlaps(collider)) {
+                    if (newX > hitbox.x) {
+                        hitbox.x = collider.x - hitbox.width;
+                        collisionX = true;
+                    } else if (newX < hitbox.x) {
+                        hitbox.x = collider.x + collider.width;
+                        collisionX = true;
+                    }
+                }
+            }
+
+            if (!collisionX) {
+                hitbox.x = newX;
+            }
+
+            float newY = hitbox.y + velocityY * delta;
+
+            Rectangle futureHitboxY = new Rectangle(
+                    hitbox.x,
+                    newY,
+                    hitbox.width,
+                    hitbox.height
+            );
+
+            for (Rectangle collider : mapViewer.getCollisionsRectangles()) {
+
+                if (futureHitboxY.overlaps(collider)) {
+
+                    collisionY = isFalling(collider, collisionY);
+                    if (collisionY) break;
+                    collisionY = isJumping(collider, collisionY);
+                }
+            }
+            if (!collisionY) {
+                hitbox.y = newY;
+                onGround = false;
+            }
+
+        }
+        if (attackCooldown > 0f) attackCooldown -= delta;
+    }
+
+    /**
+     * Méthode permettant la vérification des collisions avec le sol pendant un saut.
+     * @param collider
+     * @param collision
+     * @return boolean
+     * @author Romain-C-tech
+     */
+    private boolean isJumping(Rectangle collider, boolean collision) {
+        if (velocityY > 0 && hitbox.y + hitbox.height <= collider.y + 1) {
+
+            hitbox.y = collider.y - hitbox.height;
+            velocityY = 0;
+            collision = true;
+        }
+        return collision;
+    }
+
+    /**
+     * Méthode permettant la vérification des collisions avec le sol pendant une chute.
+     * @param collider
+     * @param collision
+     * @return boolean
+     * @author Romain-C-tech
+     */
+    private boolean isFalling(Rectangle collider, boolean collision) {
+        if (velocityY <= 0 && hitbox.y >= collider.y + collider.height - 1) {
+
+            hitbox.y = collider.y + collider.height;
+            velocityY = 0;
+            onGround = true;
+            collision = true;
+        }
+        return collision;
+    }
+
+    /**
+     * Méthode permettant la vérification de la possibilité pour un ennemy d'être retiré du jeu.
+     * @return boolean
+     * @author ssamepi
+     */
+    public boolean isRemovable() {
+        return isDead();
+    }
 
     public abstract void render(SpriteBatch batch);
+
     public abstract void dispose();
 }
